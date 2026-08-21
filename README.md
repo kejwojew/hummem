@@ -1,17 +1,9 @@
-<h1 align="center">
-  <br>
-  <a href="https://github.com/thedotmack/claude-mem">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
-    </picture>
-  </a>
-  <br>
-  <a href="https://vercel.com/open-source-program">
-    <img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge-2026.svg" />
-  </a>
-</h1>
+# hummem
+
+> **hummem** is an independent fork of [claude-mem](https://github.com/thedotmack/claude-mem) —
+> persistent memory for AI coding assistants. It stores its data in `~/.hummem` and runs its
+> worker on the 378xx port band, so it can coexist with a legacy claude-mem install
+> (`~/.claude-mem`, port 37777) on the same machine.
 
 <p align="center">
   <a href="docs/i18n/README.zh.md">🇨🇳 中文</a> •
@@ -48,7 +40,7 @@
   <a href="docs/i18n/README.no.md">🇳🇴 Norsk</a>
 </p>
 
-<h4 align="center">Persistent memory compression system built for <a href="https://claude.com/claude-code" target="_blank">Claude Code</a>.</h4>
+<h4 align="center">Persistent memory compression system for AI coding assistants.</h4>
 
 <p align="center">
   <a href="LICENSE">
@@ -123,7 +115,7 @@
 </p>
 
 <p align="center">
-  Claude-Mem seamlessly preserves context across sessions by automatically capturing tool usage observations, generating semantic summaries, and making them available to future sessions. This enables Claude to maintain continuity of knowledge about projects even after sessions end or reconnect.
+  hummem seamlessly preserves context across sessions by automatically capturing tool usage observations, generating semantic summaries, and making them available to future sessions. This enables your assistant to maintain continuity of knowledge about projects even after sessions end or reconnect.
 </p>
 
 ---
@@ -133,25 +125,25 @@
 Install with a single command:
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 Or install for OpenCode:
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 Or install for Antigravity CLI ([setup guide](https://docs.claude-mem.ai/antigravity-cli/setup)):
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 Or install for Kimi Code CLI:
 
 ```bash
-npx claude-mem install --ide kimi
+npx hummem install --ide kimi
 ```
 
 Or install from the plugin marketplace inside Claude Code:
@@ -159,16 +151,16 @@ Or install from the plugin marketplace inside Claude Code:
 ```bash
 /plugin marketplace add thedotmack/claude-mem
 
-/plugin install claude-mem
+/plugin install hummem
 ```
 
 Restart Claude Code. Context from previous sessions will automatically appear in new sessions.
 
-> **Note:** Claude-Mem is also published on npm, but `npm install -g claude-mem` installs the **SDK/library only** — it does not register the plugin hooks or set up the worker service. Always install via `npx claude-mem install` or the `/plugin` commands above.
+> **Note:** hummem is also published on npm, but `npm install -g hummem` installs the **SDK/library only** — it does not register the plugin hooks or set up the worker service. Always install via `npx hummem install` or the `/plugin` commands above.
 
 ### 🦞 OpenClaw Gateway
 
-Install claude-mem as a persistent memory plugin on [OpenClaw](https://openclaw.ai) gateways with a single command:
+Install hummem as a persistent memory plugin on [OpenClaw](https://openclaw.ai) gateways with a single command:
 
 ```bash
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
@@ -311,7 +303,7 @@ Make sure Node.js and npm are installed and added to your PATH. Download the lat
 
 ## Configuration
 
-Settings are managed in `~/.claude-mem/settings.json` (auto-created with defaults on first run). Configure AI model, worker port, data directory, log level, and context injection settings.
+Settings are managed in `~/.hummem/settings.json` (auto-created with defaults on first run). Configure AI model, worker port, data directory, log level, and context injection settings.
 
 See the **[Configuration Guide](https://docs.claude-mem.ai/configuration)** for all available settings and examples.
 
@@ -325,7 +317,7 @@ This option controls both:
 
 #### How to Configure
 
-Edit your settings file at `~/.claude-mem/settings.json`:
+Edit your settings file at `~/.hummem/settings.json`:
 
 ```json
 {

@@ -30,10 +30,10 @@ Practical guide based on 23 days of production usage with 3,400+ observations ac
 
 ```bash
 # Check worker status
-curl -s http://127.0.0.1:37777/api/health | python3 -m json.tool
+curl -s http://127.0.0.1:37877/api/health | python3 -m json.tool
 
 # Check database stats
-sqlite3 ~/.claude-mem/claude-mem.db "
+sqlite3 ~/.hummem/claude-mem.db "
   SELECT 'observations' as metric, COUNT(*) as value FROM observations
   UNION ALL SELECT 'summaries', COUNT(*) FROM session_summaries
   UNION ALL SELECT 'pending', COUNT(*) FROM pending_messages WHERE status='pending'
@@ -81,7 +81,7 @@ Based on active daily development usage:
 
 ### Port conflict on startup
 
-**Symptom:** `Worker failed to start... Is port 37777 in use?`
+**Symptom:** `Worker failed to start... Is port 37877 in use?`
 **Cause:** Two sessions starting simultaneously — HTTP check is non-atomic (TOCTOU race).
 **Fix:** PR #1566 — atomic socket bind on Unix.
 
@@ -101,13 +101,13 @@ Based on active daily development usage:
 
 ```bash
 # Count errors by day
-grep '\[ERROR\]' ~/.claude-mem/logs/claude-mem-*.log | \
+grep '\[ERROR\]' ~/.hummem/logs/claude-mem-*.log | \
   sed 's/\[20[0-9][0-9]-[0-9][0-9]-/\n&/g' | \
   grep -oP '^\[20\d{2}-\d{2}-\d{2}' | sort | uniq -c
 
 # Find circuit-breaker trips
-grep 'circuit\|Circuit\|ABANDONED\|abandoned' ~/.claude-mem/logs/claude-mem-*.log
+grep 'circuit\|Circuit\|ABANDONED\|abandoned' ~/.hummem/logs/claude-mem-*.log
 
 # Check pending message health
-grep 'CLAIMED\|CONFIRMED\|FAILED\|ABANDONED' ~/.claude-mem/logs/claude-mem-$(date +%Y-%m-%d).log | tail -20
+grep 'CLAIMED\|CONFIRMED\|FAILED\|ABANDONED' ~/.hummem/logs/claude-mem-$(date +%Y-%m-%d).log | tail -20
 ```

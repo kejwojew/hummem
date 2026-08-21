@@ -76,7 +76,7 @@ export async function runServerJobsCommand(argv: string[]): Promise<void> {
 }
 
 function printJobsUsage(): void {
-  console.error(`Usage: ${styleText('bold', 'npx claude-mem server jobs <subcommand>')}`);
+  console.error(`Usage: ${styleText('bold', 'npx hummem server jobs <subcommand>')}`);
   console.error('Subcommands:');
   console.error('  status                    Show queue lane counts (Postgres + BullMQ)');
   console.error('  failed [--limit N]        List failed generation jobs (default 20)');

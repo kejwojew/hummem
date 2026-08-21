@@ -36,24 +36,37 @@ export function expandHome(p: string): string {
 }
 
 export function resolveDataDir(): string {
+  // (a) canonical hummem override
+  if (process.env.HUMMEM_DATA_DIR) {
+    return expandHome(process.env.HUMMEM_DATA_DIR);
+  }
+
+  // (b) legacy claude-mem override — kept working for migrated installs
   if (process.env.CLAUDE_MEM_DATA_DIR) {
     return expandHome(process.env.CLAUDE_MEM_DATA_DIR);
   }
 
-  const defaultDataDir = join(homedir(), '.claude-mem');
-  const settingsPath = join(defaultDataDir, 'settings.json');
-  try {
-    if (existsSync(settingsPath)) {
-      const raw = parseJsonWithBom<Record<string, any>>(readFileSync(settingsPath, 'utf-8'));
-      const settings = raw.env ?? raw;
-      if (settings.CLAUDE_MEM_DATA_DIR) {
-        return expandHome(settings.CLAUDE_MEM_DATA_DIR);
+  // (c) settings.json key. Check the new default dir first, then the legacy
+  // claude-mem dir, so an existing ~/.claude-mem/settings.json with a
+  // CLAUDE_MEM_DATA_DIR key keeps working after migration to ~/.hummem.
+  const defaultDataDir = join(homedir(), '.hummem');
+  const legacyDataDir = join(homedir(), '.claude-mem');
+  for (const dir of [defaultDataDir, legacyDataDir]) {
+    const settingsPath = join(dir, 'settings.json');
+    try {
+      if (existsSync(settingsPath)) {
+        const raw = parseJsonWithBom<Record<string, any>>(readFileSync(settingsPath, 'utf-8'));
+        const settings = raw.env ?? raw;
+        if (settings.CLAUDE_MEM_DATA_DIR) {
+          return expandHome(settings.CLAUDE_MEM_DATA_DIR);
+        }
       }
+    } catch {
+      // settings file missing or corrupt — try the next candidate
     }
-  } catch {
-    // settings file missing or corrupt — fall through to default
   }
 
+  // (d) hummem default
   return defaultDataDir;
 }
 
@@ -101,9 +114,9 @@ export function expandTilde(filePath: string, home: string = homedir()): string 
  * Per-worker-instance suffix for the PID file and supervisor registry. When
  * CLAUDE_MEM_WORKER_PORT is set in the environment (baked into Kimi hook
  * commands), the worker gets its own `worker-<port>.pid` / `supervisor-<port>.json`
- * so a second claude-mem worker can coexist with the default one (e.g. the
- * marketplace build serving Claude Code on 37777 and a dev build serving Kimi
- * on 37790) over the SAME database — without the two supervisors clobbering
+ * so a second hummem worker can coexist with the default one (e.g. the
+ * default worker on 37877 and the Kimi-dedicated build on 37892) over the
+ * SAME database — without the two supervisors clobbering
  * each other's PID file. Env unset → legacy unsuffixed paths, byte-identical
  * to the old behavior.
  */

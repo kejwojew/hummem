@@ -41,7 +41,7 @@ export function Header({
               </div>
             )}
           </div>
-          <span className="logo-text">claude-mem</span>
+          <span className="logo-text">hummem</span>
         </h1>
       </div>
       <div className="status">

@@ -145,9 +145,9 @@ describe('Plugin Distribution - Codex Marketplace', () => {
     const mcp = JSON.parse(readFileSync(mcpPath, 'utf-8'));
     const command = mcp.mcpServers['mcp-search'].args.join(' ');
 
-    expect(command).toContain('.codex/plugins/cache/claude-mem-local/claude-mem');
-    expect(command).toContain('plugins/cache/thedotmack/claude-mem');
-    expect(command).toContain('claude-mem: mcp server not found');
+    expect(command).toContain('.codex/plugins/cache/hummem-local/hummem');
+    expect(command).toContain('plugins/cache/thedotmack/hummem');
+    expect(command).toContain('hummem: mcp server not found');
   });
 });
 
@@ -174,7 +174,7 @@ describe('Plugin Distribution - hooks.json Integrity', () => {
   });
 
   it('should try cache path before marketplaces fallback in all hook commands (#1533)', () => {
-    const cachePath = '$_C/plugins/cache/thedotmack/claude-mem';
+    const cachePath = '$_C/plugins/cache/thedotmack/hummem';
     const marketplacesPath = '$_C/plugins/marketplaces/thedotmack/plugin';
 
     for (const command of commandHooksFrom('plugin/hooks/hooks.json')) {
@@ -196,11 +196,11 @@ describe('Plugin Distribution - Startup Root Resolution', () => {
     expect(command).toContain('CLAUDE_PLUGIN_ROOT');
     expect(command).toContain('PLUGIN_ROOT');
     expect(command).toContain('plugins/marketplaces/thedotmack/plugin');
-    expect(command).toContain('plugins/cache/thedotmack/claude-mem');
+    expect(command).toContain('plugins/cache/thedotmack/hummem');
     expect(command).toContain('mcp-server.cjs');
     // No bare absolute "/scripts/..." path leaks through.
     expect(command).not.toContain('"/scripts/mcp-server.cjs"');
-    expect(command.indexOf('plugins/cache/thedotmack/claude-mem')).toBeLessThan(
+    expect(command.indexOf('plugins/cache/thedotmack/hummem')).toBeLessThan(
       command.indexOf('plugins/marketplaces/thedotmack/plugin')
     );
   });
@@ -211,10 +211,10 @@ describe('Plugin Distribution - Startup Root Resolution', () => {
       expect(command).toContain('export PATH=');
       expect(command).toContain('while IFS= read -r _R');
       expect(command).toContain('$_C/plugins/marketplaces/thedotmack/plugin');
-      expect(command).toContain('$_C/plugins/cache/thedotmack/claude-mem');
+      expect(command).toContain('$_C/plugins/cache/thedotmack/hummem');
       expect(command).toContain('[ -f "$_Q/scripts/');
       expect(command).toContain('command -v cygpath');
-      expect(command.indexOf('$_C/plugins/cache/thedotmack/claude-mem')).toBeLessThan(
+      expect(command.indexOf('$_C/plugins/cache/thedotmack/hummem')).toBeLessThan(
         command.indexOf('$_C/plugins/marketplaces/thedotmack/plugin')
       );
     }
@@ -225,7 +225,7 @@ describe('Plugin Distribution - Startup Root Resolution', () => {
       expect(command).toContain('${CLAUDE_CONFIG_DIR:-$HOME/.claude}');
       expect(command).toContain('while IFS= read -r _R');
       expect(command).toContain('$_C/plugins/marketplaces/thedotmack/plugin');
-      expect(command).toContain('$_C/plugins/cache/thedotmack/claude-mem');
+      expect(command).toContain('$_C/plugins/cache/thedotmack/hummem');
       expect(command).toContain('[ -f "$_Q/scripts/');
       expect(command).not.toContain('$HOME/.claude/plugins/');
     }
@@ -330,11 +330,11 @@ const ccTrailing = (...tail: string[]) => [
 ];
 const claudeHook = (tail: string[], extra: Record<string, unknown> = {}) => buildShellCommand({
   host: 'claude-code', requireFile: 'bun-runner.js', requireFileSecondary: 'worker-service.cjs',
-  trailingCommand: ccTrailing(...tail), notFoundMessage: 'claude-mem: plugin scripts not found', ...extra,
+  trailingCommand: ccTrailing(...tail), notFoundMessage: 'hummem: plugin scripts not found', ...extra,
 });
 const codexHook = (tail: string[]) => buildShellCommand({
   host: 'codex-cli', requireFile: 'bun-runner.js', requireFileSecondary: 'worker-service.cjs',
-  trailingCommand: ccTrailing(...tail), notFoundMessage: 'claude-mem: plugin scripts not found',
+  trailingCommand: ccTrailing(...tail), notFoundMessage: 'hummem: plugin scripts not found',
   extraEnv: { CLAUDE_MEM_CODEX_HOOK: '1' },
 });
 const codexStartupHook = () => buildShellCommand({
@@ -345,7 +345,7 @@ const codexStartupHook = () => buildShellCommand({
     'CLAUDE_MEM_CODEX_HOOK=1', ...ccTrailing('hook', 'codex', 'context'),
     '; fi',
   ],
-  notFoundMessage: 'claude-mem: plugin scripts not found',
+  notFoundMessage: 'hummem: plugin scripts not found',
 });
 const codexHookPair = (tail: string[], options: { startupVersionCheck?: boolean } = {}) => ({
   command: options.startupVersionCheck ? codexStartupHook() : codexHook(tail),
@@ -359,7 +359,7 @@ const RULE_A_EXPECTATIONS: Record<string, Record<string, RuleAExpectation>> = {
     'Setup.0.0': buildShellCommand({
       host: 'claude-code-setup', requireFile: 'version-check.js',
       trailingCommand: ['node', '"$_P/scripts/version-check.js"'],
-      notFoundMessage: 'claude-mem: version-check.js not found',
+      notFoundMessage: 'hummem: version-check.js not found',
     }),
     // `start` already prints its own single, valid status JSON
     // (buildStatusOutput → {"continue":true,"status":"ready","suppressOutput":true}),
@@ -387,11 +387,11 @@ const MCP_EXPECTED = buildShellCommand({
   // The mcp Node launcher derives its spawn target from requireFile; it ignores
   // trailingCommand, so none is passed (see buildMcpNodeLauncher).
   host: 'mcp', requireFile: 'mcp-server.cjs',
-  notFoundMessage: 'claude-mem: mcp server not found',
+  notFoundMessage: 'hummem: mcp server not found',
   mcpExtraCandidates: ['$PWD/plugin', '$PWD'],
   mcpExtraCacheRoots: [
-    '$HOME/.codex/plugins/cache/claude-mem-local/claude-mem',
-    '$HOME/.codex/plugins/cache/thedotmack/claude-mem',
+    '$HOME/.codex/plugins/cache/hummem-local/hummem',
+    '$HOME/.codex/plugins/cache/thedotmack/hummem',
   ],
 });
 
@@ -495,7 +495,7 @@ describe('Spawn-Contract Templating - Rule A shell resolution matrix', () => {
 
   it('resolves _P from the cache directory when CLAUDE_PLUGIN_ROOT is unset', () => {
     const home = mkdtempSync(path.join(tmpdir(), 'cm-home-'));
-    const cacheRoot = path.join(home, '.claude', 'plugins', 'cache', 'thedotmack', 'claude-mem', '99.0.0');
+    const cacheRoot = path.join(home, '.claude', 'plugins', 'cache', 'thedotmack', 'hummem', '99.0.0');
     mkdirSync(path.join(cacheRoot, 'scripts'), { recursive: true });
     writeFileSync(path.join(cacheRoot, 'scripts', 'version-check.js'), '');
     writeFileSync(path.join(cacheRoot, 'scripts', 'bun-runner.js'), '');
@@ -514,7 +514,7 @@ describe('Spawn-Contract Templating - Rule A shell resolution matrix', () => {
 
   it('prefers the highest cache version over the newest mtime and skips .orphaned_at dirs (2026-07-22 restart storm)', () => {
     const home = mkdtempSync(path.join(tmpdir(), 'cm-home-'));
-    const cacheBase = path.join(home, '.claude', 'plugins', 'cache', 'thedotmack', 'claude-mem');
+    const cacheBase = path.join(home, '.claude', 'plugins', 'cache', 'thedotmack', 'hummem');
     const makeVersion = (version: string) => {
       const root = path.join(cacheBase, version);
       mkdirSync(path.join(root, 'scripts'), { recursive: true });
@@ -551,7 +551,7 @@ describe('Spawn-Contract Templating - Rule A shell resolution matrix', () => {
         encoding: 'utf-8',
       });
       expect(result.status).not.toBe(0);
-      expect(result.stderr ?? '').toMatch(/claude-mem: .* not found/);
+      expect(result.stderr ?? '').toMatch(/hummem: .* not found/);
     } finally {
       rmSync(home, { recursive: true, force: true });
     }

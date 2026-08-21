@@ -36,7 +36,7 @@ function firstExisting(candidates: string[]): string | null {
  * A dev checkout wins over the marketplace copy on purpose: the marketplace
  * clone is refreshed/reset by plugin-update machinery, which silently reverts
  * baked hook commands to the last released build (bit us on Kimi hooks —
- * 2026-07-28). End-user `npx claude-mem install` runs from an arbitrary cwd
+ * 2026-07-28). End-user `npx hummem install` runs from an arbitrary cwd
  * with no `plugin/` next to it, so the marketplace fallback still applies
  * there.
  *

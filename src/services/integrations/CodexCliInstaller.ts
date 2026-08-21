@@ -15,8 +15,8 @@ const CODEX_DIR = path.join(homedir(), '.codex');
 const CODEX_AGENTS_MD_PATH = path.join(CODEX_DIR, 'AGENTS.md');
 const CODEX_TRANSCRIPT_WATCH_CONFIG_PATH = paths.transcriptsConfig();
 const CODEX_CONFIG_PATH = path.join(CODEX_DIR, 'config.toml');
-const MARKETPLACE_NAME = 'claude-mem-local';
-const CODEX_PLUGIN_ID = `claude-mem@${MARKETPLACE_NAME}`;
+const MARKETPLACE_NAME = 'hummem-local';
+const CODEX_PLUGIN_ID = `hummem@${MARKETPLACE_NAME}`;
 const LEGACY_CODEX_PLUGIN_IDS = ['claude-mem@thedotmack'];
 const MIN_CODEX_MARKETPLACE_VERSION = '0.128.0';
 const REQUIRED_MARKETPLACE_FILES = [
@@ -84,7 +84,7 @@ function resolvePluginMarketplaceRoot(preferredRoot?: string): string {
     if (resolved && missingMarketplaceFiles(resolved).length === 0) return resolved;
   }
 
-  throw new Error('Could not locate a Codex marketplace root with .agents/plugins/marketplace.json and plugin/.codex-plugin/plugin.json. Run npx claude-mem@latest install from the package or repo root.');
+  throw new Error('Could not locate a Codex marketplace root with .agents/plugins/marketplace.json and plugin/.codex-plugin/plugin.json. Run npx hummem@latest install from the package or repo root.');
 }
 
 function lookupCodexOnWindows(): string | null {
@@ -323,7 +323,7 @@ function assertCodexMarketplaceSupported(): void {
   }
 
   if (version.localeCompare(MIN_CODEX_MARKETPLACE_VERSION, undefined, { numeric: true }) < 0) {
-    throw new Error(`Codex CLI ${version} is too old for plugin marketplace support. Update Codex CLI to ${MIN_CODEX_MARKETPLACE_VERSION} or newer, then run: npx claude-mem@latest install`);
+    throw new Error(`Codex CLI ${version} is too old for plugin marketplace support. Update Codex CLI to ${MIN_CODEX_MARKETPLACE_VERSION} or newer, then run: npx hummem@latest install`);
   }
 }
 
@@ -431,11 +431,11 @@ function stripLegacyTranscriptWatchContexts(): void {
 const cleanupLegacyCodexTranscriptAgentsContext = disableCodexTranscriptAgentsContext;
 
 export async function installCodexCli(marketplaceRootOverride?: string): Promise<number> {
-  console.log('\nInstalling Claude-Mem for Codex CLI (native hooks)...\n');
+  console.log('\nInstalling hummem for Codex CLI (native hooks)...\n');
 
   if (!commandExists('codex')) {
     console.error('Codex CLI was not found on PATH.');
-    console.error('Install Codex, then run: npx claude-mem@latest install');
+    console.error('Install Codex, then run: npx hummem@latest install');
     return 1;
   }
 
@@ -475,13 +475,13 @@ Next steps:
   2. Restart any running Codex sessions so native hooks are loaded
 
 For a fresh setup, the supported entry point is:
-  npx claude-mem@latest install
+  npx hummem@latest install
 `);
   return 0;
 }
 
 export function uninstallCodexCli(): number {
-  console.log('\nUninstalling Claude-Mem Codex CLI integration...\n');
+  console.log('\nUninstalling hummem Codex CLI integration...\n');
 
   let failed = false;
 

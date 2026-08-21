@@ -116,7 +116,7 @@ function workerPostFireAndForget(
   }).catch((error: unknown) => {
     const message = error instanceof Error ? error.message : String(error);
     if (!message.includes("ECONNREFUSED")) {
-      console.warn(`[claude-mem] Worker POST ${path} failed: ${message}`);
+      console.warn(`[hummem] Worker POST ${path} failed: ${message}`);
     }
   });
 }
@@ -125,14 +125,14 @@ async function workerGetText(path: string): Promise<string | null> {
   try {
     const response = await fetch(`${WORKER_BASE_URL}${path}`, { headers: JSON_HEADERS });
     if (!response.ok) {
-      console.warn(`[claude-mem] Worker GET ${path} returned ${response.status}`);
+      console.warn(`[hummem] Worker GET ${path} returned ${response.status}`);
       return null;
     }
     return await response.text();
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
     if (!message.includes("ECONNREFUSED")) {
-      console.warn(`[claude-mem] Worker GET ${path} failed: ${message}`);
+      console.warn(`[hummem] Worker GET ${path} failed: ${message}`);
     }
     return null;
   }
@@ -189,7 +189,7 @@ function truncate(text: string): string {
 export const ClaudeMemPlugin = async (ctx: OpenCodePluginContext) => {
   const projectName = ctx.project?.name || "opencode";
 
-  console.log(`[claude-mem] OpenCode plugin loading (project: ${projectName})`);
+  console.log(`[hummem] OpenCode plugin loading (project: ${projectName})`);
 
   return {
     // Capture every tool execution as an observation. This is the primary
@@ -276,7 +276,7 @@ export const ClaudeMemPlugin = async (ctx: OpenCodePluginContext) => {
     tool: {
       claude_mem_search: {
         description:
-          "Search claude-mem memory database for past observations, sessions, and context",
+          "Search hummem memory database for past observations, sessions, and context",
         args: {
           query: z.string().describe("Search query for memory observations"),
         },
@@ -291,7 +291,7 @@ export const ClaudeMemPlugin = async (ctx: OpenCodePluginContext) => {
           );
 
           if (!text) {
-            return "claude-mem worker is not running. Start it with: npx claude-mem start";
+            return "hummem worker is not running. Start it with: npx hummem start";
           }
 
           return parseSearchResponse(text, query);
@@ -313,7 +313,7 @@ export function parseSearchResponse(text: string, query: string): string {
     data = JSON.parse(text);
   } catch (error: unknown) {
     console.warn(
-      "[claude-mem] Failed to parse search results:",
+      "[hummem] Failed to parse search results:",
       error instanceof Error ? error.message : String(error),
     );
     return "Failed to parse search results.";

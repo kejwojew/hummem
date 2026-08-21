@@ -925,7 +925,7 @@ function runServerServiceCli(command: string, extraArgs: string[] = []): void {
       serverScript = legacyScript;
     } else {
       console.error(`Server script not found at: ${serverScript}`);
-      console.error('Rebuild or reinstall claude-mem so server-service.cjs is available.');
+      console.error('Rebuild or reinstall hummem so server-service.cjs is available.');
       process.exit(1);
     }
   }
@@ -1323,7 +1323,7 @@ async function main() {
       const platform = process.argv[3];
       const event = process.argv[4];
       if (!platform || !event) {
-        console.error('Usage: claude-mem hook <platform> <event>');
+        console.error('Usage: hummem hook <platform> <event>');
         console.error('Platforms: claude-code, codex, cursor, antigravity-cli, kimi, raw');
         console.error('Events: context, session-init, observation, summarize, user-message');
         process.exit(1);
@@ -1521,7 +1521,7 @@ export function formatDependencyHealthHint(health: WorkerHealthSnapshot): string
     return `${status.dependency}: ${status.kind}`;
   });
 
-  return `  Dependencies: degraded (${labels.join(', ')}). Run npx claude-mem doctor or open Settings for remediation.`;
+  return `  Dependencies: degraded (${labels.join(', ')}). Run npx hummem doctor or open Settings for remediation.`;
 }
 
 /**

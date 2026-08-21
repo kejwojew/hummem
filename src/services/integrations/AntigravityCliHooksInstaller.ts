@@ -57,7 +57,7 @@ const ANTIGRAVITY_MCP_CONFIG_PATHS = [
 // user's actual global rules directory.
 const RULES_CONTEXT_PATH = path.join(homedir(), '.agents', 'rules', 'claude-mem-context.md');
 
-const HOOK_NAME = 'claude-mem';
+const HOOK_NAME = 'hummem';
 const HOOK_TIMEOUT_MS = 10000;
 
 // 7 confirmed-live hook events (B0). SessionEnd is deliberately excluded:
@@ -221,7 +221,7 @@ function setupRulesContextFile(): void {
 }
 
 export async function installAntigravityCliHooks(): Promise<number> {
-  console.log('\nInstalling Claude-Mem Antigravity CLI hooks + MCP...\n');
+  console.log('\nInstalling hummem Antigravity CLI hooks + MCP...\n');
 
   const workerServicePath = findWorkerServicePath();
   if (!workerServicePath) {
@@ -257,7 +257,7 @@ MCP config installed to:
 Using unified CLI: bun worker-service.cjs hook antigravity-cli <event>
 
 Next steps:
-  1. Start claude-mem worker: claude-mem start
+  1. Start hummem worker: hummem start
   2. Restart Antigravity CLI (agy) to load the hooks
   3. Memory will be captured automatically during sessions
 
@@ -303,11 +303,11 @@ function removeClaudeMemFromMcpConfig(mcpConfigPath: string): boolean {
   if (!existsSync(mcpConfigPath)) return false;
 
   const config = readMcpConfigTolerantly(mcpConfigPath);
-  if (!config.mcpServers || !('claude-mem' in config.mcpServers)) {
+  if (!config.mcpServers || !('hummem' in config.mcpServers)) {
     return false;
   }
 
-  delete config.mcpServers['claude-mem'];
+  delete config.mcpServers['hummem'];
   writeFileSync(mcpConfigPath, JSON.stringify(config, null, 2) + '\n');
   return true;
 }
@@ -325,7 +325,7 @@ function removeContextTagBlock(filePath: string): boolean {
 }
 
 export function uninstallAntigravityCliHooks(): number {
-  console.log('\nUninstalling Claude-Mem Antigravity CLI hooks + MCP...\n');
+  console.log('\nUninstalling hummem Antigravity CLI hooks + MCP...\n');
 
   try {
     if (existsSync(GEMINI_SETTINGS_PATH)) {
@@ -337,7 +337,7 @@ export function uninstallAntigravityCliHooks(): number {
     for (const mcpConfigPath of ANTIGRAVITY_MCP_CONFIG_PATHS) {
       const removed = removeClaudeMemFromMcpConfig(mcpConfigPath);
       if (removed) {
-        console.log(`  Removed claude-mem entry from ${mcpConfigPath}`);
+        console.log(`  Removed hummem entry from ${mcpConfigPath}`);
       }
     }
 
@@ -385,7 +385,7 @@ function removeAntigravityHooksFromSettings(): void {
   }
 
   writeAntigravitySettings(settings);
-  console.log(`  Removed ${removedCount} claude-mem hook(s) from ${GEMINI_SETTINGS_PATH}`);
+  console.log(`  Removed ${removedCount} hummem hook(s) from ${GEMINI_SETTINGS_PATH}`);
 
   if (removeContextTagBlock(GEMINI_MD_PATH)) {
     console.log(`  Removed context section from ${GEMINI_MD_PATH}`);
@@ -393,12 +393,12 @@ function removeAntigravityHooksFromSettings(): void {
 }
 
 export function checkAntigravityCliHooksStatus(): number {
-  console.log('\nClaude-Mem Antigravity CLI Status\n');
+  console.log('\nhummem Antigravity CLI Status\n');
 
   if (!existsSync(GEMINI_SETTINGS_PATH)) {
     console.log('Antigravity CLI settings: Not found');
     console.log(`  Expected at: ${GEMINI_SETTINGS_PATH}\n`);
-    console.log('No hooks installed. Run: claude-mem install --ide antigravity\n');
+    console.log('No hooks installed. Run: hummem install --ide antigravity\n');
     return 0;
   }
 
@@ -430,7 +430,7 @@ export function checkAntigravityCliHooksStatus(): number {
 
   if (installedEvents.length === 0) {
     console.log('Hooks: Not installed');
-    console.log('Run: claude-mem install --ide antigravity\n');
+    console.log('Run: hummem install --ide antigravity\n');
   } else {
     console.log(`Settings: ${GEMINI_SETTINGS_PATH}`);
     console.log(`Mode: Unified CLI (bun worker-service.cjs hook antigravity-cli)`);
@@ -446,7 +446,7 @@ export function checkAntigravityCliHooksStatus(): number {
     if (mdContent.includes('<claude-mem-context>')) {
       console.log(`Context (GEMINI.md): Active (${GEMINI_MD_PATH})`);
     } else {
-      console.log('Context (GEMINI.md): exists but missing claude-mem section');
+      console.log('Context (GEMINI.md): exists but missing hummem section');
     }
   } else {
     console.log('Context (GEMINI.md): No GEMINI.md found');
@@ -459,8 +459,8 @@ export function checkAntigravityCliHooksStatus(): number {
       continue;
     }
     const config = readMcpConfigTolerantly(mcpConfigPath);
-    const hasEntry = Boolean(config.mcpServers?.['claude-mem']);
-    console.log(`MCP config (${mcpConfigPath}): ${hasEntry ? 'claude-mem registered' : 'found, but no claude-mem entry'}`);
+    const hasEntry = Boolean(config.mcpServers?.['hummem']);
+    console.log(`MCP config (${mcpConfigPath}): ${hasEntry ? 'hummem registered' : 'found, but no hummem entry'}`);
   }
 
   console.log('');
@@ -480,19 +480,19 @@ export async function handleAntigravityCliCommand(subcommand: string, _args: str
 
     default:
       console.log(`
-Claude-Mem Antigravity CLI Integration
+hummem Antigravity CLI Integration
 
-Usage: claude-mem antigravity-cli <command>
+Usage: hummem antigravity-cli <command>
 
 Commands:
   install             Install hooks into ~/.gemini/settings.json + MCP config
-  uninstall           Remove claude-mem hooks/MCP entries (preserves other config)
+  uninstall           Remove hummem hooks/MCP entries (preserves other config)
   status              Check installation status
 
 Examples:
-  claude-mem antigravity-cli install     # Install hooks + MCP
-  claude-mem antigravity-cli status      # Check if installed
-  claude-mem antigravity-cli uninstall   # Remove hooks + MCP
+  hummem antigravity-cli install     # Install hooks + MCP
+  hummem antigravity-cli status      # Check if installed
+  hummem antigravity-cli uninstall   # Remove hooks + MCP
 
 For more info: https://docs.claude-mem.ai/antigravity-cli/setup
       `);

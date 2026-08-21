@@ -1,6 +1,6 @@
 # Claude-Mem OpenClaw Plugin — Setup Guide
 
-This guide walks through setting up the claude-mem plugin on an OpenClaw gateway. By the end, your agents will have persistent memory across sessions via system prompt context injection, and optionally a real-time observation feed streaming to a messaging channel.
+This guide walks through setting up the hummem plugin on an OpenClaw gateway. By the end, your agents will have persistent memory across sessions via system prompt context injection, and optionally a real-time observation feed streaming to a messaging channel.
 
 ## Quick Install (Recommended)
 
@@ -60,7 +60,7 @@ curl -fsSL https://bun.sh/install | bash
 
 ### Step 2: Get the Worker Running
 
-The claude-mem worker is an HTTP service on port 37777. It stores observations, generates summaries, and serves the context timeline. The plugin talks to it over HTTP — it doesn't matter where the worker is running, just that it's reachable on localhost:37777.
+The hummem worker is an HTTP service on port 37877. It stores observations, generates summaries, and serves the context timeline. The plugin talks to it over HTTP — it doesn't matter where the worker is running, just that it's reachable on localhost:37877.
 
 #### Check if it's already running
 
@@ -117,12 +117,12 @@ curl http://localhost:37777/api/health
 
 ### Step 3: Add the Plugin to Your Gateway
 
-Add the `claude-mem` plugin to your OpenClaw gateway configuration:
+Add the `hummem` plugin to your OpenClaw gateway configuration:
 
 ```json
 {
   "plugins": {
-    "claude-mem": {
+    "hummem": {
       "enabled": true,
       "config": {
         "project": "my-project",
@@ -142,7 +142,7 @@ Add the `claude-mem` plugin to your OpenClaw gateway configuration:
 
 - **`syncMemoryFileExclude`** (string[], default: `[]`) — Agent IDs excluded from automatic context injection. Useful for agents that curate their own memory. Observations are still recorded for excluded agents.
 
-- **`workerPort`** (number, default: `37777`) — The port where the claude-mem worker service is listening. Only change this if you configured the worker to use a different port.
+- **`workerPort`** (number, default: `37877`) — The port where the hummem worker service is listening. Only change this if you configured the worker to use a different port.
 
 ---
 
@@ -151,7 +151,7 @@ Add the `claude-mem` plugin to your OpenClaw gateway configuration:
 Restart your OpenClaw gateway so it picks up the new plugin configuration. After restart, check the gateway logs for:
 
 ```
-[claude-mem] OpenClaw plugin loaded — v1.0.0 (worker: 127.0.0.1:37777)
+[hummem] OpenClaw plugin loaded — v1.0.0 (worker: 127.0.0.1:37877)
 ```
 
 If you see this, the plugin is loaded. You can also verify by running `/claude_mem_status` in any OpenClaw chat:
@@ -170,7 +170,7 @@ The observation feed shows `disconnected` because we haven't configured it yet. 
 
 Have an agent do some work. The plugin automatically records observations through these OpenClaw events:
 
-1. **`before_agent_start`** — Initializes a claude-mem session when the agent starts
+1. **`before_agent_start`** — Initializes a hummem session when the agent starts
 2. **`before_prompt_build`** — Injects the observation timeline into the agent's system prompt (cached for 60s)
 3. **`tool_result_persist`** — Records each tool use (Read, Write, Bash, etc.) as an observation
 4. **`agent_end`** — Summarizes the session and marks it complete
@@ -183,7 +183,7 @@ You can also check the worker's viewer UI at http://localhost:37777 to see obser
 
 ## Step 6: Set Up the Observation Feed (Streaming to a Channel)
 
-The observation feed connects to the claude-mem worker's SSE (Server-Sent Events) stream and forwards every new observation to a messaging channel in real time. Your agents learn things, and you see them learning in your Telegram/Discord/Slack/etc.
+The observation feed connects to the hummem worker's SSE (Server-Sent Events) stream and forwards every new observation to a messaging channel in real time. Your agents learn things, and you see them learning in your Telegram/Discord/Slack/etc.
 
 ### What you'll see
 
@@ -300,7 +300,7 @@ Your complete plugin config should now look like this (using Telegram as an exam
 ```json
 {
   "plugins": {
-    "claude-mem": {
+    "hummem": {
       "enabled": true,
       "config": {
         "project": "my-project",
@@ -434,7 +434,7 @@ A background service connects to the worker's SSE stream and forwards `new_obser
 ```json
 {
   "plugins": {
-    "claude-mem": {
+    "hummem": {
       "enabled": true,
       "config": {
         "project": "openclaw",

@@ -199,13 +199,13 @@ For a developer running claude-mem on one machine, server-beta is invisible. Her
    - finds-or-creates a `local-hook-team` row in `teams`,
    - finds-or-creates a `local-hook-project` row in `projects`,
    - generates a 48-byte url-safe random api key, hashes it (sha256), and creates an `api_keys` row scoped to that team+project with hook-only scopes (`events:write`, `sessions:write`, `observations:read`, `jobs:read`),
-   - writes the raw key + project id + server URL into `~/.claude-mem/settings.json` so subsequent hook fires can authenticate.
+   - writes the raw key + project id + server URL into `~/.hummem/settings.json` so subsequent hook fires can authenticate.
 3. The server-beta daemon starts on a UID-derived port: `37877 + (uid % 100)`. (This was a Phase-12 review fix — previously it hardcoded `37877` and two profiles on the same machine collided.)
 4. Hooks now `POST /v1/events` to that local port with the api key. From the user's perspective, their context still appears in their next session, search still returns relevant observations, the viewer still works.
 
 The single-user case is "team_id = local-hook-team, project_id = local-hook-project, you are the only `actor_id`". Everything multi-tenant degrades cleanly to single-tenant with that mapping.
 
-Multi-account on the same machine: set `CLAUDE_MEM_DATA_DIR=$HOME/.claude-mem-work` for the work profile. Every path (DB, settings, pid, port file) derives from it. The UID-derived port plus per-user data dir means two profiles cohabit without conflict.
+Multi-account on the same machine: set `CLAUDE_MEM_DATA_DIR=$HOME/.hummem-work` for the work profile. Every path (DB, settings, pid, port file) derives from it. The UID-derived port plus per-user data dir means two profiles cohabit without conflict.
 
 ---
 
@@ -410,7 +410,7 @@ POSTGRES_USER=… POSTGRES_PASSWORD=… POSTGRES_DB=… docker compose exec clau
     --name alice-laptop
 ```
 
-The output is a JSON blob with the raw key. Each developer pastes it into their `~/.claude-mem/settings.json` `CLAUDE_MEM_SERVER_BETA_API_KEY`. Done. They use Claude Code normally; their hooks now write to the team substrate.
+The output is a JSON blob with the raw key. Each developer pastes it into their `~/.hummem/settings.json` `CLAUDE_MEM_SERVER_BETA_API_KEY`. Done. They use Claude Code normally; their hooks now write to the team substrate.
 
 **Day two — operator path**. Something stuck in `processing`?
 

@@ -74,7 +74,7 @@ function removeMarketplaceDirectory(): boolean {
 }
 
 function removeCacheDirectory(): boolean {
-  const cacheDirectory = join(pluginsDirectory(), 'cache', 'thedotmack', 'claude-mem');
+  const cacheDirectory = join(pluginsDirectory(), 'cache', 'thedotmack', 'hummem');
   if (existsSync(cacheDirectory)) {
     rmSync(cacheDirectory, { recursive: true, force: true });
     return true;
@@ -92,8 +92,8 @@ function removeFromKnownMarketplaces(): void {
 
 function removeFromInstalledPlugins(): void {
   const installedPlugins = readJsonSafe<Record<string, any>>(installedPluginsPath(), {});
-  if (installedPlugins.plugins?.['claude-mem@thedotmack']) {
-    delete installedPlugins.plugins['claude-mem@thedotmack'];
+  if (installedPlugins.plugins?.['hummem@thedotmack']) {
+    delete installedPlugins.plugins['hummem@thedotmack'];
     writeJsonFileAtomic(installedPluginsPath(), installedPlugins);
   }
 }
@@ -106,7 +106,7 @@ function stripLegacyClaudeMemAlias(): void {
     join(home, 'Documents', 'PowerShell', 'Microsoft.PowerShell_profile.ps1'),
   ];
 
-  const aliasLineRegex = /^\s*alias\s+claude-mem\s*=/;
+  const aliasLineRegex = /^\s*alias\s+hummem\s*=/;
 
   for (const filePath of candidateFiles) {
     if (!existsSync(filePath)) continue;
@@ -122,7 +122,7 @@ function stripLegacyClaudeMemAlias(): void {
     if (filtered.length === lines.length) continue; 
     try {
       writeFileSync(filePath, filtered.join('\n'));
-      console.error(`Removed legacy claude-mem alias from ${filePath}`);
+      console.error(`Removed legacy hummem alias from ${filePath}`);
     } catch (error: unknown) {
       console.warn(`[uninstall] Could not rewrite ${filePath}:`, error instanceof Error ? error.message : String(error));
     }
@@ -133,8 +133,8 @@ export function removeFromClaudeSettings(): void {
   const settings = readJsonSafe<Record<string, any>>(claudeSettingsPath(), {});
   let dirty = false;
 
-  if (settings.enabledPlugins?.['claude-mem@thedotmack'] !== undefined) {
-    delete settings.enabledPlugins['claude-mem@thedotmack'];
+  if (settings.enabledPlugins?.['hummem@thedotmack'] !== undefined) {
+    delete settings.enabledPlugins['hummem@thedotmack'];
     dirty = true;
   }
 
@@ -182,7 +182,7 @@ function removeStrayClaudeMemPaths(): number {
       console.warn(`[uninstall] Could not read ${npxRoot}:`, error instanceof Error ? error.message : String(error));
     }
     for (const hashDir of hashDirs) {
-      const candidate = join(npxRoot, hashDir, 'node_modules', 'claude-mem');
+      const candidate = join(npxRoot, hashDir, 'node_modules', 'hummem');
       if (!existsSync(candidate)) continue;
       try {
         rmSync(candidate, { recursive: true, force: true });
@@ -211,7 +211,7 @@ function removeStrayClaudeMemPaths(): number {
         continue;
       }
       for (const entry of logEntries) {
-        if (!entry.startsWith('mcp-logs-plugin-claude-mem-')) continue;
+        if (!entry.startsWith('mcp-logs-plugin-hummem-')) continue;
         const logPath = join(projectPath, entry);
         try {
           rmSync(logPath, { recursive: true, force: true });
@@ -223,7 +223,7 @@ function removeStrayClaudeMemPaths(): number {
     }
   }
 
-  const pluginDataDir = join(home, '.claude', 'plugins', 'data', 'claude-mem-thedotmack');
+  const pluginDataDir = join(home, '.claude', 'plugins', 'data', 'hummem-thedotmack');
   if (existsSync(pluginDataDir)) {
     try {
       rmSync(pluginDataDir, { recursive: true, force: true });
@@ -237,10 +237,10 @@ function removeStrayClaudeMemPaths(): number {
 }
 
 export async function runUninstallCommand(): Promise<void> {
-  p.intro(styleText(['bgRed', 'white'], ' claude-mem uninstall '));
+  p.intro(styleText(['bgRed', 'white'], ' hummem uninstall '));
 
   if (!isPluginInstalled()) {
-    p.log.warn('claude-mem does not appear to be installed.');
+    p.log.warn('hummem does not appear to be installed.');
 
     if (process.stdin.isTTY) {
       const shouldCleanup = await p.confirm({
@@ -258,7 +258,7 @@ export async function runUninstallCommand(): Promise<void> {
     }
   } else if (process.stdin.isTTY) {
     const shouldContinue = await p.confirm({
-      message: 'Are you sure you want to uninstall claude-mem?',
+      message: 'Are you sure you want to uninstall hummem?',
       initialValue: false,
     });
 
@@ -294,7 +294,7 @@ export async function runUninstallCommand(): Promise<void> {
       p.log.info('Server runtime detected (externally managed stack — leaving Docker/pg/redis untouched).');
     }
     clearServerRuntimeSettings(SERVER_RUNTIME_SETTINGS_KEYS);
-    p.log.info('Server runtime settings cleared from ~/.claude-mem/settings.json.');
+    p.log.info('Server runtime settings cleared from ~/.hummem/settings.json.');
   }
 
   await p.tasks([
@@ -338,14 +338,14 @@ export async function runUninstallCommand(): Promise<void> {
       },
     },
     {
-      title: 'Removing legacy claude-mem shell alias',
+      title: 'Removing legacy hummem shell alias',
       task: async () => {
         stripLegacyClaudeMemAlias();
         return `Legacy alias check complete ${styleText('green', 'OK')}`;
       },
     },
     {
-      title: 'Removing stray claude-mem caches and logs',
+      title: 'Removing stray hummem caches and logs',
       task: async () => {
         const removed = removeStrayClaudeMemPaths();
         return removed > 0
@@ -391,8 +391,8 @@ export async function runUninstallCommand(): Promise<void> {
 
   p.note(
     [
-      `Your data directory at ${styleText('cyan', '~/.claude-mem')} was preserved.`,
-      'To remove it manually: rm -rf ~/.claude-mem',
+      `Your data directory at ${styleText('cyan', '~/.hummem')} was preserved.`,
+      'To remove it manually: rm -rf ~/.hummem',
     ].join('\n'),
     'Note',
   );
@@ -401,5 +401,5 @@ export async function runUninstallCommand(): Promise<void> {
   // install ID still live in ~/.claude-mem, which uninstall preserves.
   await captureCliEvent('uninstall_completed', {}, { person: true });
 
-  p.outro(styleText('green', 'claude-mem has been uninstalled.'));
+  p.outro(styleText('green', 'hummem has been uninstalled.'));
 }

@@ -153,20 +153,20 @@ check_git() {
   exit 1
 }
 
-check_port_37777() {
+check_port_37877() {
   local port_in_use=""
 
   if command -v lsof &>/dev/null; then
-    if lsof -i :37777 -sTCP:LISTEN &>/dev/null; then
+    if lsof -i :37877 -sTCP:LISTEN &>/dev/null; then
       port_in_use="true"
     fi
   elif command -v ss &>/dev/null; then
-    if ss -tlnp 2>/dev/null | grep -q ':37777 '; then
+    if ss -tlnp 2>/dev/null | grep -q ':37877 '; then
       port_in_use="true"
     fi
   elif command -v curl &>/dev/null; then
     local response
-    response="$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:37777/api/health" 2>/dev/null)" || true
+    response="$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:37877/api/health" 2>/dev/null)" || true
     if [[ "$response" == "200" ]]; then
       port_in_use="true"
     fi
@@ -779,7 +779,7 @@ configure_memory_slot() {
             'claude-mem': {
               enabled: true,
               config: {
-                workerPort: 37777,
+                workerPort: 37877,
                 syncMemoryFile: true
               }
             }
@@ -812,7 +812,7 @@ configure_memory_slot() {
       config.plugins.entries['claude-mem'] = {
         enabled: true,
         config: {
-          workerPort: 37777,
+          workerPort: 37877,
           syncMemoryFile: true
         }
       };
@@ -868,7 +868,7 @@ setup_ai_provider() {
         if [[ -n "$AI_PROVIDER_API_KEY" ]]; then
           success "Selected via --provider: Gemini (API key set via --api-key)"
         else
-          warn "Selected via --provider: Gemini (no API key — add later in ~/.claude-mem/settings.json)"
+          warn "Selected via --provider: Gemini (no API key — add later in ~/.hummem/settings.json)"
         fi
         ;;
       openrouter)
@@ -877,7 +877,7 @@ setup_ai_provider() {
         if [[ -n "$AI_PROVIDER_API_KEY" ]]; then
           success "Selected via --provider: OpenRouter (API key set via --api-key)"
         else
-          warn "Selected via --provider: OpenRouter (no API key — add later in ~/.claude-mem/settings.json)"
+          warn "Selected via --provider: OpenRouter (no API key — add later in ~/.hummem/settings.json)"
         fi
         ;;
       *)
@@ -926,7 +926,7 @@ setup_ai_provider() {
         read_tty -rs AI_PROVIDER_API_KEY
         echo ""
         if [[ -z "$AI_PROVIDER_API_KEY" ]]; then
-          warn "No API key provided — you can add it later in ~/.claude-mem/settings.json"
+          warn "No API key provided — you can add it later in ~/.hummem/settings.json"
         else
           success "Gemini API key set ($(mask_api_key "$AI_PROVIDER_API_KEY"))"
         fi
@@ -939,7 +939,7 @@ setup_ai_provider() {
         read_tty -rs AI_PROVIDER_API_KEY
         echo ""
         if [[ -z "$AI_PROVIDER_API_KEY" ]]; then
-          warn "No API key provided — you can add it later in ~/.claude-mem/settings.json"
+          warn "No API key provided — you can add it later in ~/.hummem/settings.json"
         else
           success "OpenRouter API key set ($(mask_api_key "$AI_PROVIDER_API_KEY"))"
         fi
@@ -953,7 +953,7 @@ setup_ai_provider() {
 }
 
 write_settings() {
-  local settings_dir="${HOME}/.claude-mem"
+  local settings_dir="${HOME}/.hummem"
   local settings_file="${settings_dir}/settings.json"
 
   mkdir -p "$settings_dir"
@@ -973,7 +973,7 @@ write_settings() {
     const defaults = {
       CLAUDE_MEM_MODEL: 'claude-sonnet-5',
       CLAUDE_MEM_CONTEXT_OBSERVATIONS: '50',
-      CLAUDE_MEM_WORKER_PORT: '37777',
+      CLAUDE_MEM_WORKER_PORT: '37877',
       CLAUDE_MEM_WORKER_HOST: '127.0.0.1',
       CLAUDE_MEM_SKIP_TOOLS: 'ListMcpResourcesTool,SlashCommand,Skill,TodoWrite,AskUserQuestion',
       CLAUDE_MEM_PROVIDER: 'claude',
@@ -985,7 +985,7 @@ write_settings() {
       CLAUDE_MEM_OPENROUTER_MODEL: 'xiaomi/mimo-v2-flash:free',
       CLAUDE_MEM_OPENROUTER_SITE_URL: '',
       CLAUDE_MEM_OPENROUTER_APP_NAME: 'claude-mem',
-      CLAUDE_MEM_DATA_DIR: path.join(homedir, '.claude-mem'),
+      CLAUDE_MEM_DATA_DIR: path.join(homedir, '.hummem'),
       CLAUDE_MEM_LOG_LEVEL: 'INFO',
       CLAUDE_MEM_PYTHON_VERSION: '3.13',
       CLAUDE_CODE_PATH: '',
@@ -1105,7 +1105,7 @@ start_worker() {
   fi
 
   local worker_script="${CLAUDE_MEM_INSTALL_DIR}/plugin/scripts/worker-service.cjs"
-  local log_dir="${HOME}/.claude-mem/logs"
+  local log_dir="${HOME}/.hummem/logs"
   local log_date
   log_date="$(date +%Y-%m-%d)"
   local log_file="${log_dir}/worker-${log_date}.log"
@@ -1119,16 +1119,16 @@ start_worker() {
     fi
   fi
 
-  CLAUDE_MEM_WORKER_PORT=37777 nohup "$BUN_PATH" "$worker_script" \
+  CLAUDE_MEM_WORKER_PORT=37877 nohup "$BUN_PATH" "$worker_script" \
     >> "$log_file" 2>&1 &
   WORKER_PID=$!
 
-  local pid_file="${HOME}/.claude-mem/worker.pid"
-  mkdir -p "${HOME}/.claude-mem"
+  local pid_file="${HOME}/.hummem/worker.pid"
+  mkdir -p "${HOME}/.hummem"
   INSTALLER_PID_FILE="$pid_file" INSTALLER_WORKER_PID="$WORKER_PID" node -e "
     const info = {
       pid: parseInt(process.env.INSTALLER_WORKER_PID, 10),
-      port: 37777,
+      port: 37877,
       startedAt: new Date().toISOString(),
       version: 'installer'
     };
@@ -1142,8 +1142,8 @@ start_worker() {
 verify_health() {
   local max_attempts=30
   local attempt=1
-  local health_url="http://127.0.0.1:37777/api/health"
-  local readiness_url="http://127.0.0.1:37777/api/readiness"
+  local health_url="http://127.0.0.1:37877/api/health"
+  local readiness_url="http://127.0.0.1:37877/api/readiness"
   local health_alive=false
 
   info "Verifying worker health..."
@@ -1172,8 +1172,8 @@ verify_health() {
   if [[ "$health_alive" != "true" ]]; then
     warn "Worker health check timed out after ${max_attempts} attempts"
     warn "The worker may still be starting up. Check status with:"
-    warn "  curl http://127.0.0.1:37777/api/health"
-    warn "  Or check logs: ~/.claude-mem/logs/"
+    warn "  curl http://127.0.0.1:37877/api/health"
+    warn "  Or check logs: ~/.hummem/logs/"
     return 1
   fi
 
@@ -1194,7 +1194,7 @@ verify_health() {
 
   warn "Worker is running but initialization is still in progress"
   warn "This is normal on first run — the worker will finish initializing in the background."
-  warn "Check readiness with: curl http://127.0.0.1:37777/api/readiness"
+  warn "Check readiness with: curl http://127.0.0.1:37877/api/readiness"
   return 0
 }
 
@@ -1453,16 +1453,16 @@ print_completion_summary() {
     echo -e "  ${COLOR_GREEN}✓${COLOR_RESET}  AI provider: ${COLOR_BOLD}${provider_display}${COLOR_RESET}"
   fi
 
-  echo -e "  ${COLOR_GREEN}✓${COLOR_RESET}  Settings written to ~/.claude-mem/settings.json"
+  echo -e "  ${COLOR_GREEN}✓${COLOR_RESET}  Settings written to ~/.hummem/settings.json"
 
   if [[ -n "$WORKER_PID" ]] && kill -0 "$WORKER_PID" 2>/dev/null; then
-    echo -e "  ${COLOR_GREEN}✓${COLOR_RESET}  Worker running on port ${COLOR_BOLD}37777${COLOR_RESET} (PID: ${WORKER_PID})"
+    echo -e "  ${COLOR_GREEN}✓${COLOR_RESET}  Worker running on port ${COLOR_BOLD}37877${COLOR_RESET} (PID: ${WORKER_PID})"
   elif [[ -n "$WORKER_UPTIME" && "$WORKER_UPTIME" =~ ^[0-9]+$ ]] && (( WORKER_UPTIME > 0 )); then
     local uptime_formatted
     uptime_formatted="$(format_uptime_ms "$WORKER_UPTIME")"
-    echo -e "  ${COLOR_GREEN}✓${COLOR_RESET}  Worker running on port ${COLOR_BOLD}37777${COLOR_RESET} (PID: ${WORKER_REPORTED_PID}, uptime: ${uptime_formatted})"
+    echo -e "  ${COLOR_GREEN}✓${COLOR_RESET}  Worker running on port ${COLOR_BOLD}37877${COLOR_RESET} (PID: ${WORKER_REPORTED_PID}, uptime: ${uptime_formatted})"
   else
-    echo -e "  ${COLOR_YELLOW}⚠${COLOR_RESET}  Worker may not be running — check logs at ~/.claude-mem/logs/"
+    echo -e "  ${COLOR_YELLOW}⚠${COLOR_RESET}  Worker may not be running — check logs at ~/.hummem/logs/"
   fi
 
   if [[ "$WORKER_INITIALIZED" != "true" ]] && { [[ -n "$WORKER_REPORTED_PID" ]] || { [[ -n "$WORKER_PID" ]] && kill -0 "$WORKER_PID" 2>/dev/null; }; }; then
@@ -1482,7 +1482,7 @@ print_completion_summary() {
   echo ""
   echo -e "  ${COLOR_CYAN}1.${COLOR_RESET} Restart your OpenClaw gateway to load the plugin"
   echo -e "  ${COLOR_CYAN}2.${COLOR_RESET} Verify with ${COLOR_BOLD}/claude-mem-status${COLOR_RESET} in any OpenClaw chat"
-  echo -e "  ${COLOR_CYAN}3.${COLOR_RESET} Check the viewer UI at ${COLOR_BOLD}http://localhost:37777${COLOR_RESET}"
+  echo -e "  ${COLOR_CYAN}3.${COLOR_RESET} Check the viewer UI at ${COLOR_BOLD}http://localhost:37877${COLOR_RESET}"
   if [[ "$FEED_CONFIGURED" == "true" ]]; then
     echo -e "  ${COLOR_CYAN}4.${COLOR_RESET} Run ${COLOR_BOLD}/claude-mem-feed${COLOR_RESET} to check feed status"
   fi
@@ -1541,8 +1541,8 @@ main() {
   echo ""
   info "${COLOR_BOLD}[7/8]${COLOR_RESET} Starting worker service..."
 
-  if check_port_37777; then
-    warn "Port 37777 is already in use (worker may already be running)"
+  if check_port_37877; then
+    warn "Port 37877 is already in use (worker may already be running)"
     info "Checking if the existing service is healthy..."
     if verify_health; then
       local expected_version=""
@@ -1576,15 +1576,15 @@ main() {
 
       if [[ "$needs_restart" == "true" ]]; then
         info "Stopping existing worker..."
-        curl -s -X POST "http://127.0.0.1:37777/api/admin/shutdown" >/dev/null 2>&1 || true
+        curl -s -X POST "http://127.0.0.1:37877/api/admin/shutdown" >/dev/null 2>&1 || true
         sleep 2
 
-        if check_port_37777; then
+        if check_port_37877; then
           if [[ -n "$WORKER_REPORTED_PID" ]]; then
             kill "$WORKER_REPORTED_PID" 2>/dev/null || true
             sleep 1
           fi
-          local pid_file="${HOME}/.claude-mem/worker.pid"
+          local pid_file="${HOME}/.hummem/worker.pid"
           if [[ -f "$pid_file" ]]; then
             local file_pid
             file_pid="$(INSTALLER_PID_FILE="$pid_file" node -e "
@@ -1627,9 +1627,9 @@ main() {
         fi
       fi
     else
-      warn "Port 37777 is occupied but not responding to health checks"
+      warn "Port 37877 is occupied but not responding to health checks"
       warn "Another process may be using this port. Stop it and re-run the installer,"
-      warn "or change CLAUDE_MEM_WORKER_PORT in ~/.claude-mem/settings.json"
+      warn "or change CLAUDE_MEM_WORKER_PORT in ~/.hummem/settings.json"
     fi
   else
     if start_worker; then

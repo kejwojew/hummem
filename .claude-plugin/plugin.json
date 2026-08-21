@@ -1,7 +1,7 @@
 {
-  "name": "claude-mem",
+  "name": "hummem",
   "version": "13.15.2",
-  "description": "Memory compression system for Claude Code - persist context across sessions",
+  "description": "Memory compression system for AI coding assistants - persist context across sessions (hummem, a claude-mem fork)",
   "author": {
     "name": "Alex Newman"
   },

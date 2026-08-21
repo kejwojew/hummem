@@ -246,7 +246,7 @@ export function compareVersionsDescending(a: string, b: string): number {
 }
 
 export function cacheWorkerScriptCandidates(
-  cacheRoot: string = path.join(path.dirname(path.dirname(MARKETPLACE_ROOT)), 'cache', 'thedotmack', 'claude-mem')
+  cacheRoot: string = path.join(path.dirname(path.dirname(MARKETPLACE_ROOT)), 'cache', 'thedotmack', 'hummem')
 ): WorkerScriptCandidate[] {
   try {
     return readdirSync(cacheRoot)
@@ -503,7 +503,7 @@ export async function ensureWorkerRunning(): Promise<boolean> {
     // resolver, is then the only spawner.
     const stalePidInfo = readOwnedWorkerPidInfo();
     if (stalePidInfo === null || stalePidInfo.port !== getWorkerPort()) {
-      logger.error('SYSTEM', 'Stale worker is serving the port but the PID file does not identify it; kill the claude-mem worker process manually', {
+      logger.error('SYSTEM', 'Stale worker is serving the port but the PID file does not identify it; kill the hummem worker process manually', {
         port: getWorkerPort(),
         pidFilePid: stalePidInfo?.pid ?? null,
         pidFilePort: stalePidInfo?.port ?? null,
@@ -748,7 +748,7 @@ export async function recordWorkerUnreachable(): Promise<number> {
     // via the bypass channel + exits 2. Previously this raw process.stderr.write
     // was swallowed by hookCommand's blanket no-op, so the user/model never saw it.
     emitBlockingError(
-      `claude-mem worker unreachable for ${next.consecutiveFailures} consecutive hooks.`
+      `hummem worker unreachable for ${next.consecutiveFailures} consecutive hooks.`
     );
   }
   return next.consecutiveFailures;

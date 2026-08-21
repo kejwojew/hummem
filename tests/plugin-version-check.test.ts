@@ -64,7 +64,7 @@ describe('plugin/scripts/version-check.js install marker compatibility', () => {
 
     expect(result.status).toBe(0);
     expect(result.stderr).toContain(
-      'claude-mem: upgraded to v12.4.4 - run: npx claude-mem@latest install',
+      'hummem: upgraded to v12.4.4 - run: npx hummem@latest install',
     );
   });
 });

@@ -44,7 +44,7 @@ const cachedOnboardingExplainer: string | null = (() => {
 // practice and long enough to absorb hook bursts.
 const SETTINGS_CACHE_TTL_MS = 5000;
 
-const WELCOME_HINT_TEMPLATE = `# claude-mem status
+const WELCOME_HINT_TEMPLATE = `# hummem status
 
 This project has no memory yet. The current session will seed it; subsequent sessions will receive auto-injected context for relevant past work.
 
@@ -404,7 +404,7 @@ export class SearchRoutes extends BaseRouteHandler {
     }
 
     // Chroma is single-writer per data dir, so a secondary worker instance
-    // (e.g. the Kimi-dedicated worker on 37791) runs with Chroma disabled —
+    // (e.g. the Kimi-dedicated worker on 37892) runs with Chroma disabled —
     // leaving it with FTS-only search that cannot answer multi-word or
     // cross-language queries (observed live 2026-08-01: Russian prompts got
     // count:0 while the main worker answered them via e5). Both instances
@@ -693,7 +693,7 @@ export class SearchRoutes extends BaseRouteHandler {
   private async forwardSemanticToMainWorker(body: unknown): Promise<unknown | null> {
     try {
       // The main worker's port comes from settings.json — WITHOUT env
-      // overrides: this daemon itself carries CLAUDE_MEM_WORKER_PORT=37791 in
+      // overrides: this daemon itself carries CLAUDE_MEM_WORKER_PORT=37892 in
       // env, and applying overrides would point the forward back at itself
       // (recursive self-forward until timeout — observed live 2026-08-01).
       const settings = SettingsDefaultsManager.loadFromFile(USER_SETTINGS_PATH, false);
