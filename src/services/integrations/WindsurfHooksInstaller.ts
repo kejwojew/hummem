@@ -87,12 +87,12 @@ export function writeWindsurfContextFile(workspacePath: string, context: string)
 
   let content = `# Memory Context from Past Sessions
 
-The following context is from claude-mem, a persistent memory system that tracks your coding sessions.
+The following context is from hummem, a persistent memory system that tracks your coding sessions.
 
 ${context}
 
 ---
-*Auto-updated by claude-mem after each session. Use MCP search tools for detailed queries.*
+*Auto-updated by hummem after each session. Use MCP search tools for detailed queries.*
 `;
 
   if (content.length > WINDSURF_CONTEXT_CHAR_LIMIT) {
@@ -163,7 +163,7 @@ function mergeAndWriteHooksJson(
 }
 
 export async function installWindsurfHooks(): Promise<number> {
-  console.log('\nInstalling Claude-Mem Windsurf hooks (user level)...\n');
+  console.log('\nInstalling hummem Windsurf hooks (user level)...\n');
 
   const workerServicePath = findWorkerServicePath();
   if (!workerServicePath) {
@@ -221,7 +221,7 @@ Events registered:
   - post_cascade_response (full AI response)
 
 Next steps:
-  1. Start claude-mem worker: claude-mem start
+  1. Start hummem worker: hummem start
   2. Restart Windsurf to load the hooks
   3. Context is injected via .windsurf/rules/claude-mem-context.md (workspace-level)
 `);
@@ -252,7 +252,7 @@ async function setupWindsurfProjectContext(workspaceRoot: string): Promise<void>
 
 *No context yet. Complete your first session and context will appear here.*
 
-Use claude-mem's MCP search tools for manual memory queries.
+Use hummem's MCP search tools for manual memory queries.
 `;
     writeFileSync(rulesFile, placeholderContent);
     console.log(`  Created placeholder context file (will populate after first session)`);
@@ -286,7 +286,7 @@ async function fetchWindsurfContextFromWorker(
 }
 
 export function uninstallWindsurfHooks(): number {
-  console.log('\nUninstalling Claude-Mem Windsurf hooks...\n');
+  console.log('\nUninstalling hummem Windsurf hooks...\n');
 
   if (existsSync(WINDSURF_HOOKS_JSON_PATH)) {
     try {
@@ -336,7 +336,7 @@ function removeClaudeMemHookEntries(): void {
     console.log(`  Removed hooks.json (no hooks remaining)`);
   } else {
     writeFileSync(WINDSURF_HOOKS_JSON_PATH, JSON.stringify(config, null, 2));
-    console.log(`  Removed claude-mem entries from hooks.json (other hooks preserved)`);
+    console.log(`  Removed hummem entries from hooks.json (other hooks preserved)`);
   }
 }
 
@@ -355,7 +355,7 @@ function removeWindsurfContextAndUnregister(workspaceRoot: string): void {
 }
 
 export function checkWindsurfHooksStatus(): number {
-  console.log('\nClaude-Mem Windsurf Hooks Status\n');
+  console.log('\nhummem Windsurf Hooks Status\n');
 
   if (existsSync(WINDSURF_HOOKS_JSON_PATH)) {
     console.log(`User-level: Installed`);
@@ -390,7 +390,7 @@ export function checkWindsurfHooksStatus(): number {
     }
   } else {
     console.log(`User-level: Not installed`);
-    console.log(`\nNo hooks installed. Run: claude-mem windsurf install\n`);
+    console.log(`\nNo hooks installed. Run: hummem windsurf install\n`);
   }
 
   console.log('');

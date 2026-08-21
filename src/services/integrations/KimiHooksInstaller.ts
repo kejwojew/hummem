@@ -39,8 +39,8 @@ export function kimiMcpJsonPath(): string {
   return path.join(kimiHomeDir(), 'mcp.json');
 }
 
-const MANAGED_BLOCK_START = '# >>> claude-mem kimi hooks (managed — do not edit)';
-const MANAGED_BLOCK_END = '# <<< claude-mem kimi hooks';
+const MANAGED_BLOCK_START = '# >>> hummem kimi hooks (managed — do not edit)';
+const MANAGED_BLOCK_END = '# <<< hummem kimi hooks';
 
 // Hook timeout in seconds (Kimi allows 1-600, default 30). 60 matches the
 // Claude Code hook default and covers a cold worker start on SessionStart —
@@ -53,7 +53,7 @@ interface KimiHookSpec {
   internalEvent: string;
 }
 
-// Kimi event → internal claude-mem event. SessionEnd is deliberately absent:
+// Kimi event → internal hummem event. SessionEnd is deliberately absent:
 // there is no 'session-complete' handler (the worker self-completes).
 const KIMI_HOOK_SPECS: KimiHookSpec[] = [
   { event: 'SessionStart', matcher: 'startup|resume', internalEvent: 'context' },
@@ -66,25 +66,27 @@ const KIMI_HOOK_SPECS: KimiHookSpec[] = [
 /**
  * Dedicated worker port for the Kimi integration. Kimi hooks (and the MCP
  * entry) bake CLAUDE_MEM_WORKER_PORT so the Kimi-facing worker runs as a
- * separate instance from the default one (37777, typically the marketplace
- * build serving Claude Code): no version-skew restarts, no PID-file fights —
- * while both share the same ~/.claude-mem database, so memory stays unified
- * across clients. NOTE: 37790 is avoided — a stale sandbox worker from June
- * sits on it with its own DB (discovered live 2026-07-28). 37791 it is.
+ * separate instance from the default one (37800 + uid%100, e.g. 37877 for
+ * uid 501): no version-skew restarts, no PID-file fights. hummem lives in
+ * the 378xx band so it can run alongside a legacy claude-mem install
+ * (default worker 37777, Kimi worker 37791) without colliding with either.
+ * This instance also gets its own data dir (~/.hummem via HUMMEM_DATA_DIR),
+ * so memory is fully separate from the legacy install.
  */
-export const KIMI_WORKER_PORT = '37791';
+export const KIMI_WORKER_PORT = '37892';
 
 /**
- * Env baked into every Kimi hook command. CLAUDE_MEM_CHROMA_ENABLED=false:
- * the Chroma data dir is single-writer, and the default worker (37777) already
- * owns it and backfills ALL projects from the shared DB — including
- * Kimi-written observations. Letting the Kimi instance fight for a second
- * writer just spams CHROMA_MCP errors (observed live 2026-07-29); disabling
- * Chroma on this instance keeps it FTS-only while vectorization stays
- * centralized on the default worker.
+ * Env baked into every Kimi hook command. HUMMEM_DATA_DIR pins this instance
+ * to ~/.hummem so it never touches a legacy ~/.claude-mem install.
+ * CLAUDE_MEM_CHROMA_ENABLED=false: the Chroma data dir is single-writer, and
+ * until data dirs fully separate in production the default worker already
+ * owns it — letting the Kimi instance fight for a second writer just spams
+ * CHROMA_MCP errors (observed live 2026-07-29 on the claude-mem install);
+ * disabling Chroma on this instance keeps it FTS-only.
  */
 const KIMI_INSTANCE_ENV: Record<string, string> = {
   CLAUDE_MEM_WORKER_PORT: KIMI_WORKER_PORT,
+  HUMMEM_DATA_DIR: '~/.hummem',
   CLAUDE_MEM_CHROMA_ENABLED: 'false',
 };
 
@@ -147,7 +149,7 @@ function stripOrphanedKimiHooks(content: string): string {
     // Marker comments from previous installs are dropped too — Kimi's TOML
     // serializer strips comments anyway, and leftover markers would duplicate
     // on re-install.
-    if (trimmed.startsWith('#') && trimmed.includes('claude-mem kimi hooks')) {
+    if (trimmed.startsWith('#') && trimmed.includes('hummem kimi hooks')) {
       i++;
       continue;
     }
@@ -171,7 +173,7 @@ function stripOrphanedKimiHooks(content: string): string {
 }
 
 /**
- * Idempotent merge: strips any pre-existing claude-mem kimi hook entries
+ * Idempotent merge: strips any pre-existing hummem kimi hook entries
  * (marked block AND orphans whose markers a serializer ate), then appends the
  * fresh managed block. User-owned `[[hooks]]` entries and every other config
  * key stay untouched.
@@ -182,7 +184,7 @@ export function mergeKimiHooksToml(existingContent: string, managedBlock: string
   return `${trimmed}${trimmed ? '\n\n' : ''}${managedBlock}\n`;
 }
 
-/** Removes every claude-mem kimi hook entry (marked block and orphans alike). */
+/** Removes every hummem kimi hook entry (marked block and orphans alike). */
 export function removeKimiHooksToml(existingContent: string): string {
   return stripOrphanedKimiHooks(existingContent);
 }
@@ -219,17 +221,17 @@ function removeKimiMcpEntry(): boolean {
     return false;
   }
 
-  if (!config.mcpServers || !('claude-mem' in config.mcpServers)) {
+  if (!config.mcpServers || !('hummem' in config.mcpServers)) {
     return false;
   }
 
-  delete config.mcpServers['claude-mem'];
+  delete config.mcpServers['hummem'];
   writeFileSync(mcpConfigPath, JSON.stringify(config, null, 2) + '\n');
   return true;
 }
 
 export async function installKimiHooks(): Promise<number> {
-  console.log('\nInstalling Claude-Mem Kimi Code hooks + MCP...\n');
+  console.log('\nInstalling hummem Kimi Code hooks + MCP...\n');
 
   const workerServicePath = findWorkerServicePath();
   if (!workerServicePath) {
@@ -274,15 +276,15 @@ MCP config:         ${kimiMcpJsonPath()}
 Using unified CLI:  bun worker-service.cjs hook kimi <event>
 
 Next steps:
-  1. Start claude-mem worker: claude-mem start
+  1. Start hummem worker: hummem start
   2. Restart Kimi Code to load the hooks
   3. Memory will be captured automatically during sessions
 
 Observer provider:
   To run the memory observer on Kimi's Anthropic-compatible endpoint
   instead of Anthropic, set ANTHROPIC_BASE_URL=https://api.kimi.com/coding/
-  and ANTHROPIC_API_KEY=<kimi key> in ~/.claude-mem/.env and
-  CLAUDE_MEM_MODEL=kimi-for-coding in ~/.claude-mem/settings.json
+  and ANTHROPIC_API_KEY=<kimi key> in ~/.hummem/.env and
+  CLAUDE_MEM_MODEL=kimi-for-coding in ~/.hummem/settings.json
   (see src/shared/kimi-observer.ts).
 `);
 
@@ -295,7 +297,7 @@ Observer provider:
 }
 
 export function uninstallKimiHooks(): number {
-  console.log('\nUninstalling Claude-Mem Kimi Code hooks + MCP...\n');
+  console.log('\nUninstalling hummem Kimi Code hooks + MCP...\n');
 
   try {
     const configPath = kimiConfigTomlPath();
@@ -303,16 +305,16 @@ export function uninstallKimiHooks(): number {
       const existingContent = readFileSync(configPath, 'utf-8');
       if (hasManagedHooksBlock(existingContent)) {
         writeFileSync(configPath, removeKimiHooksToml(existingContent));
-        console.log(`  Removed claude-mem hooks from ${configPath} (other config preserved)`);
+        console.log(`  Removed hummem hooks from ${configPath} (other config preserved)`);
       } else {
-        console.log('  No claude-mem hooks found in config.toml — nothing to remove.');
+        console.log('  No hummem hooks found in config.toml — nothing to remove.');
       }
     } else {
       console.log('  No Kimi Code config.toml found — nothing to uninstall.');
     }
 
     if (removeKimiMcpEntry()) {
-      console.log(`  Removed claude-mem entry from ${kimiMcpJsonPath()}`);
+      console.log(`  Removed hummem entry from ${kimiMcpJsonPath()}`);
     }
 
     console.log('\nUninstallation complete!');
@@ -326,20 +328,20 @@ export function uninstallKimiHooks(): number {
 }
 
 export function checkKimiHooksStatus(): number {
-  console.log('\nClaude-Mem Kimi Code Status\n');
+  console.log('\nhummem Kimi Code Status\n');
 
   const configPath = kimiConfigTomlPath();
   if (!existsSync(configPath)) {
     console.log('Kimi Code config: Not found');
     console.log(`  Expected at: ${configPath}\n`);
-    console.log('No hooks installed. Run: npx claude-mem install --ide kimi\n');
+    console.log('No hooks installed. Run: npx hummem install --ide kimi\n');
     return 0;
   }
 
   const content = readFileSync(configPath, 'utf-8');
   if (!hasManagedHooksBlock(content)) {
     console.log('Hooks: Not installed');
-    console.log('Run: npx claude-mem install --ide kimi\n');
+    console.log('Run: npx hummem install --ide kimi\n');
   } else {
     console.log(`Config: ${configPath}`);
     console.log('Mode: Unified CLI (bun worker-service.cjs hook kimi)');
@@ -355,8 +357,8 @@ export function checkKimiHooksStatus(): number {
   } else {
     try {
       const config = JSON.parse(readFileSync(mcpConfigPath, 'utf-8'));
-      const hasEntry = Boolean(config.mcpServers?.['claude-mem']);
-      console.log(`MCP config (${mcpConfigPath}): ${hasEntry ? 'claude-mem registered' : 'found, but no claude-mem entry'}`);
+      const hasEntry = Boolean(config.mcpServers?.['hummem']);
+      console.log(`MCP config (${mcpConfigPath}): ${hasEntry ? 'hummem registered' : 'found, but no hummem entry'}`);
     } catch {
       console.log(`MCP config (${mcpConfigPath}): unreadable JSON`);
     }
@@ -381,19 +383,19 @@ export async function handleKimiCommand(subcommand: string, _args: string[]): Pr
 
     default:
       console.log(`
-Claude-Mem Kimi Code Integration
+hummem Kimi Code Integration
 
-Usage: claude-mem kimi <command>
+Usage: hummem kimi <command>
 
 Commands:
   install             Install hooks into ~/.kimi-code/config.toml + MCP config
-  uninstall           Remove claude-mem hooks/MCP entries (preserves other config)
+  uninstall           Remove hummem hooks/MCP entries (preserves other config)
   status              Check installation status
 
 Examples:
-  claude-mem kimi install     # Install hooks + MCP
-  claude-mem kimi status      # Check if installed
-  claude-mem kimi uninstall   # Remove hooks + MCP
+  hummem kimi install     # Install hooks + MCP
+  hummem kimi status      # Check if installed
+  hummem kimi uninstall   # Remove hooks + MCP
       `);
       return 0;
   }

@@ -130,8 +130,8 @@ If the agent environment cannot give the user control of an interactive terminal
 Read the configured runtime before restarting. For a worker runtime, use the verified CLI restart path:
 
 ```bash
-npx claude-mem restart
-npx claude-mem status
+npx hummem restart
+npx hummem status
 ```
 
 If the CLI shim is unavailable, run the installed plugin's `scripts/worker-service.cjs restart` with Bun. Do not use a bare restart HTTP request when the verified CLI path is available.

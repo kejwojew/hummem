@@ -68,11 +68,11 @@ function shellTemplateManifest(buildShellCommand, buildCodexWindowsCommand) {
   ];
   const claudeHook = (tail, extra = {}) => buildShellCommand({
     host: 'claude-code', requireFile: 'bun-runner.js', requireFileSecondary: 'worker-service.cjs',
-    trailingCommand: ccTrailing(...tail), notFoundMessage: 'claude-mem: plugin scripts not found', ...extra,
+    trailingCommand: ccTrailing(...tail), notFoundMessage: 'hummem: plugin scripts not found', ...extra,
   });
   const codexHook = (tail) => buildShellCommand({
     host: 'codex-cli', requireFile: 'bun-runner.js', requireFileSecondary: 'worker-service.cjs',
-    trailingCommand: ccTrailing(...tail), notFoundMessage: 'claude-mem: plugin scripts not found',
+    trailingCommand: ccTrailing(...tail), notFoundMessage: 'hummem: plugin scripts not found',
     extraEnv: { CLAUDE_MEM_CODEX_HOOK: '1' },
   });
   const codexStartupHook = () => buildShellCommand({
@@ -83,7 +83,7 @@ function shellTemplateManifest(buildShellCommand, buildCodexWindowsCommand) {
       'CLAUDE_MEM_CODEX_HOOK=1', ...ccTrailing('hook', 'codex', 'context'),
       '; fi',
     ],
-    notFoundMessage: 'claude-mem: plugin scripts not found',
+    notFoundMessage: 'hummem: plugin scripts not found',
   });
   const codexHookPair = (tail, options = {}) => ({
     command: options.startupVersionCheck ? codexStartupHook() : codexHook(tail),
@@ -97,7 +97,7 @@ function shellTemplateManifest(buildShellCommand, buildCodexWindowsCommand) {
         'Setup.0.0': buildShellCommand({
           host: 'claude-code-setup', requireFile: 'version-check.js',
           trailingCommand: ['node', '"$_P/scripts/version-check.js"'],
-          notFoundMessage: 'claude-mem: version-check.js not found',
+          notFoundMessage: 'hummem: version-check.js not found',
         }),
         // `start` already emits its own single, valid status JSON via
         // buildStatusOutput ({"continue":true,"status":"ready","suppressOutput":true}).
@@ -129,11 +129,11 @@ function shellTemplateManifest(buildShellCommand, buildCodexWindowsCommand) {
         // The mcp Node launcher derives its spawn target from requireFile, so
         // no trailingCommand is needed (it is ignored for this host).
         host: 'mcp', requireFile: 'mcp-server.cjs',
-        notFoundMessage: 'claude-mem: mcp server not found',
+        notFoundMessage: 'hummem: mcp server not found',
         mcpExtraCandidates: ['$PWD/plugin', '$PWD'],
         mcpExtraCacheRoots: [
-          '$HOME/.codex/plugins/cache/claude-mem-local/claude-mem',
-          '$HOME/.codex/plugins/cache/thedotmack/claude-mem',
+          '$HOME/.codex/plugins/cache/hummem-local/hummem',
+          '$HOME/.codex/plugins/cache/thedotmack/hummem',
         ],
       }),
     },
@@ -246,7 +246,7 @@ async function verifyShellTemplateCanonical() {
 }
 
 async function buildHooks() {
-  console.log('🔨 Building claude-mem hooks and worker service...\n');
+  console.log('🔨 Building hummem hooks and worker service...\n');
 
   try {
     const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
@@ -285,10 +285,10 @@ async function buildHooks() {
 
     console.log('\n📦 Generating plugin package.json...');
     const pluginPackageJson = {
-      name: 'claude-mem-plugin',
+      name: 'hummem-plugin',
       version: version,
       private: true,
-      description: 'Runtime dependencies for claude-mem bundled hooks',
+      description: 'Runtime dependencies for hummem bundled hooks',
       type: 'module',
       dependencies: {
         'zod': '^4.4.3',
@@ -754,16 +754,16 @@ async function buildHooks() {
       }
     }
     const codexMarketplace = JSON.parse(fs.readFileSync('.agents/plugins/marketplace.json', 'utf-8'));
-    const claudeMemMarketplaceEntry = (codexMarketplace.plugins ?? []).find((plugin) => plugin.name === 'claude-mem');
+    const claudeMemMarketplaceEntry = (codexMarketplace.plugins ?? []).find((plugin) => plugin.name === 'hummem');
     if (claudeMemMarketplaceEntry?.source?.path !== './plugin') {
-      throw new Error('.agents/plugins/marketplace.json must point claude-mem source.path at ./plugin so Codex loads the bundled plugin root');
+      throw new Error('.agents/plugins/marketplace.json must point hummem source.path at ./plugin so Codex loads the bundled plugin root');
     }
     const bundledMcp = JSON.parse(fs.readFileSync('plugin/.mcp.json', 'utf-8'));
     const mcpSearchCommand = bundledMcp.mcpServers?.['mcp-search']?.args?.join(' ') ?? '';
-    if (!mcpSearchCommand.includes('.codex/plugins/cache/claude-mem-local/claude-mem')) {
+    if (!mcpSearchCommand.includes('.codex/plugins/cache/hummem-local/hummem')) {
       throw new Error('plugin/.mcp.json mcp-search launcher must include Codex cache fallback for hosts that do not inject PLUGIN_ROOT');
     }
-    if (!mcpSearchCommand.includes('plugins/cache/thedotmack/claude-mem')) {
+    if (!mcpSearchCommand.includes('plugins/cache/thedotmack/hummem')) {
       throw new Error('plugin/.mcp.json mcp-search launcher must include Claude cache fallback for hosts that do not inject PLUGIN_ROOT');
     }
     console.log('✓ All required distribution files present');

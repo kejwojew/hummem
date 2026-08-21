@@ -50,11 +50,11 @@ describe('KIMI_CODE_HOME override', () => {
 
 describe('mergeKimiHooksToml / removeKimiHooksToml (pure merge)', () => {
   const block = [
-    '# >>> claude-mem kimi hooks (managed — do not edit)',
+    '# >>> hummem kimi hooks (managed — do not edit)',
     '[[hooks]]',
     'event = "SessionStart"',
     'command = "\\"bun\\" \\"/x/worker-service.cjs\\" hook kimi context"',
-    '# <<< claude-mem kimi hooks',
+    '# <<< hummem kimi hooks',
   ].join('\n');
 
   it('appends the managed block to an empty config', () => {
@@ -90,7 +90,7 @@ describe('mergeKimiHooksToml / removeKimiHooksToml (pure merge)', () => {
     const merged = mergeKimiHooksToml(userConfig, block);
     const removed = removeKimiHooksToml(merged);
 
-    expect(removed).not.toContain('claude-mem kimi hooks');
+    expect(removed).not.toContain('hummem kimi hooks');
     expect(removed).toContain('theme = "dark"');
     expect(removed).toContain('command = "echo bye"');
     expect(countOccurrences(removed, '[[hooks]]')).toBe(1);
@@ -117,11 +117,11 @@ describe('installKimiHooks', () => {
       expect(content).toContain(`hook kimi ${internal}`);
     }
     expect(countOccurrences(content, '[[hooks]]')).toBe(5);
-    // Kimi hooks run their own worker instance (per-port PID/registry), sharing
-    // the same DB as the default worker — env is baked into every command.
-    expect(countOccurrences(content, 'CLAUDE_MEM_WORKER_PORT=37791')).toBe(5);
+    // Kimi hooks run their own worker instance (per-port PID/registry) with
+    // its own data dir — env is baked into every command.
+    expect(countOccurrences(content, 'CLAUDE_MEM_WORKER_PORT=37892')).toBe(5);
     // Kimi rejects unknown [[hooks]] fields — our entries carry only these.
-    const managedBlock = content.slice(content.indexOf('# >>> claude-mem'));
+    const managedBlock = content.slice(content.indexOf('# >>> hummem'));
     const fieldNames = managedBlock
       .split('\n')
       .filter((line) => /^[a-z_]+ =/.test(line))
@@ -129,18 +129,19 @@ describe('installKimiHooks', () => {
     expect([...new Set(fieldNames)].sort()).toEqual(['command', 'event', 'matcher', 'timeout']);
   });
 
-  it('registers the claude-mem MCP server in mcp.json', async () => {
+  it('registers the hummem MCP server in mcp.json', async () => {
     const result = await installKimiHooks();
     expect(result).toBe(0);
 
     const mcp = JSON.parse(fs.readFileSync(join(fakeHome, 'mcp.json'), 'utf-8'));
-    expect(mcp.mcpServers['claude-mem']).toBeDefined();
-    expect(mcp.mcpServers['claude-mem'].command).toBeTruthy();
-    expect(Array.isArray(mcp.mcpServers['claude-mem'].args)).toBe(true);
-    expect(mcp.mcpServers['claude-mem'].args[0]).toContain('mcp-server.cjs');
+    expect(mcp.mcpServers['hummem']).toBeDefined();
+    expect(mcp.mcpServers['hummem'].command).toBeTruthy();
+    expect(Array.isArray(mcp.mcpServers['hummem'].args)).toBe(true);
+    expect(mcp.mcpServers['hummem'].args[0]).toContain('mcp-server.cjs');
     // MCP server must reach the same dedicated worker instance as the hooks.
-    expect(mcp.mcpServers['claude-mem'].env).toEqual({
-      CLAUDE_MEM_WORKER_PORT: '37791',
+    expect(mcp.mcpServers['hummem'].env).toEqual({
+      CLAUDE_MEM_WORKER_PORT: '37892',
+      HUMMEM_DATA_DIR: '~/.hummem',
       CLAUDE_MEM_CHROMA_ENABLED: 'false',
     });
   });
@@ -151,7 +152,7 @@ describe('installKimiHooks', () => {
 
     const content = readConfigToml();
     expect(countOccurrences(content, '[[hooks]]')).toBe(5);
-    expect(countOccurrences(content, 'claude-mem kimi hooks (managed')).toBe(1);
+    expect(countOccurrences(content, 'hummem kimi hooks (managed')).toBe(1);
   });
 
   it('replaces orphaned kimi hook entries whose markers a TOML serializer ate', async () => {
@@ -163,7 +164,7 @@ describe('installKimiHooks', () => {
       `[[hooks]]\nevent = "UserPromptSubmit"\ncommand = "${env} \\"bun\\" \\"/old/path/worker-service.cjs\\" hook kimi session-init"\ntimeout = 60\n`;
     fs.writeFileSync(
       join(fakeHome, 'config.toml'),
-      `theme = "dark"\n\n${orphan('CLAUDE_MEM_WORKER_PORT=37791')}\n${orphan('CLAUDE_MEM_WORKER_PORT=37791 CLAUDE_MEM_CHROMA_ENABLED=false')}`,
+      `theme = "dark"\n\n${orphan('CLAUDE_MEM_WORKER_PORT=37892')}\n${orphan('CLAUDE_MEM_WORKER_PORT=37892 CLAUDE_MEM_CHROMA_ENABLED=false')}`,
     );
 
     expect(await installKimiHooks()).toBe(0);
@@ -199,7 +200,7 @@ describe('installKimiHooks', () => {
 
     const mcp = JSON.parse(fs.readFileSync(join(fakeHome, 'mcp.json'), 'utf-8'));
     expect(mcp.mcpServers['other-server']).toEqual({ command: 'foo', args: [] });
-    expect(mcp.mcpServers['claude-mem']).toBeDefined();
+    expect(mcp.mcpServers['hummem']).toBeDefined();
   });
 });
 
@@ -225,7 +226,7 @@ describe('uninstallKimiHooks', () => {
     expect(countOccurrences(content, '[[hooks]]')).toBe(1);
 
     const mcp = JSON.parse(fs.readFileSync(join(fakeHome, 'mcp.json'), 'utf-8'));
-    expect(mcp.mcpServers['claude-mem']).toBeUndefined();
+    expect(mcp.mcpServers['hummem']).toBeUndefined();
     expect(mcp.mcpServers['other-server']).toBeDefined();
   });
 

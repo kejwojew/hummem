@@ -9,7 +9,7 @@ interface CountRow { count: number }
 interface StatusRow { status: string; count: number }
 
 function resolveDbPath(): string {
-  const dataDir = process.env.CLAUDE_MEM_DATA_DIR || join(homedir(), '.claude-mem');
+  const dataDir = process.env.HUMMEM_DATA_DIR || process.env.CLAUDE_MEM_DATA_DIR || join(homedir(), '.hummem');
   return join(dataDir, 'claude-mem.db');
 }
 

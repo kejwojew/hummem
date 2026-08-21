@@ -25,7 +25,7 @@ describe('mode-creator skill', () => {
     expect(content).toContain('Code mode already works well for software work.');
     expect(content).toContain('interactive question tool');
     expect(content).toContain('Never pass the token as an argument.');
-    expect(content).toContain('npx claude-mem restart');
+    expect(content).toContain('npx hummem restart');
     expect(content).toContain('Mode: <mode name> (<mode id>)');
   });
 

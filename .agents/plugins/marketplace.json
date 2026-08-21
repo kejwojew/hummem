@@ -1,11 +1,11 @@
 {
-  "name": "claude-mem-local",
+  "name": "hummem-local",
   "interface": {
-    "displayName": "claude-mem (local)"
+    "displayName": "hummem (local)"
   },
   "plugins": [
     {
-      "name": "claude-mem",
+      "name": "hummem",
       "source": {
         "source": "local",
         "path": "./plugin"

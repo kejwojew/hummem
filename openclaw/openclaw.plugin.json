@@ -1,7 +1,7 @@
 {
-  "id": "claude-mem",
-  "name": "Claude-Mem (Persistent Memory)",
-  "description": "OpenClaw plugin for Claude-Mem. Records observations from embedded runner sessions and streams them to messaging channels.",
+  "id": "hummem",
+  "name": "hummem (Persistent Memory)",
+  "description": "OpenClaw plugin for hummem. Records observations from embedded runner sessions and streams them to messaging channels.",
   "kind": "memory",
   "version": "13.13.1",
   "license": "Apache-2.0",
@@ -25,13 +25,13 @@
       },
       "workerPort": {
         "type": "number",
-        "default": 37777,
-        "description": "Port for Claude-Mem worker service"
+        "default": 37877,
+        "description": "Port for hummem worker service"
       },
       "workerHost": {
         "type": "string",
         "default": "127.0.0.1",
-        "description": "Hostname for Claude-Mem worker service. Set to host.docker.internal when the gateway runs in Docker and the worker runs on the host."
+        "description": "Hostname for hummem worker service. Set to host.docker.internal when the gateway runs in Docker and the worker runs on the host."
       },
       "project": {
         "type": "string",

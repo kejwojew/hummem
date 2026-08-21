@@ -190,7 +190,7 @@ function registerPlugin(version: string): void {
   const cachePath = pluginCacheDirectory(version);
   const now = new Date().toISOString();
 
-  installedPlugins.plugins['claude-mem@thedotmack'] = [
+  installedPlugins.plugins['hummem@thedotmack'] = [
     {
       scope: 'user',
       installPath: cachePath,
@@ -207,7 +207,7 @@ function enablePluginInClaudeSettings(): void {
   const settings = readJsonSafe<Record<string, any>>(claudeSettingsPath(), {});
 
   if (!settings.enabledPlugins) settings.enabledPlugins = {};
-  settings.enabledPlugins['claude-mem@thedotmack'] = true;
+  settings.enabledPlugins['hummem@thedotmack'] = true;
 
   writeJsonFileAtomic(claudeSettingsPath(), settings);
 }
@@ -266,7 +266,7 @@ async function resolveClaudeAutoMemoryChoice(
       {
         value: 'disable',
         label: 'Disable auto-memory',
-        hint: 'Only if you explicitly want claude-mem to replace native startup memory.',
+        hint: 'Only if you explicitly want hummem to replace native startup memory.',
       },
     ],
     initialValue: 'leave-enabled',
@@ -319,7 +319,7 @@ function makeIDETask(ideId: string, summary: InstallSummary): TaskDescriptor | n
           if (mcpResult === 0) {
             return `Cursor: hooks + MCP installed ${styleText('green', 'OK')}`;
           }
-          return `Cursor: hooks installed; MCP setup failed — run \`npx claude-mem cursor mcp\` ${styleText('yellow', '!')}`;
+          return `Cursor: hooks installed; MCP setup failed — run \`npx hummem cursor mcp\` ${styleText('yellow', '!')}`;
         },
       };
     }
@@ -539,7 +539,7 @@ function applyClaudeCodePathSetupIfNeeded(): void {
   } else {
     try {
       const trailing = existing.length === 0 || existing.endsWith('\n') ? '' : '\n';
-      const block = `${trailing}\n# Added by claude-mem installer for Claude Code\n${exportLine}\n`;
+      const block = `${trailing}\n# Added by hummem installer for Claude Code\n${exportLine}\n`;
       writeFileSync(configFile, existing + block, 'utf-8');
       log.success(`Added Claude Code to PATH in ${configFile}`);
     } catch (error: unknown) {
@@ -882,7 +882,7 @@ async function promptRuntime(options: InstallOptions): Promise<RuntimeId> {
   }
 
   const selected = await p.select<RuntimeId>({
-    message: 'Which runtime should claude-mem start after install?',
+    message: 'Which runtime should hummem start after install?',
     options: [
       { value: 'worker', label: 'Worker', hint: 'stable compatibility path' },
       { value: 'server', label: 'Server (beta)', hint: 'REST V1, API keys, team-ready storage' },
@@ -938,7 +938,7 @@ async function maybeBootstrapServerApiKey(): Promise<void> {
   if (!process.env.CLAUDE_MEM_SERVER_DATABASE_URL) {
     log.warn(
       'Skipping local hook API key bootstrap: CLAUDE_MEM_SERVER_DATABASE_URL is not set. '
-        + 'Run `npx claude-mem server keys rotate` after configuring Postgres to provision a key.',
+        + 'Run `npx hummem server keys rotate` after configuring Postgres to provision a key.',
     );
     return;
   }
@@ -948,7 +948,7 @@ async function maybeBootstrapServerApiKey(): Promise<void> {
     // [ANTI-PATTERN IGNORED]: the failure is already surfaced to the user via the interactive-aware log.warn wrapper below (p.log.warn in a TTY, console.warn otherwise), including the manual remediation command.
     log.warn(
       `Failed to bootstrap server API key: ${error instanceof Error ? error.message : String(error)}. `
-        + 'Hooks will fall back to the worker until you run `npx claude-mem server keys rotate`.',
+        + 'Hooks will fall back to the worker until you run `npx hummem server keys rotate`.',
     );
   }
 }
@@ -977,7 +977,7 @@ async function promptProvider(options: InstallOptions): Promise<ProviderId> {
       CLAUDE_MEM_PROVIDER: 'claude',
       CLAUDE_MEM_CLAUDE_AUTH_METHOD: resolvedAuthMethod,
     });
-    if (wrote) log.info('Saved Claude Agent SDK configuration to ~/.claude-mem/settings.json');
+    if (wrote) log.info('Saved Claude Agent SDK configuration to ~/.hummem/settings.json');
   };
 
   const useSubscriptionAuth = () => {
@@ -987,7 +987,7 @@ async function promptProvider(options: InstallOptions): Promise<ProviderId> {
       ANTHROPIC_BASE_URL: '',
       ANTHROPIC_AUTH_TOKEN: '',
     });
-    log.info('Configured claude-mem to use your logged-in Claude SDK account.');
+    log.info('Configured hummem to use your logged-in Claude SDK account.');
   };
 
   const configureDirectApiKey = async (): Promise<void> => {
@@ -1079,7 +1079,7 @@ async function promptProvider(options: InstallOptions): Promise<ProviderId> {
     if (tokenCancelled || tokenInput.length === 0) {
       log.info('Gateway URL saved; existing gateway token preserved.');
     } else {
-      log.info('Configured Claude Agent SDK gateway in ~/.claude-mem/.env.');
+      log.info('Configured Claude Agent SDK gateway in ~/.hummem/.env.');
     }
   };
 
@@ -1090,7 +1090,7 @@ async function promptProvider(options: InstallOptions): Promise<ProviderId> {
         return 'claude';
       }
       const wrote = mergeSettings({ CLAUDE_MEM_PROVIDER: options.provider });
-      if (wrote) log.info(`Saved provider=${options.provider} to ~/.claude-mem/settings.json`);
+      if (wrote) log.info(`Saved provider=${options.provider} to ~/.hummem/settings.json`);
       log.warn(`Provider=${options.provider} requested non-interactively. API key prompt skipped — set CLAUDE_MEM_${options.provider.toUpperCase()}_API_KEY and CLAUDE_MEM_PROVIDER in settings.json or env manually if not already set.`);
       return options.provider;
     }
@@ -1121,7 +1121,7 @@ async function promptProvider(options: InstallOptions): Promise<ProviderId> {
     }
 
     const apiModeResult = await p.select<ClaudeApiMode>({
-      message: 'How should claude-mem connect?',
+      message: 'How should hummem connect?',
       options: [
         { value: 'direct', label: 'Anthropic API key' },
         { value: 'gateway', label: 'LiteLLM or custom gateway' },
@@ -1174,7 +1174,7 @@ async function promptProvider(options: InstallOptions): Promise<ProviderId> {
   const existingKey = getSetting(keyEnvName as keyof SettingsDefaults) as string | undefined;
   if (existingKey && existingKey.trim().length > 0) {
     const wrote = mergeSettings({ CLAUDE_MEM_PROVIDER: selectedProvider });
-    if (wrote) log.info(`Saved provider=${selectedProvider} to ~/.claude-mem/settings.json`);
+    if (wrote) log.info(`Saved provider=${selectedProvider} to ~/.hummem/settings.json`);
     return selectedProvider;
   }
 
@@ -1196,7 +1196,7 @@ async function promptProvider(options: InstallOptions): Promise<ProviderId> {
     [keyEnvName]: apiKey,
   });
   if (wrote) {
-    log.info(`Saved provider=${selectedProvider} to ~/.claude-mem/settings.json`);
+    log.info(`Saved provider=${selectedProvider} to ~/.hummem/settings.json`);
   }
   return selectedProvider;
 }
@@ -1217,14 +1217,14 @@ async function promptClaudeModel(options: InstallOptions): Promise<void> {
     }
     const wrote = mergeSettings({ CLAUDE_MEM_MODEL: options.model });
     if (wrote) {
-      log.info(`Saved Claude model=${options.model} to ~/.claude-mem/settings.json`);
+      log.info(`Saved Claude model=${options.model} to ~/.hummem/settings.json`);
     }
     return;
   }
   if (options.model && allowCustomModel) {
     const wrote = mergeSettings({ CLAUDE_MEM_MODEL: options.model });
     if (wrote) {
-      log.info(`Saved gateway model=${options.model} to ~/.claude-mem/settings.json`);
+      log.info(`Saved gateway model=${options.model} to ~/.hummem/settings.json`);
     }
     return;
   }
@@ -1249,7 +1249,7 @@ async function promptClaudeModel(options: InstallOptions): Promise<void> {
     const selectedModel = String(result).trim();
     const wrote = mergeSettings({ CLAUDE_MEM_MODEL: selectedModel });
     if (wrote) {
-      log.info(`Saved gateway model=${selectedModel} to ~/.claude-mem/settings.json`);
+      log.info(`Saved gateway model=${selectedModel} to ~/.hummem/settings.json`);
     }
     return;
   }
@@ -1257,7 +1257,7 @@ async function promptClaudeModel(options: InstallOptions): Promise<void> {
   const initialValue = allowed.has(initialModel) ? initialModel : 'claude-haiku-4-5-20251001';
 
   const result = await p.select<string>({
-    message: 'Which Claude model should claude-mem use to compress observations?\nThis runs whenever you and Claude touch a file — keep it cheap and fast.',
+    message: 'Which Claude model should hummem use to compress observations?\nThis runs whenever you and Claude touch a file — keep it cheap and fast.',
     options: [
       { value: 'claude-haiku-4-5-20251001', label: 'Haiku 4.5 (recommended — fast, cheap, great for compression)' },
       { value: 'claude-sonnet-5', label: 'Sonnet 5 (balanced quality and cost)' },
@@ -1274,7 +1274,7 @@ async function promptClaudeModel(options: InstallOptions): Promise<void> {
 
   const wrote = mergeSettings({ CLAUDE_MEM_MODEL: selectedModel });
   if (wrote) {
-    log.info(`Saved Claude model=${selectedModel} to ~/.claude-mem/settings.json`);
+    log.info(`Saved Claude model=${selectedModel} to ~/.hummem/settings.json`);
   }
 }
 
@@ -1365,7 +1365,7 @@ async function promptTelemetryOptIn(): Promise<void> {
 
   p.log.message(styleText('dim', 
     'Anonymous install ID only — no prompts, file paths, code, or project names, ever.\n'
-    + 'Details: https://docs.claude-mem.ai/telemetry · Change anytime: claude-mem telemetry disable',
+    + 'Details: https://docs.claude-mem.ai/telemetry · Change anytime: hummem telemetry disable',
   ));
   const consent = await p.confirm({
     message: 'Share anonymized usage data with CMEM? It is on by default and helps us make the product better.',
@@ -1484,7 +1484,7 @@ export async function runInstallCommand(options: InstallOptions = {}): Promise<v
       if (isInteractive) {
         p.log.error(headline);
         p.log.error(err.remediation);
-        p.outro(styleText('red', 'claude-mem installation aborted.'));
+        p.outro(styleText('red', 'hummem installation aborted.'));
       } else {
         console.error(`\n  ${headline}`);
         console.error(`  ${err.remediation}`);
@@ -1506,9 +1506,9 @@ async function runInstallCommandInner(options: InstallOptions, summary: InstallS
 
   if (isInteractive) {
     await playBanner();
-    p.intro(styleText(['bgCyan', 'black'], ' claude-mem install '));
+    p.intro(styleText(['bgCyan', 'black'], ' hummem install '));
   } else {
-    console.log('claude-mem install');
+    console.log('hummem install');
   }
   const marketplaceDir = marketplaceDirectory();
   const alreadyInstalled = existsSync(join(marketplaceDir, 'plugin', '.claude-plugin', 'plugin.json'));
@@ -1526,7 +1526,7 @@ async function runInstallCommandInner(options: InstallOptions, summary: InstallS
   }
 
   const dot = styleText('dim', '·');
-  const segments = [`${styleText('bold', 'claude-mem')} ${styleText('cyan', `v${version}`)}`];
+  const segments = [`${styleText('bold', 'hummem')} ${styleText('cyan', `v${version}`)}`];
   if (existingVersion && existingVersion !== version) {
     segments.push(`installed ${styleText('yellow', `v${existingVersion}`)}`);
   } else if (existingVersion) {
@@ -1740,7 +1740,7 @@ async function runInstallCommandInner(options: InstallOptions, summary: InstallS
       title: selectedRuntime === 'server' ? 'Starting server daemon' : 'Starting worker daemon',
       task: async (message) => {
         if (selectedRuntime === 'server') {
-          return `Server runtime selected — start it with ${styleText('bold', 'npx claude-mem server start')} ${styleText('dim', '(or via Docker compose)')}`;
+          return `Server runtime selected — start it with ${styleText('bold', 'npx hummem server start')} ${styleText('dim', '(or via Docker compose)')}`;
         }
         if (autoStartSkipped) {
           return isInteractive
@@ -1761,7 +1761,7 @@ async function runInstallCommandInner(options: InstallOptions, summary: InstallS
           case 'warming':
             return `Worker starting on port ${port} — finishing in background ${styleText('yellow', '⏳')}`;
           case 'dead':
-            return `Worker did not start — try \`npx claude-mem start\` manually ${styleText('yellow', '!')}`;
+            return `Worker did not start — try \`npx hummem start\` manually ${styleText('yellow', '!')}`;
         }
       },
     },
@@ -1843,7 +1843,7 @@ async function runInstallCommandInner(options: InstallOptions, summary: InstallS
   const finalWorkerState = workerStartResult as WorkerStartResult;
   const workerAlive = finalWorkerState !== 'dead' || workerReady;
   const runtimeLabel = selectedRuntime === 'server' ? 'Server' : 'Worker';
-  const runtimeStartCommand = selectedRuntime === 'server' ? 'npx claude-mem server start' : 'npx claude-mem start';
+  const runtimeStartCommand = selectedRuntime === 'server' ? 'npx hummem server start' : 'npx hummem start';
   const workerBaseUrl = `http://${workerUrlHost}:${actualPort}`;
   const configuredWorkerBaseUrl = `http://${workerUrlHost}:${workerPort}`;
   const workerHeadline = autoStartSkipped
@@ -1853,7 +1853,7 @@ async function runInstallCommandInner(options: InstallOptions, summary: InstallS
       : `${styleText('yellow', '⏳')} ${runtimeLabel} starting at ${styleText('underline', workerBaseUrl)} — give it ~30s, then refresh`;
   const nextStepsHeadline = autoStartSkipped || workerAlive
     ? workerHeadline
-    : `${styleText('yellow', '!')} Worker not yet ready on port ${styleText('cyan', String(workerPort))} -- still starting up; check ${styleText('bold', 'claude-mem status')} later, or start manually: ${styleText('bold', 'npx claude-mem start')}`;
+    : `${styleText('yellow', '!')} Worker not yet ready on port ${styleText('cyan', String(workerPort))} -- still starting up; check ${styleText('bold', 'hummem status')} later, or start manually: ${styleText('bold', 'npx hummem start')}`;
   const firstSuccessOpener = autoStartSkipped
     ? `once the worker is running, keep ${styleText('underline', configuredWorkerBaseUrl)} open in a browser`
     : workerAlive
@@ -1869,10 +1869,10 @@ async function runInstallCommandInner(options: InstallOptions, summary: InstallS
     `  ${styleText('cyan', 'B.')} Front-load it: open Claude Code and run ${styleText('bold', '/learn-codebase')} to ingest the whole repo (~5 min, optional).`,
     ``,
     `Memory injection starts on your second session in a project.`,
-    `Everything stays in ${styleText('cyan', '~/.claude-mem')} on this machine.`,
+    `Everything stays in ${styleText('cyan', '~/.hummem')} on this machine.`,
     ``,
     `${styleText('dim', 'How it works: /how-it-works   ·   Disable first-session hint: CLAUDE_MEM_WELCOME_HINT_ENABLED=false')}`,
-    `${styleText('dim', 'Note: close all Claude Code sessions before uninstalling, or ~/.claude-mem will be recreated by active hooks.')}`,
+    `${styleText('dim', 'Note: close all Claude Code sessions before uninstalling, or ~/.hummem will be recreated by active hooks.')}`,
   ];
 
   if (isInteractive) {
@@ -1881,18 +1881,18 @@ async function runInstallCommandInner(options: InstallOptions, summary: InstallS
     // the product is installed and working, never as a gate in front of it.
     await promptTelemetryOptIn();
     if (failedIDEs.length > 0) {
-      p.outro(styleText('yellow', 'claude-mem installed with some IDE setup failures.'));
+      p.outro(styleText('yellow', 'hummem installed with some IDE setup failures.'));
     } else {
-      p.outro(styleText('green', 'claude-mem installed successfully!'));
+      p.outro(styleText('green', 'hummem installed successfully!'));
     }
   } else {
     console.log('\n  Next Steps');
     nextSteps.forEach(l => console.log(`  ${l}`));
     if (failedIDEs.length > 0) {
-      console.log('\nclaude-mem installed with some IDE setup failures.');
+      console.log('\nhummem installed with some IDE setup failures.');
       process.exitCode = 1;
     } else {
-      console.log('\nclaude-mem installed successfully!');
+      console.log('\nhummem installed successfully!');
     }
   }
 
@@ -1922,9 +1922,9 @@ async function runRepairCommandInner(summary: InstallSummary): Promise<void> {
   let uvVersion = 'unknown';
 
   if (isInteractive) {
-    p.intro(styleText(['bgCyan', 'black'], ' claude-mem repair '));
+    p.intro(styleText(['bgCyan', 'black'], ' hummem repair '));
   } else {
-    console.log('claude-mem repair');
+    console.log('hummem repair');
   }
   log.info(`Version: ${styleText('cyan', version)}`);
 
@@ -1973,9 +1973,9 @@ async function runRepairCommandInner(summary: InstallSummary): Promise<void> {
   flushSummary(summary, (line) => (isInteractive ? p.log.message(line) : console.log(`  ${line}`)));
 
   if (isInteractive) {
-    p.outro(styleText('green', 'claude-mem repair complete.'));
+    p.outro(styleText('green', 'hummem repair complete.'));
   } else {
-    console.log('claude-mem repair complete.');
+    console.log('hummem repair complete.');
   }
 }
 
@@ -1991,7 +1991,7 @@ export async function runRepairCommand(): Promise<void> {
       if (isInteractive) {
         p.log.error(headline);
         p.log.error(err.remediation);
-        p.outro(styleText('red', 'claude-mem repair aborted.'));
+        p.outro(styleText('red', 'hummem repair aborted.'));
       } else {
         console.error(`\n  ${headline}`);
         console.error(`  ${err.remediation}`);

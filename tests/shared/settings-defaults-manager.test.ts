@@ -19,7 +19,7 @@ describe('SettingsDefaultsManager', () => {
     // The preload tripwire (tests/preload.ts) pins CLAUDE_MEM_DATA_DIR for
     // the whole run, and loadFromFile applies env overrides on top of file
     // values — which would make every loadFromFile result diverge from
-    // getAllDefaults()'s hardcoded ~/.claude-mem default. These tests are
+    // getAllDefaults()'s hardcoded ~/.hummem default. These tests are
     // about file > defaults behavior on an EXPLICIT settingsPath (no real
     // data-dir I/O happens here), so drop the env override for their
     // duration and restore it after.
@@ -430,14 +430,14 @@ describe('SettingsDefaultsManager', () => {
   describe('get', () => {
     it('should return default value for key', () => {
       expect(SettingsDefaultsManager.get('CLAUDE_MEM_MODEL')).toBe('claude-haiku-4-5-20251001');
-      const expectedPort = String(37700 + ((process.getuid?.() ?? 77) % 100));
+      const expectedPort = String(37800 + ((process.getuid?.() ?? 77) % 100));
       expect(SettingsDefaultsManager.get('CLAUDE_MEM_WORKER_PORT')).toBe(expectedPort);
     });
   });
 
   describe('getInt', () => {
     it('should return integer value for numeric string', () => {
-      const expectedPort = 37700 + ((process.getuid?.() ?? 77) % 100);
+      const expectedPort = 37800 + ((process.getuid?.() ?? 77) % 100);
       expect(SettingsDefaultsManager.getInt('CLAUDE_MEM_WORKER_PORT')).toBe(expectedPort);
       expect(SettingsDefaultsManager.getInt('CLAUDE_MEM_CONTEXT_OBSERVATIONS')).toBe(50);
     });
@@ -533,7 +533,7 @@ describe('SettingsDefaultsManager', () => {
       const defaults = SettingsDefaultsManager.getAllDefaults();
 
       const fileSettings = {
-        CLAUDE_MEM_WORKER_PORT: '22222', // Different from default 37777
+        CLAUDE_MEM_WORKER_PORT: '22222', // Different from default 37877
       };
       writeFileSync(settingsPath, JSON.stringify(fileSettings));
 
@@ -541,7 +541,7 @@ describe('SettingsDefaultsManager', () => {
 
       const result = SettingsDefaultsManager.loadFromFile(settingsPath);
 
-      const expectedDefault = String(37700 + ((process.getuid?.() ?? 77) % 100));
+      const expectedDefault = String(37800 + ((process.getuid?.() ?? 77) % 100));
       expect(defaults.CLAUDE_MEM_WORKER_PORT).toBe(expectedDefault); 
       expect(result.CLAUDE_MEM_WORKER_PORT).toBe('33333'); 
     });

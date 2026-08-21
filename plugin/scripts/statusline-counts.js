@@ -8,7 +8,7 @@ const cwd = process.argv[2] || process.env.CLAUDE_CWD || process.cwd();
 const project = basename(cwd);
 
 try {
-  let dataDir = process.env.CLAUDE_MEM_DATA_DIR || join(homedir(), ".claude-mem");
+  let dataDir = process.env.HUMMEM_DATA_DIR || process.env.CLAUDE_MEM_DATA_DIR || join(homedir(), ".hummem");
   if (!process.env.CLAUDE_MEM_DATA_DIR) {
     const settingsPath = join(dataDir, "settings.json");
     if (existsSync(settingsPath)) {

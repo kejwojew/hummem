@@ -15,10 +15,10 @@ function createMockApi(pluginConfigOverride: Record<string, any> = {}) {
   const eventHandlers: Map<string, Function[]> = new Map();
 
   const api = {
-    id: "claude-mem",
+    id: "hummem",
     name: "Claude-Mem (Persistent Memory)",
     version: "1.0.0",
-    source: "/test/extensions/claude-mem/dist/index.js",
+    source: "/test/extensions/hummem/dist/index.js",
     config: {},
     pluginConfig: pluginConfigOverride,
     logger: {
@@ -102,7 +102,7 @@ describe("claudeMemPlugin", () => {
     claudeMemPlugin(api);
 
     assert.ok(getService(), "service should be registered");
-    assert.equal(getService().id, "claude-mem-observation-feed");
+    assert.equal(getService().id, "hummem-observation-feed");
     assert.ok(getCommand("claude_mem_feed"), "feed command should be registered");
     assert.ok(getCommand("claude_mem_status"), "status command should be registered");
     assert.ok(getEventHandlers("session_start").length > 0, "session_start handler registered");
