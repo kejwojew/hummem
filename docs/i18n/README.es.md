@@ -2,11 +2,11 @@
 
 <h1 align="center">
   <br>
-  <a href="https://github.com/thedotmack/claude-mem">
+  <a href="https://github.com/kejwojew/hummem">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp" alt="hummem" width="400">
     </picture>
   </a>
   <br>
@@ -67,51 +67,22 @@
   </a>
 </p>
 
-<p align="center">
-  <a href="https://trendshift.io/repositories/15496" target="_blank">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
-    </picture>
-  </a>
-</p>
 
 <br>
 
 <table align="center">
   <tr>
     <td align="center">
-      <a href="https://github.com/thedotmack/claude-mem">
+      <a href="https://github.com/kejwojew/hummem">
         <picture>
           <img
-            src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/cm-preview.gif"
-            alt="Claude-Mem Preview"
+            src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
+            alt="hummem preview"
             width="500"
           >
         </picture>
       </a>
-    </td>
-    <td align="center">
-      <a href="https://www.star-history.com/#thedotmack/claude-mem&Date">
-        <picture>
-          <source
-            media="(prefers-color-scheme: dark)"
-            srcset="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&theme=dark&legend=top-left"
-          />
-          <source
-            media="(prefers-color-scheme: light)"
-            srcset="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&legend=top-left"
-          />
-          <img
-            alt="Star History Chart"
-            src="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&legend=top-left"
-            width="500"
-          />
-        </picture>
-      </a>
-    </td>
-  </tr>
+    </td>  </tr>
 </table>
 
 <p align="center">
@@ -144,7 +115,7 @@ O instala para OpenCode:
 npx claude-mem install --ide opencode
 ```
 
-O instala para Antigravity CLI ([guía de configuración](https://docs.claude-mem.ai/antigravity-cli/setup)):
+O instala para Antigravity CLI ([guía de configuración](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
 npx claude-mem install --ide antigravity
@@ -153,7 +124,7 @@ npx claude-mem install --ide antigravity
 O instala desde el marketplace de plugins dentro de Claude Code:
 
 ```bash
-/plugin marketplace add thedotmack/claude-mem
+/plugin marketplace add kejwojew/hummem
 
 /plugin install claude-mem
 ```
@@ -170,7 +141,7 @@ Instala claude-mem como plugin de memoria persistente en gateways de [OpenClaw](
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 ```
 
-El instalador se encarga de las dependencias, la configuración del plugin, la configuración del proveedor de IA, el inicio del worker y, opcionalmente, de los feeds de observación en tiempo real hacia Telegram, Discord, Slack y más. Consulta la [Guía de Integración con OpenClaw](https://docs.claude-mem.ai/openclaw-integration) para más detalles.
+El instalador se encarga de las dependencias, la configuración del plugin, la configuración del proveedor de IA, el inicio del worker y, opcionalmente, de los feeds de observación en tiempo real hacia Telegram, Discord, Slack y más. Consulta la [Guía de Integración con OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) para más detalles.
 
 **Características Principales:**
 
@@ -188,35 +159,35 @@ El instalador se encarga de las dependencias, la configuración del plugin, la c
 
 ## Documentación
 
-📚 **[Ver Documentación Completa](https://docs.claude-mem.ai/)** - Navegar en el sitio web oficial
+📚 **[Ver Documentación Completa](https://github.com/kejwojew/hummem#readme)** - Navegar en el sitio web oficial
 
 ### Primeros Pasos
 
-- **[Guía de Instalación](https://docs.claude-mem.ai/installation)** - Inicio rápido e instalación avanzada
-- **[Guía de Uso](https://docs.claude-mem.ai/usage/getting-started)** - Cómo funciona Claude-Mem automáticamente
-- **[Herramientas de Búsqueda](https://docs.claude-mem.ai/usage/search-tools)** - Consulta el historial de tu proyecto con lenguaje natural
+- **[Guía de Instalación](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - Inicio rápido e instalación avanzada
+- **[Guía de Uso](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - Cómo funciona Claude-Mem automáticamente
+- **[Herramientas de Búsqueda](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - Consulta el historial de tu proyecto con lenguaje natural
 
 ### Mejores Prácticas
 
-- **[Ingeniería de Contexto](https://docs.claude-mem.ai/context-engineering)** - Principios de optimización de contexto para agentes de IA
-- **[Divulgación Progresiva](https://docs.claude-mem.ai/progressive-disclosure)** - Filosofía detrás de la estrategia de preparación de contexto de Claude-Mem
+- **[Ingeniería de Contexto](https://github.com/kejwojew/hummem/blob/main/docs/public/context-engineering.mdx)** - Principios de optimización de contexto para agentes de IA
+- **[Divulgación Progresiva](https://github.com/kejwojew/hummem/blob/main/docs/public/progressive-disclosure.mdx)** - Filosofía detrás de la estrategia de preparación de contexto de Claude-Mem
 
 ### Arquitectura
 
-- **[Descripción General](https://docs.claude-mem.ai/architecture/overview)** - Componentes del sistema y flujo de datos
-- **[Evolución de la Arquitectura](https://docs.claude-mem.ai/architecture-evolution)** - El viaje de v3 a v5
-- **[Arquitectura de Hooks](https://docs.claude-mem.ai/hooks-architecture)** - Cómo Claude-Mem usa hooks de ciclo de vida
-- **[Referencia de Hooks](https://docs.claude-mem.ai/architecture/hooks)** - 7 scripts de hooks explicados
-- **[Servicio Worker](https://docs.claude-mem.ai/architecture/worker-service)** - API HTTP y gestión de Bun
-- **[Base de Datos](https://docs.claude-mem.ai/architecture/database)** - Esquema SQLite y búsqueda FTS5
-- **[Arquitectura de Búsqueda](https://docs.claude-mem.ai/architecture/search-architecture)** - Búsqueda híbrida con base de datos vectorial Chroma
+- **[Descripción General](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)** - Componentes del sistema y flujo de datos
+- **[Evolución de la Arquitectura](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture-evolution.mdx)** - El viaje de v3 a v5
+- **[Arquitectura de Hooks](https://github.com/kejwojew/hummem/blob/main/docs/public/hooks-architecture.mdx)** - Cómo Claude-Mem usa hooks de ciclo de vida
+- **[Referencia de Hooks](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/hooks.mdx)** - 7 scripts de hooks explicados
+- **[Servicio Worker](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/worker-service.mdx)** - API HTTP y gestión de Bun
+- **[Base de Datos](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/database.mdx)** - Esquema SQLite y búsqueda FTS5
+- **[Arquitectura de Búsqueda](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/search-architecture.mdx)** - Búsqueda híbrida con base de datos vectorial Chroma
 
 ### Configuración y Desarrollo
 
-- **[Configuración](https://docs.claude-mem.ai/configuration)** - Variables de entorno y ajustes
-- **[Desarrollo](https://docs.claude-mem.ai/development)** - Compilación, pruebas y contribución
-- **[Ramas de Publicación](https://docs.claude-mem.ai/branches)** - Flujo de las ramas stable, core-dev y community-edge
-- **[Solución de Problemas](https://docs.claude-mem.ai/troubleshooting)** - Problemas comunes y soluciones
+- **[Configuración](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** - Variables de entorno y ajustes
+- **[Desarrollo](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** - Compilación, pruebas y contribución
+- **[Ramas de Publicación](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** - Flujo de las ramas stable, core-dev y community-edge
+- **[Solución de Problemas](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** - Problemas comunes y soluciones
 
 ---
 
@@ -231,7 +202,7 @@ El instalador se encarga de las dependencias, la configuración del plugin, la c
 5. **Habilidad mem-search** - Consultas en lenguaje natural con divulgación progresiva
 6. **Base de Datos Vectorial Chroma** - Búsqueda híbrida semántica + palabras clave para recuperación inteligente de contexto
 
-Ver [Descripción General de la Arquitectura](https://docs.claude-mem.ai/architecture/overview) para más detalles.
+Ver [Descripción General de la Arquitectura](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx) para más detalles.
 
 ---
 
@@ -270,7 +241,7 @@ search(query="authentication bug", type="bugfix", limit=10)
 get_observations(ids=[123, 456])
 ```
 
-Ver [Guía de Herramientas de Búsqueda](https://docs.claude-mem.ai/usage/search-tools) para ejemplos detallados.
+Ver [Guía de Herramientas de Búsqueda](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx) para ejemplos detallados.
 
 ---
 
@@ -278,7 +249,7 @@ Ver [Guía de Herramientas de Búsqueda](https://docs.claude-mem.ai/usage/search
 
 Las versiones estables se publican desde `main` y se distribuyen en npm. `core-dev` y
 `community-edge` son ramas que se ejecutan desde el código fuente para correcciones tempranas
-de fiabilidad e integraciones de la comunidad. Consulta **[Ramas de Publicación](https://docs.claude-mem.ai/branches)**
+de fiabilidad e integraciones de la comunidad. Consulta **[Ramas de Publicación](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)**
 para conocer el flujo de ramas y las instrucciones de ejecución no estable.
 
 ---
@@ -308,7 +279,7 @@ Asegúrate de que Node.js y npm estén instalados y agregados a tu PATH. Descarg
 
 Los ajustes se gestionan en `~/.claude-mem/settings.json` (se crea automáticamente con valores predeterminados en la primera ejecución). Configura el modelo de IA, puerto del worker, directorio de datos, nivel de registro y ajustes de inyección de contexto.
 
-Ver la **[Guía de Configuración](https://docs.claude-mem.ai/configuration)** para todos los ajustes disponibles y ejemplos.
+Ver la **[Guía de Configuración](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** para todos los ajustes disponibles y ejemplos.
 
 ### Configuración de Modo e Idioma
 
@@ -353,7 +324,7 @@ Reinicia Claude Code para aplicar la nueva configuración de modo.
 
 ## Desarrollo
 
-Ver la **[Guía de Desarrollo](https://docs.claude-mem.ai/development)** para instrucciones de compilación, pruebas y flujo de contribución.
+Ver la **[Guía de Desarrollo](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** para instrucciones de compilación, pruebas y flujo de contribución.
 
 ---
 
@@ -361,7 +332,7 @@ Ver la **[Guía de Desarrollo](https://docs.claude-mem.ai/development)** para in
 
 Si experimentas problemas, describe el problema a Claude y la habilidad troubleshoot diagnosticará automáticamente y proporcionará soluciones.
 
-Ver la **[Guía de Solución de Problemas](https://docs.claude-mem.ai/troubleshooting)** para problemas comunes y soluciones.
+Ver la **[Guía de Solución de Problemas](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** para problemas comunes y soluciones.
 
 ---
 
@@ -386,10 +357,10 @@ npm run bug-report
 
 Claude-Mem se distribuye desde tres ramas: `main` (estable), `core-dev` y
 `community-edge`. Solo `main` se publica en npm; las demás se ejecutan desde
-el código fuente. Consulta [Ramas de Publicación](https://docs.claude-mem.ai/branches) para conocer la
+el código fuente. Consulta [Ramas de Publicación](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx) para conocer la
 estrategia y las instrucciones de ejecución local.
 
-Ver [Guía de Desarrollo](https://docs.claude-mem.ai/development) para el flujo de contribución.
+Ver [Guía de Desarrollo](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx) para el flujo de contribución.
 
 ---
 
@@ -412,8 +383,8 @@ entre lo abierto y lo comercial.
 ## Soporte
 
 - **Documentación**: [docs/](docs/)
-- **Problemas**: [GitHub Issues](https://github.com/thedotmack/claude-mem/issues)
-- **Repositorio**: [github.com/thedotmack/claude-mem](https://github.com/thedotmack/claude-mem)
+- **Problemas**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
+- **Repositorio**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
 - **Cuenta Oficial de X**: [@Claude_Memory](https://x.com/Claude_Memory)
 - **Discord Oficial**: [Únete a Discord](https://discord.com/invite/J4wttp9vDu)
 - **Autor**: Alex Newman ([@thedotmack](https://github.com/thedotmack))

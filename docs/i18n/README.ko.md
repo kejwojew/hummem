@@ -2,11 +2,11 @@
 
 <h1 align="center">
   <br>
-  <a href="https://github.com/thedotmack/claude-mem">
+  <a href="https://github.com/kejwojew/hummem">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp" alt="hummem" width="400">
     </picture>
   </a>
   <br>
@@ -67,51 +67,22 @@
   </a>
 </p>
 
-<p align="center">
-  <a href="https://trendshift.io/repositories/15496" target="_blank">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
-    </picture>
-  </a>
-</p>
 
 <br>
 
 <table align="center">
   <tr>
     <td align="center">
-      <a href="https://github.com/thedotmack/claude-mem">
+      <a href="https://github.com/kejwojew/hummem">
         <picture>
           <img
-            src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/cm-preview.gif"
-            alt="Claude-Mem Preview"
+            src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
+            alt="hummem preview"
             width="500"
           >
         </picture>
       </a>
-    </td>
-    <td align="center">
-      <a href="https://www.star-history.com/#thedotmack/claude-mem&Date">
-        <picture>
-          <source
-            media="(prefers-color-scheme: dark)"
-            srcset="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&theme=dark&legend=top-left"
-          />
-          <source
-            media="(prefers-color-scheme: light)"
-            srcset="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&legend=top-left"
-          />
-          <img
-            alt="Star History Chart"
-            src="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&legend=top-left"
-            width="500"
-          />
-        </picture>
-      </a>
-    </td>
-  </tr>
+    </td>  </tr>
 </table>
 
 <p align="center">
@@ -144,7 +115,7 @@ npx claude-mem install
 npx claude-mem install --ide opencode
 ```
 
-또는 Antigravity CLI용으로 설치하세요 ([설치 가이드](https://docs.claude-mem.ai/antigravity-cli/setup)):
+또는 Antigravity CLI용으로 설치하세요 ([설치 가이드](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
 npx claude-mem install --ide antigravity
@@ -153,7 +124,7 @@ npx claude-mem install --ide antigravity
 또는 Claude Code 내에서 플러그인 마켓플레이스를 통해 설치하세요:
 
 ```bash
-/plugin marketplace add thedotmack/claude-mem
+/plugin marketplace add kejwojew/hummem
 
 /plugin install claude-mem
 ```
@@ -170,7 +141,7 @@ Claude Code를 재시작하세요. 이전 세션의 컨텍스트가 자동으로
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 ```
 
-설치 프로그램은 종속성, 플러그인 설정, AI 제공업체 구성, 워커 시작, 그리고 Telegram, Discord, Slack 등으로의 선택적 실시간 관찰 피드를 처리합니다. 자세한 내용은 [OpenClaw 통합 가이드](https://docs.claude-mem.ai/openclaw-integration)를 참조하세요.
+설치 프로그램은 종속성, 플러그인 설정, AI 제공업체 구성, 워커 시작, 그리고 Telegram, Discord, Slack 등으로의 선택적 실시간 관찰 피드를 처리합니다. 자세한 내용은 [OpenClaw 통합 가이드](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx)를 참조하세요.
 
 **주요 기능:**
 
@@ -188,35 +159,35 @@ curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 
 ## 문서
 
-📚 **[전체 문서 보기](https://docs.claude-mem.ai/)** - 공식 웹사이트에서 찾아보기
+📚 **[전체 문서 보기](https://github.com/kejwojew/hummem#readme)** - 공식 웹사이트에서 찾아보기
 
 ### 시작하기
 
-- **[설치 가이드](https://docs.claude-mem.ai/installation)** - 빠른 시작 및 고급 설치
-- **[사용 가이드](https://docs.claude-mem.ai/usage/getting-started)** - Claude-Mem이 자동으로 작동하는 방법
-- **[검색 도구](https://docs.claude-mem.ai/usage/search-tools)** - 자연어로 프로젝트 기록 쿼리
+- **[설치 가이드](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - 빠른 시작 및 고급 설치
+- **[사용 가이드](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - Claude-Mem이 자동으로 작동하는 방법
+- **[검색 도구](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - 자연어로 프로젝트 기록 쿼리
 
 ### 모범 사례
 
-- **[컨텍스트 엔지니어링](https://docs.claude-mem.ai/context-engineering)** - AI 에이전트 컨텍스트 최적화 원칙
-- **[점진적 공개](https://docs.claude-mem.ai/progressive-disclosure)** - Claude-Mem의 컨텍스트 프라이밍 전략의 철학
+- **[컨텍스트 엔지니어링](https://github.com/kejwojew/hummem/blob/main/docs/public/context-engineering.mdx)** - AI 에이전트 컨텍스트 최적화 원칙
+- **[점진적 공개](https://github.com/kejwojew/hummem/blob/main/docs/public/progressive-disclosure.mdx)** - Claude-Mem의 컨텍스트 프라이밍 전략의 철학
 
 ### 아키텍처
 
-- **[개요](https://docs.claude-mem.ai/architecture/overview)** - 시스템 구성 요소 및 데이터 흐름
-- **[아키텍처 진화](https://docs.claude-mem.ai/architecture-evolution)** - v3에서 v5로의 여정
-- **[후크 아키텍처](https://docs.claude-mem.ai/hooks-architecture)** - Claude-Mem이 라이프사이클 후크를 사용하는 방법
-- **[후크 참조](https://docs.claude-mem.ai/architecture/hooks)** - 7개 후크 스크립트 설명
-- **[워커 서비스](https://docs.claude-mem.ai/architecture/worker-service)** - HTTP API 및 Bun 관리
-- **[데이터베이스](https://docs.claude-mem.ai/architecture/database)** - SQLite 스키마 및 FTS5 검색
-- **[검색 아키텍처](https://docs.claude-mem.ai/architecture/search-architecture)** - Chroma 벡터 데이터베이스를 활용한 하이브리드 검색
+- **[개요](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)** - 시스템 구성 요소 및 데이터 흐름
+- **[아키텍처 진화](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture-evolution.mdx)** - v3에서 v5로의 여정
+- **[후크 아키텍처](https://github.com/kejwojew/hummem/blob/main/docs/public/hooks-architecture.mdx)** - Claude-Mem이 라이프사이클 후크를 사용하는 방법
+- **[후크 참조](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/hooks.mdx)** - 7개 후크 스크립트 설명
+- **[워커 서비스](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/worker-service.mdx)** - HTTP API 및 Bun 관리
+- **[데이터베이스](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/database.mdx)** - SQLite 스키마 및 FTS5 검색
+- **[검색 아키텍처](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/search-architecture.mdx)** - Chroma 벡터 데이터베이스를 활용한 하이브리드 검색
 
 ### 설정 및 개발
 
-- **[설정](https://docs.claude-mem.ai/configuration)** - 환경 변수 및 설정
-- **[개발](https://docs.claude-mem.ai/development)** - 빌드, 테스트, 기여
-- **[릴리스 브랜치](https://docs.claude-mem.ai/branches)** - Stable, core-dev, community-edge 브랜치 흐름
-- **[문제 해결](https://docs.claude-mem.ai/troubleshooting)** - 일반적인 문제 및 해결 방법
+- **[설정](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** - 환경 변수 및 설정
+- **[개발](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** - 빌드, 테스트, 기여
+- **[릴리스 브랜치](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** - Stable, core-dev, community-edge 브랜치 흐름
+- **[문제 해결](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** - 일반적인 문제 및 해결 방법
 
 ---
 
@@ -231,7 +202,7 @@ curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 5. **mem-search 스킬** - 점진적 공개를 통한 자연어 쿼리
 6. **Chroma 벡터 데이터베이스** - 지능형 컨텍스트 검색을 위한 하이브리드 의미론적 + 키워드 검색
 
-자세한 내용은 [아키텍처 개요](https://docs.claude-mem.ai/architecture/overview)를 참조하세요.
+자세한 내용은 [아키텍처 개요](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)를 참조하세요.
 
 ---
 
@@ -270,7 +241,7 @@ search(query="authentication bug", type="bugfix", limit=10)
 get_observations(ids=[123, 456])
 ```
 
-자세한 예제는 [검색 도구 가이드](https://docs.claude-mem.ai/usage/search-tools)를 참조하세요.
+자세한 예제는 [검색 도구 가이드](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)를 참조하세요.
 
 ---
 
@@ -278,7 +249,7 @@ get_observations(ids=[123, 456])
 
 안정적인 릴리스는 `main`에서 배포되며 npm에 게시됩니다. `core-dev`와
 `community-edge`는 초기 안정성 수정과 커뮤니티 통합을 위한 소스 실행 브랜치입니다.
-브랜치 흐름과 비안정 버전 실행 방법은 **[릴리스 브랜치](https://docs.claude-mem.ai/branches)**를
+브랜치 흐름과 비안정 버전 실행 방법은 **[릴리스 브랜치](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)**를
 참조하세요.
 
 ---
@@ -308,7 +279,7 @@ Node.js와 npm이 설치되어 있고 PATH에 추가되어 있는지 확인하�
 
 설정은 `~/.claude-mem/settings.json`에서 관리됩니다 (첫 실행 시 기본값으로 자동 생성). AI 모델, 워커 포트, 데이터 디렉토리, 로그 수준 및 컨텍스트 주입 설정을 구성할 수 있습니다.
 
-사용 가능한 모든 설정 및 예제는 **[설정 가이드](https://docs.claude-mem.ai/configuration)**를 참조하세요.
+사용 가능한 모든 설정 및 예제는 **[설정 가이드](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)**를 참조하세요.
 
 ### 모드 및 언어 설정
 
@@ -353,7 +324,7 @@ ls ~/.claude/plugins/marketplaces/thedotmack/plugin/modes/
 
 ## 개발
 
-빌드 지침, 테스트 및 기여 워크플로우는 **[개발 가이드](https://docs.claude-mem.ai/development)**를 참조하세요.
+빌드 지침, 테스트 및 기여 워크플로우는 **[개발 가이드](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)**를 참조하세요.
 
 ---
 
@@ -361,7 +332,7 @@ ls ~/.claude/plugins/marketplaces/thedotmack/plugin/modes/
 
 문제가 발생하면 Claude에게 문제를 설명하면 troubleshoot 스킬이 자동으로 진단하고 수정 사항을 제공합니다.
 
-일반적인 문제 및 해결 방법은 **[문제 해결 가이드](https://docs.claude-mem.ai/troubleshooting)**를 참조하세요.
+일반적인 문제 및 해결 방법은 **[문제 해결 가이드](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)**를 참조하세요.
 
 ---
 
@@ -386,10 +357,10 @@ npm run bug-report
 
 Claude-Mem은 `main` (stable), `core-dev`, `community-edge`의 세 브랜치에서
 배포됩니다. `main`만 npm에 게시되며, 나머지는 소스에서 실행됩니다.
-전략과 로컬 실행 방법은 [릴리스 브랜치](https://docs.claude-mem.ai/branches)를
+전략과 로컬 실행 방법은 [릴리스 브랜치](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)를
 참조하세요.
 
-기여 워크플로우는 [개발 가이드](https://docs.claude-mem.ai/development)를 참조하세요.
+기여 워크플로우는 [개발 가이드](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)를 참조하세요.
 
 ---
 
@@ -412,8 +383,8 @@ Claude-Mem은 Apache License 2.0에 따라 라이선스가 부여됩니다.
 ## 지원
 
 - **문서**: [docs/](docs/)
-- **이슈**: [GitHub Issues](https://github.com/thedotmack/claude-mem/issues)
-- **저장소**: [github.com/thedotmack/claude-mem](https://github.com/thedotmack/claude-mem)
+- **이슈**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
+- **저장소**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
 - **공식 X 계정**: [@Claude_Memory](https://x.com/Claude_Memory)
 - **공식 Discord**: [Discord 참여하기](https://discord.com/invite/J4wttp9vDu)
 - **작성자**: Alex Newman ([@thedotmack](https://github.com/thedotmack))

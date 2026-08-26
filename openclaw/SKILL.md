@@ -46,8 +46,8 @@ First, clone the claude-mem repository to a location accessible by your OpenClaw
 
 ```bash
 cd /opt  # or wherever you want to keep it
-git clone https://github.com/thedotmack/claude-mem.git
-cd claude-mem
+git clone https://github.com/kejwojew/hummem.git
+cd hummem
 npm install
 npm run build
 ```

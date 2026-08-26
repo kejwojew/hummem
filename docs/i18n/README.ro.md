@@ -2,11 +2,11 @@
 
 <h1 align="center">
   <br>
-  <a href="https://github.com/thedotmack/claude-mem">
+  <a href="https://github.com/kejwojew/hummem">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp" alt="hummem" width="400">
     </picture>
   </a>
   <br>
@@ -67,51 +67,22 @@
   </a>
 </p>
 
-<p align="center">
-  <a href="https://trendshift.io/repositories/15496" target="_blank">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
-    </picture>
-  </a>
-</p>
 
 <br>
 
 <table align="center">
   <tr>
     <td align="center">
-      <a href="https://github.com/thedotmack/claude-mem">
+      <a href="https://github.com/kejwojew/hummem">
         <picture>
           <img
-            src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/cm-preview.gif"
-            alt="Claude-Mem Preview"
+            src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
+            alt="hummem preview"
             width="500"
           >
         </picture>
       </a>
-    </td>
-    <td align="center">
-      <a href="https://www.star-history.com/#thedotmack/claude-mem&Date">
-        <picture>
-          <source
-            media="(prefers-color-scheme: dark)"
-            srcset="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&theme=dark&legend=top-left"
-          />
-          <source
-            media="(prefers-color-scheme: light)"
-            srcset="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&legend=top-left"
-          />
-          <img
-            alt="Star History Chart"
-            src="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&legend=top-left"
-            width="500"
-          />
-        </picture>
-      </a>
-    </td>
-  </tr>
+    </td>  </tr>
 </table>
 
 <p align="center">
@@ -144,7 +115,7 @@ Sau instalați pentru OpenCode:
 npx claude-mem install --ide opencode
 ```
 
-Sau instalați pentru Antigravity CLI ([ghid de configurare](https://docs.claude-mem.ai/antigravity-cli/setup)):
+Sau instalați pentru Antigravity CLI ([ghid de configurare](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
 npx claude-mem install --ide antigravity
@@ -153,7 +124,7 @@ npx claude-mem install --ide antigravity
 Sau instalați din marketplace-ul de plugin-uri direct din Claude Code:
 
 ```bash
-/plugin marketplace add thedotmack/claude-mem
+/plugin marketplace add kejwojew/hummem
 
 /plugin install claude-mem
 ```
@@ -170,7 +141,7 @@ Instalați claude-mem ca plugin de memorie persistentă pe gateway-urile [OpenCl
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 ```
 
-Programul de instalare gestionează dependențele, configurarea plugin-ului, configurarea furnizorului AI, pornirea worker-ului și fluxurile opționale de observații în timp real către Telegram, Discord, Slack și altele. Consultați [Ghidul de Integrare OpenClaw](https://docs.claude-mem.ai/openclaw-integration) pentru detalii.
+Programul de instalare gestionează dependențele, configurarea plugin-ului, configurarea furnizorului AI, pornirea worker-ului și fluxurile opționale de observații în timp real către Telegram, Discord, Slack și altele. Consultați [Ghidul de Integrare OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) pentru detalii.
 
 **Caracteristici Principale:**
 
@@ -188,35 +159,35 @@ Programul de instalare gestionează dependențele, configurarea plugin-ului, con
 
 ## Documentație
 
-📚 **[Vizualizați Documentația Completă](https://docs.claude-mem.ai/)** - Răsfoiți pe site-ul oficial
+📚 **[Vizualizați Documentația Completă](https://github.com/kejwojew/hummem#readme)** - Răsfoiți pe site-ul oficial
 
 ### Introducere
 
-- **[Ghid de Instalare](https://docs.claude-mem.ai/installation)** - Start rapid și instalare avansată
-- **[Ghid de Utilizare](https://docs.claude-mem.ai/usage/getting-started)** - Cum funcționează Claude-Mem automat
-- **[Instrumente de Căutare](https://docs.claude-mem.ai/usage/search-tools)** - Interogați istoricul proiectului cu limbaj natural
+- **[Ghid de Instalare](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - Start rapid și instalare avansată
+- **[Ghid de Utilizare](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - Cum funcționează Claude-Mem automat
+- **[Instrumente de Căutare](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - Interogați istoricul proiectului cu limbaj natural
 
 ### Practici Recomandate
 
-- **[Inginerie de Context](https://docs.claude-mem.ai/context-engineering)** - Principii de optimizare a contextului pentru agenți AI
-- **[Dezvăluire Progresivă](https://docs.claude-mem.ai/progressive-disclosure)** - Filosofia din spatele strategiei de pregătire a contextului Claude-Mem
+- **[Inginerie de Context](https://github.com/kejwojew/hummem/blob/main/docs/public/context-engineering.mdx)** - Principii de optimizare a contextului pentru agenți AI
+- **[Dezvăluire Progresivă](https://github.com/kejwojew/hummem/blob/main/docs/public/progressive-disclosure.mdx)** - Filosofia din spatele strategiei de pregătire a contextului Claude-Mem
 
 ### Arhitectură
 
-- **[Prezentare Generală](https://docs.claude-mem.ai/architecture/overview)** - Componente de sistem și flux de date
-- **[Evoluția Arhitecturii](https://docs.claude-mem.ai/architecture-evolution)** - Parcursul de la v3 la v5
-- **[Arhitectura Hook-urilor](https://docs.claude-mem.ai/hooks-architecture)** - Cum folosește Claude-Mem hook-urile de ciclu de viață
-- **[Referință Hook-uri](https://docs.claude-mem.ai/architecture/hooks)** - 7 scripturi de hook explicate
-- **[Serviciu Worker](https://docs.claude-mem.ai/architecture/worker-service)** - HTTP API și gestionare Bun
-- **[Bază de Date](https://docs.claude-mem.ai/architecture/database)** - Schemă SQLite și căutare FTS5
-- **[Arhitectura Căutării](https://docs.claude-mem.ai/architecture/search-architecture)** - Căutare hibridă cu baza de date vectorială Chroma
+- **[Prezentare Generală](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)** - Componente de sistem și flux de date
+- **[Evoluția Arhitecturii](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture-evolution.mdx)** - Parcursul de la v3 la v5
+- **[Arhitectura Hook-urilor](https://github.com/kejwojew/hummem/blob/main/docs/public/hooks-architecture.mdx)** - Cum folosește Claude-Mem hook-urile de ciclu de viață
+- **[Referință Hook-uri](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/hooks.mdx)** - 7 scripturi de hook explicate
+- **[Serviciu Worker](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/worker-service.mdx)** - HTTP API și gestionare Bun
+- **[Bază de Date](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/database.mdx)** - Schemă SQLite și căutare FTS5
+- **[Arhitectura Căutării](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/search-architecture.mdx)** - Căutare hibridă cu baza de date vectorială Chroma
 
 ### Configurare și Dezvoltare
 
-- **[Configurare](https://docs.claude-mem.ai/configuration)** - Variabile de mediu și setări
-- **[Dezvoltare](https://docs.claude-mem.ai/development)** - Construire, testare, contribuție
-- **[Ramuri de Lansare](https://docs.claude-mem.ai/branches)** - Fluxul ramurilor stable, core-dev și community-edge
-- **[Depanare](https://docs.claude-mem.ai/troubleshooting)** - Probleme comune și soluții
+- **[Configurare](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** - Variabile de mediu și setări
+- **[Dezvoltare](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** - Construire, testare, contribuție
+- **[Ramuri de Lansare](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** - Fluxul ramurilor stable, core-dev și community-edge
+- **[Depanare](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** - Probleme comune și soluții
 
 ---
 
@@ -231,7 +202,7 @@ Programul de instalare gestionează dependențele, configurarea plugin-ului, con
 5. **Abilitatea mem-search** - Interogări în limbaj natural cu dezvăluire progresivă
 6. **Bază de Date Vectorială Chroma** - Căutare hibridă semantică + cuvinte cheie pentru recuperare inteligentă a contextului
 
-Consultați [Prezentarea Generală a Arhitecturii](https://docs.claude-mem.ai/architecture/overview) pentru detalii.
+Consultați [Prezentarea Generală a Arhitecturii](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx) pentru detalii.
 
 ---
 
@@ -270,7 +241,7 @@ search(query="authentication bug", type="bugfix", limit=10)
 get_observations(ids=[123, 456])
 ```
 
-Consultați [Ghidul Instrumentelor de Căutare](https://docs.claude-mem.ai/usage/search-tools) pentru exemple detaliate.
+Consultați [Ghidul Instrumentelor de Căutare](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx) pentru exemple detaliate.
 
 ---
 
@@ -278,7 +249,7 @@ Consultați [Ghidul Instrumentelor de Căutare](https://docs.claude-mem.ai/usage
 
 Lansările stabile pornesc din `main` și sunt publicate pe npm. `core-dev` și
 `community-edge` sunt ramuri rulate direct din sursă pentru remedieri timpurii de fiabilitate și
-integrări comunitare. Consultați **[Ramuri de Lansare](https://docs.claude-mem.ai/branches)**
+integrări comunitare. Consultați **[Ramuri de Lansare](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)**
 pentru fluxul ramurilor și instrucțiunile de rulare non-stabile.
 
 ---
@@ -308,7 +279,7 @@ Asigurați-vă că Node.js și npm sunt instalate și adăugate în PATH. Descă
 
 Setările sunt gestionate în `~/.claude-mem/settings.json` (creat automat cu valori implicite la prima rulare). Configurați modelul AI, portul worker-ului, directorul de date, nivelul de log și setările de injectare a contextului.
 
-Consultați **[Ghidul de Configurare](https://docs.claude-mem.ai/configuration)** pentru toate setările disponibile și exemple.
+Consultați **[Ghidul de Configurare](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** pentru toate setările disponibile și exemple.
 
 ### Configurarea Modului și Limbii
 
@@ -353,7 +324,7 @@ Reporniți Claude Code pentru a aplica noua configurație a modului.
 
 ## Dezvoltare
 
-Consultați **[Ghidul de Dezvoltare](https://docs.claude-mem.ai/development)** pentru instrucțiuni de construire, testare și fluxul de contribuție.
+Consultați **[Ghidul de Dezvoltare](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** pentru instrucțiuni de construire, testare și fluxul de contribuție.
 
 ---
 
@@ -361,7 +332,7 @@ Consultați **[Ghidul de Dezvoltare](https://docs.claude-mem.ai/development)** p
 
 Dacă întâmpinați probleme, descrieți problema lui Claude, iar abilitatea troubleshoot va diagnostica automat și va furniza soluții.
 
-Consultați **[Ghidul de Depanare](https://docs.claude-mem.ai/troubleshooting)** pentru probleme comune și soluții.
+Consultați **[Ghidul de Depanare](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** pentru probleme comune și soluții.
 
 ---
 
@@ -386,10 +357,10 @@ Contribuțiile sunt binevenite! Vă rugăm:
 
 Claude-Mem este lansat din trei ramuri: `main` (stabilă), `core-dev` și
 `community-edge`. Doar `main` este publicată pe npm; celelalte sunt rulate din
-sursă. Consultați [Ramuri de Lansare](https://docs.claude-mem.ai/branches) pentru
+sursă. Consultați [Ramuri de Lansare](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx) pentru
 strategie și instrucțiuni de rulare locală.
 
-Consultați [Ghidul de Dezvoltare](https://docs.claude-mem.ai/development) pentru fluxul de contribuție.
+Consultați [Ghidul de Dezvoltare](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx) pentru fluxul de contribuție.
 
 ---
 
@@ -412,8 +383,8 @@ open-source/comercială.
 ## Suport
 
 - **Documentație**: [docs/](docs/)
-- **Probleme**: [GitHub Issues](https://github.com/thedotmack/claude-mem/issues)
-- **Repository**: [github.com/thedotmack/claude-mem](https://github.com/thedotmack/claude-mem)
+- **Probleme**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
+- **Repository**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
 - **Cont Oficial X**: [@Claude_Memory](https://x.com/Claude_Memory)
 - **Discord Oficial**: [Alăturați-vă pe Discord](https://discord.com/invite/J4wttp9vDu)
 - **Autor**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
