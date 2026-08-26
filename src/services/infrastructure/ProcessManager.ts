@@ -10,6 +10,7 @@ import { removeOwnedPidFile } from '../../supervisor/shutdown.js';
 import { getSupervisor, validateWorkerPidFile, type ValidateWorkerPidStatus } from '../../supervisor/index.js';
 import { emitRemapProject, hasSyncLane } from '../sync/remap-outbox.js';
 import { paths } from '../../shared/paths.js';
+import { peekDatabasePath } from '../../shared/database-path.js';
 
 const DATA_DIR = paths.dataDir();
 const PID_FILE = paths.workerPid();
@@ -227,7 +228,7 @@ function classifyCwdForRemap(cwd: string): CwdClassification {
 export function runOneTimeCwdRemap(dataDirectory?: string): void {
   const effectiveDataDir = dataDirectory ?? DATA_DIR;
   const markerPath = path.join(effectiveDataDir, CWD_REMAP_MARKER_FILENAME);
-  const dbPath = path.join(effectiveDataDir, 'claude-mem.db');
+  const dbPath = peekDatabasePath(effectiveDataDir);
 
   if (existsSync(markerPath)) {
     logger.debug('SYSTEM', 'cwd-remap marker exists, skipping');

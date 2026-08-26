@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import { SettingsDefaultsManager } from './SettingsDefaultsManager.js';
 import { parseJsonWithBom } from './atomic-json.js';
 import { readEnv } from './legacy-env.js';
+import { resolveDatabasePath } from './database-path.js';
 
 function getDirname(): string {
   if (typeof __dirname !== 'undefined') {
@@ -77,7 +78,16 @@ export const MARKETPLACE_ROOT = join(CLAUDE_CONFIG_DIR, 'plugins', 'marketplaces
 
 export const LOGS_DIR = join(DATA_DIR, 'logs');
 export const USER_SETTINGS_PATH = join(DATA_DIR, 'settings.json');
-export const DB_PATH = join(DATA_DIR, 'claude-mem.db');
+
+/**
+ * Path to the SQLite database.
+ *
+ * Resolved through the migration-aware helper, which renames a legacy
+ * `claude-mem.db` (with its `-wal`/`-shm` sidecars) exactly once and never
+ * overwrites an existing canonical file. Module-level evaluation means the
+ * rename happens on first import, before any consumer opens a connection.
+ */
+export const DB_PATH = resolveDatabasePath(DATA_DIR).path;
 
 export const OBSERVER_SESSIONS_DIR = join(DATA_DIR, 'observer-sessions');
 
@@ -135,7 +145,10 @@ export const paths = {
   serverPort: () => join(DATA_DIR, '.server-beta.port'),
   serverRuntime: () => join(DATA_DIR, '.server-beta.runtime.json'),
   settings: () => join(DATA_DIR, 'settings.json'),
-  database: () => join(DATA_DIR, 'claude-mem.db'),
+  // Returns the already-migrated path resolved at import time rather than
+  // re-deriving it, so a caller can never open a filename the migration just
+  // moved out from under it.
+  database: () => DB_PATH,
   chroma: () => join(DATA_DIR, 'chroma'),
   combinedCerts: () => join(DATA_DIR, 'combined_certs.pem'),
   transcriptsConfig: () => join(DATA_DIR, 'transcript-watch.json'),

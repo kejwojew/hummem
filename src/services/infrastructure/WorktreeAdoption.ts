@@ -7,6 +7,7 @@ import { getProjectContext } from '../../utils/project-name.js';
 import { ChromaSync, MergedIntoProjectTarget } from '../sync/ChromaSync.js';
 import { emitRemapProject, hasSyncLane } from '../sync/remap-outbox.js';
 import { paths } from '../../shared/paths.js';
+import { peekDatabasePath } from '../../shared/database-path.js';
 import { openConfiguredSqliteDatabase } from '../sqlite/connection.js';
 
 const DEFAULT_DATA_DIR = paths.dataDir();
@@ -160,7 +161,7 @@ export async function adoptMergedWorktrees(opts: {
     return result;
   }
 
-  const dbPath = path.join(dataDirectory, 'claude-mem.db');
+  const dbPath = peekDatabasePath(dataDirectory);
   if (!existsSync(dbPath)) {
     logger.debug('SYSTEM', 'Worktree adoption skipped (no DB yet)', { dbPath });
     return result;
@@ -361,7 +362,7 @@ export async function adoptMergedWorktreesForAllKnownRepos(opts: {
   dryRun?: boolean;
 } = {}): Promise<AdoptionResult[]> {
   const dataDirectory = opts.dataDirectory ?? DEFAULT_DATA_DIR;
-  const dbPath = path.join(dataDirectory, 'claude-mem.db');
+  const dbPath = peekDatabasePath(dataDirectory);
   const results: AdoptionResult[] = [];
 
   if (!existsSync(dbPath)) {
