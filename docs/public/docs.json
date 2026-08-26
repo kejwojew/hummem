@@ -1,13 +1,13 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Claude-Mem",
-  "description": "Persistent memory compression system that preserves context across Claude Code sessions",
+  "name": "hummem",
+  "description": "Persistent memory for AI coding assistants - durable context across sessions",
   "theme": "mint",
-  "favicon": "/claude-mem-logomark.webp",
+  "favicon": "/hummem-logomark.webp",
   "logo": {
-    "light": "/claude-mem-logo-for-light-mode.webp",
-    "dark": "/claude-mem-logo-for-dark-mode.webp",
-    "href": "https://github.com/thedotmack/claude-mem"
+    "light": "/hummem-logo-for-light-mode.webp",
+    "dark": "/hummem-logo-for-dark-mode.webp",
+    "href": "https://github.com/kejwojew/hummem"
   },
   "colors": {
     "primary": "#3B82F6",
@@ -18,13 +18,13 @@
     "links": [
       {
         "label": "GitHub",
-        "href": "https://github.com/thedotmack/claude-mem"
+        "href": "https://github.com/kejwojew/hummem"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Install",
-      "href": "https://github.com/thedotmack/claude-mem#quick-start"
+      "href": "https://github.com/kejwojew/hummem#quick-start"
     }
   },
   "navigation": {
@@ -115,7 +115,7 @@
   },
   "footer": {
     "socials": {
-      "github": "https://github.com/thedotmack/claude-mem"
+      "github": "https://github.com/kejwojew/hummem"
     },
     "links": [
       {
@@ -123,11 +123,11 @@
         "items": [
           {
             "label": "Documentation",
-            "href": "https://github.com/thedotmack/claude-mem"
+            "href": "https://github.com/kejwojew/hummem"
           },
           {
             "label": "Issues",
-            "href": "https://github.com/thedotmack/claude-mem/issues"
+            "href": "https://github.com/kejwojew/hummem/issues"
           }
         ]
       },
@@ -136,7 +136,7 @@
         "items": [
           {
             "label": "License (Apache-2.0)",
-            "href": "https://github.com/thedotmack/claude-mem/blob/main/LICENSE"
+            "href": "https://github.com/kejwojew/hummem/blob/main/LICENSE"
           }
         ]
       }
@@ -146,8 +146,8 @@
     "indexing": "all",
     "metatags": {
       "og:type": "website",
-      "og:site_name": "Claude-Mem Documentation",
-      "og:description": "Persistent memory compression system that preserves context across Claude Code sessions"
+      "og:site_name": "hummem Documentation",
+      "og:description": "Persistent memory for AI coding assistants - durable context across sessions"
     }
   },
   "contextual": {
