@@ -6,6 +6,8 @@ import {
   legacyNameFor,
   canonicalNameFor,
   resetLegacyEnvWarnings,
+  enableLegacyEnvWarnings,
+  getUsedLegacyEnvNames,
 } from '../../src/shared/legacy-env.js';
 
 /**
@@ -88,53 +90,66 @@ describe('readEnv precedence', () => {
   });
 });
 
-describe('deprecation warning', () => {
-  it('warns once per legacy variable, not once per read', () => {
-    const warn = spyOn(console, 'warn').mockImplementation(() => {});
+describe('deprecation recording', () => {
+  it('records a legacy variable once, however many times it is read', () => {
+    process.env.CLAUDE_MEM_DATA_DIR = '/legacy';
+    readEnv('HUMMEM_DATA_DIR');
+    readEnv('HUMMEM_DATA_DIR');
+    readEnv('HUMMEM_DATA_DIR');
+    expect(getUsedLegacyEnvNames()).toEqual(['CLAUDE_MEM_DATA_DIR']);
+  });
+
+  it('records nothing when the canonical name is used', () => {
+    process.env.HUMMEM_DATA_DIR = '/canonical';
+    readEnv('HUMMEM_DATA_DIR');
+    expect(getUsedLegacyEnvNames()).toEqual([]);
+  });
+
+  it('records nothing when reading an explicitly injected environment', () => {
+    // Building a child's environment is not the parent's deprecation to report.
+    readEnv('HUMMEM_DATA_DIR', { CLAUDE_MEM_DATA_DIR: '/legacy' });
+    expect(getUsedLegacyEnvNames()).toEqual([]);
+  });
+
+  it('stays silent until an entry point opts in', () => {
+    // Hooks never opt in: they are spawned per tool call, their stderr is read
+    // as evidence of failure, and the notice is unactionable mid-session.
+    const write = spyOn(process.stderr, 'write').mockImplementation(() => true);
     try {
       process.env.CLAUDE_MEM_DATA_DIR = '/legacy';
       readEnv('HUMMEM_DATA_DIR');
-      readEnv('HUMMEM_DATA_DIR');
-      readEnv('HUMMEM_DATA_DIR');
-      expect(warn).toHaveBeenCalledTimes(1);
-      expect(String(warn.mock.calls[0][0])).toContain('CLAUDE_MEM_DATA_DIR');
-      expect(String(warn.mock.calls[0][0])).toContain('HUMMEM_DATA_DIR');
+      expect(write).not.toHaveBeenCalled();
     } finally {
-      warn.mockRestore();
+      write.mockRestore();
     }
   });
 
-  it('does not warn when the canonical name is used', () => {
-    const warn = spyOn(console, 'warn').mockImplementation(() => {});
+  it('flushes names recorded before the opt-in', () => {
+    // DATA_DIR resolves at import time, long before any entry point runs.
+    const write = spyOn(process.stderr, 'write').mockImplementation(() => true);
     try {
-      process.env.HUMMEM_DATA_DIR = '/canonical';
+      process.env.CLAUDE_MEM_DATA_DIR = '/legacy';
       readEnv('HUMMEM_DATA_DIR');
-      expect(warn).not.toHaveBeenCalled();
+      enableLegacyEnvWarnings();
+      expect(write).toHaveBeenCalledTimes(1);
+      const line = String(write.mock.calls[0][0]);
+      expect(line).toContain('CLAUDE_MEM_DATA_DIR');
+      expect(line).toContain('HUMMEM_DATA_DIR');
     } finally {
-      warn.mockRestore();
+      write.mockRestore();
     }
   });
 
-  it('can be suppressed for hook processes that must not emit noise', () => {
-    const warn = spyOn(console, 'warn').mockImplementation(() => {});
+  it('can be suppressed entirely', () => {
+    const write = spyOn(process.stderr, 'write').mockImplementation(() => true);
     try {
       process.env.HUMMEM_SUPPRESS_LEGACY_ENV_WARNING = '1';
       process.env.CLAUDE_MEM_DATA_DIR = '/legacy';
       expect(readEnv('HUMMEM_DATA_DIR')).toBe('/legacy');
-      expect(warn).not.toHaveBeenCalled();
+      enableLegacyEnvWarnings();
+      expect(write).not.toHaveBeenCalled();
     } finally {
-      warn.mockRestore();
-    }
-  });
-
-  it('does not warn when reading an explicitly injected environment', () => {
-    // Building a child's environment is not the parent's deprecation to report.
-    const warn = spyOn(console, 'warn').mockImplementation(() => {});
-    try {
-      readEnv('HUMMEM_DATA_DIR', { CLAUDE_MEM_DATA_DIR: '/legacy' });
-      expect(warn).not.toHaveBeenCalled();
-    } finally {
-      warn.mockRestore();
+      write.mockRestore();
     }
   });
 });
