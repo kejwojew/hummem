@@ -1,5 +1,6 @@
 import { existsSync, renameSync } from 'fs';
-import { join } from 'path';
+import { homedir } from 'os';
+import { join, resolve } from 'path';
 
 /**
  * Database filename resolution and one-time rename of the legacy file.
@@ -26,6 +27,16 @@ export const DATABASE_FILENAME = 'hummem.db';
 /** Filename used before the project became independent. */
 export const LEGACY_DATABASE_FILENAME = 'claude-mem.db';
 
+/**
+ * Whether this directory is the conventional home of a legacy install.
+ *
+ * Compared by resolved path rather than by name so a symlinked or relative
+ * spelling of the same directory is still recognised.
+ */
+function isLegacyDataDir(dataDir: string, home: string = homedir()): boolean {
+  return resolve(dataDir) === resolve(join(home, '.claude-mem'));
+}
+
 /** SQLite sidecar suffixes that must travel with the main database file. */
 const SIDECAR_SUFFIXES = ['-wal', '-shm'] as const;
 
@@ -50,7 +61,9 @@ export interface DatabaseMigrationResult {
  */
 export function resolveDatabasePath(
   dataDir: string,
-  { migrate = true }: { migrate?: boolean } = {}
+  // `home` is injectable because homedir() reads the OS account record rather
+  // than $HOME, so a test cannot otherwise exercise the legacy-directory guard.
+  { migrate = true, home = homedir() }: { migrate?: boolean; home?: string } = {}
 ): DatabaseMigrationResult {
   const canonicalPath = join(dataDir, DATABASE_FILENAME);
   const legacyPath = join(dataDir, LEGACY_DATABASE_FILENAME);
@@ -81,6 +94,23 @@ export function resolveDatabasePath(
   // Nothing to migrate: a fresh install creates the canonical file.
   if (!legacyExists) {
     return { path: canonicalPath, action: 'none' };
+  }
+
+  // Refuse to rename inside a directory that still belongs to a legacy
+  // install. Someone who points HUMMEM_DATA_DIR at ~/.claude-mem to share one
+  // memory has not asked to retire the other project — renaming its database
+  // out from under it leaves that install unable to find its own data, and it
+  // silently creates an empty replacement instead. Read the legacy file in
+  // place; `hummem migrate` is the supported way to move.
+  if (isLegacyDataDir(dataDir, home)) {
+    return {
+      path: legacyPath,
+      action: 'legacy-retained',
+      detail:
+        `${dataDir} is a legacy data directory shared with another install; ` +
+        `using ${LEGACY_DATABASE_FILENAME} in place rather than renaming it. ` +
+        'Run `hummem migrate` to move your memory to its own directory.',
+    };
   }
 
   if (!migrate) {

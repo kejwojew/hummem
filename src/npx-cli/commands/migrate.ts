@@ -24,6 +24,8 @@ export interface MigrateOptions {
   to?: string;
   apply?: boolean;
   move?: boolean;
+  /** Confirms the irreversible deletion performed by --move. */
+  yes?: boolean;
 }
 
 export function parseMigrateOptions(args: string[]): MigrateOptions {
@@ -31,6 +33,7 @@ export function parseMigrateOptions(args: string[]): MigrateOptions {
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
     if (arg === '--apply') options.apply = true;
+    else if (arg === '--yes' || arg === '-y') options.yes = true;
     else if (arg === '--move') options.move = true;
     else if (arg === '--from') options.from = args[++i];
     else if (arg === '--to') options.to = args[++i];
@@ -77,6 +80,19 @@ function printPlan(plan: MigrationPlan): void {
         ? `, source left in place (${formatBytes(plan.totalBytes)} stays on disk)`
         : ', source reclaimed')
   );
+
+  for (const warning of plan.warnings) {
+    console.log(`\n  ${styleText('yellow', '!')} ${warning}`);
+  }
+
+  if (plan.mode === 'move') {
+    // The only irreversible path in this command.
+    console.log(
+      `\n  ${styleText('yellow', '!')} ${styleText('bold', '--move deletes the source.')} ` +
+        'It is removed only after the copy is verified, but once removed there ' +
+        'is no undo. Use the default copy mode unless you are short on disk.'
+    );
+  }
 }
 
 function printBlockers(plan: MigrationPlan): void {
@@ -119,6 +135,16 @@ export async function runMigrateCommand(options: MigrateOptions = {}): Promise<v
     process.exit(0);
   }
 
+  if (mode === 'move' && !options.yes) {
+    // Deleting a user's only copy of their memory should not be reachable by
+    // a single mistyped command.
+    console.error(
+      `\n  ${styleText('red', '✗')} --move removes ${plan.sourceDir} once the copy is verified.\n` +
+        `    ${styleText('dim', 'Re-run with --yes to confirm, or drop --move to keep the source.')}\n`
+    );
+    process.exit(1);
+  }
+
   const result = performDataDirMigration({ sourceDir, targetDir, mode });
 
   if (!result.performed) {
@@ -131,6 +157,26 @@ export async function runMigrateCommand(options: MigrateOptions = {}): Promise<v
     `\n  ${styleText('green', '✓')} migrated ${result.migratedEntries.length} entr` +
       `${result.migratedEntries.length === 1 ? 'y' : 'ies'} to ${result.plan.targetDir}`
   );
+
+  if (result.verified) {
+    console.log(
+      `  ${styleText('green', '✓')} every migrated entry matches its source`
+    );
+  } else if (result.mismatches.length > 0) {
+    console.error(
+      styleText('red', `\n  ${result.mismatches.length} entr` +
+        `${result.mismatches.length === 1 ? 'y does' : 'ies do'} not match the source:`)
+    );
+    for (const name of result.mismatches) {
+      console.error(`    ${styleText('red', '✗')} ${name}`);
+    }
+    console.error(
+      styleText('dim',
+        `\n  Your original data is untouched in ${result.plan.sourceDir}.\n` +
+        `  Remove ${result.plan.targetDir} and re-run.\n`)
+    );
+    process.exit(1);
+  }
 
   if (result.rewroteDataDirSetting) {
     // Worth stating: without this the migrated install would silently keep
