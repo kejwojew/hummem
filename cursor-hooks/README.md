@@ -15,8 +15,8 @@ Give your Cursor AI persistent memory across sessions. Your agent remembers what
 
 ```bash
 # Clone and build
-git clone https://github.com/thedotmack/claude-mem.git
-cd claude-mem && bun install && bun run build
+git clone https://github.com/kejwojew/hummem.git
+cd hummem && bun install && bun run build
 
 # Interactive setup (configures provider + installs hooks)
 bun run cursor:setup
