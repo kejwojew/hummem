@@ -1,6 +1,6 @@
 ---
 name: version-bump
-description: Automated semantic versioning and release workflow for Claude Code plugins. Handles version increments across package.json, marketplace.json, plugin.json manifests, build verification, git tagging, GitHub releases, and changelog generation. NPM publishing (so `npx claude-mem@X.Y.Z` resolves) is handed off to the human maintainer, who raised npm security.
+description: Automated semantic versioning and release workflow for Claude Code plugins. Handles version increments across package.json, marketplace.json, plugin.json manifests, build verification, git tagging, GitHub releases, and changelog generation. NPM publishing (so `npx hummem@X.Y.Z` resolves) is handed off to the human maintainer, who raised npm security.
 ---
 
 # Version Bump & Release Workflow
@@ -14,7 +14,7 @@ description: Automated semantic versioning and release workflow for Claude Code 
 1.  **Analyze**: Determine if the change is **PATCH** (bug fixes), **MINOR** (features), or **MAJOR** (breaking).
 2.  **Environment**: Identify repository owner/name from `git remote -v`.
 3.  **Paths — every file that carries the version string**:
-    - `package.json` — **the npm/npx-published version** (`npx claude-mem@X.Y.Z` resolves from this)
+    - `package.json` — **the npm/npx-published version** (`npx hummem@X.Y.Z` resolves from this)
     - `plugin/package.json` — bundled plugin runtime deps
     - `.claude-plugin/marketplace.json` — version inside `plugins[0].version`
     - `.claude-plugin/plugin.json` — top-level Claude-plugin manifest
@@ -38,7 +38,7 @@ description: Automated semantic versioning and release workflow for Claude Code 
     The agent MUST NOT run `npm publish` (or `np` / `npm run release:*`, which
     also publish) itself. **Hand off NPM publishing to the human now:** stop and
     tell them the version is committed, tagged, and pushed, and that they must
-    publish to npm to make `npx claude-mem@X.Y.Z` resolve. Give them the command:
+    publish to npm to make `npx hummem@X.Y.Z` resolve. Give them the command:
     ```bash
     npm publish   # run by the HUMAN — the prepublishOnly script rebuilds the package
     ```
@@ -67,7 +67,7 @@ description: Automated semantic versioning and release workflow for Claude Code 
 - [ ] `git grep` for old version returns zero hits
 - [ ] `npm run build-and-sync` succeeded
 - [ ] Git tag created and pushed
-- [ ] **NPM publishing handed off to the human** (agent does NOT run `npm publish` — human raised security); once they publish, `npm view claude-mem@X.Y.Z version` confirms it (so `npx claude-mem@X.Y.Z` resolves)
+- [ ] **NPM publishing handed off to the human** (agent does NOT run `npm publish` — human raised security); once they publish, `npm view claude-mem@X.Y.Z version` confirms it (so `npx hummem@X.Y.Z` resolves)
 - [ ] GitHub release created with notes
 - [ ] `CHANGELOG.md` updated and pushed
 - [ ] Discord notification run from `~/Scripts/claude-mem/`

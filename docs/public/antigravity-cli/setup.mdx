@@ -28,7 +28,7 @@ Antigravity CLI is a different product from the Antigravity **desktop IDE** (`an
 ### Step 1: Install claude-mem
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 The installer will:
@@ -100,7 +100,7 @@ Claude-mem needs an AI provider to extract observations from your sessions. Choo
 
 ```bash
 # Check worker is running
-npx claude-mem status
+npx hummem status
 
 # Check hooks are installed — look for claude-mem entries
 cat ~/.gemini/settings.json | grep claude-mem
@@ -166,20 +166,20 @@ Antigravity CLI ships a first-class plugin-marketplace subcommand system: `agy p
 
 3. Re-run the installer:
    ```bash
-   npx claude-mem install --ide antigravity
+   npx hummem install --ide antigravity
    ```
 
 ### Worker not running
 
 ```bash
 # Check status
-npx claude-mem status
+npx hummem status
 
 # View logs
-npx claude-mem logs
+npx hummem logs
 
 # Restart worker
-npx claude-mem restart
+npx hummem restart
 ```
 
 ### No context appearing at session start
@@ -193,13 +193,13 @@ npx claude-mem restart
 If you see characters like `[31m` or `[0m` in the session context, your claude-mem version may need updating — the Antigravity CLI adapter strips ANSI color codes automatically:
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 ## Uninstalling
 
 ```bash
-npx claude-mem uninstall
+npx hummem uninstall
 ```
 
 This removes claude-mem's hooks from `~/.gemini/settings.json`, cleans up the context section in `~/.gemini/GEMINI.md`, removes claude-mem's entry from both MCP config files, and removes the rules context section — while preserving everything else in those files.

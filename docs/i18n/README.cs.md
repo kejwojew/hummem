@@ -106,19 +106,19 @@
 Nainstalujte jedním příkazem:
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 Nebo instalace pro OpenCode:
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 Nebo instalace pro Antigravity CLI ([návod k nastavení](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 Nebo instalace z tržiště pluginů uvnitř Claude Code:
@@ -131,7 +131,7 @@ Nebo instalace z tržiště pluginů uvnitř Claude Code:
 
 Restartujte Claude Code. Kontext z předchozích sezení se automaticky objeví v nových sezeních.
 
-> **Poznámka:** Claude-Mem je také publikován na npm, ale `npm install -g claude-mem` nainstaluje **pouze SDK/knihovnu** — neregistruje háčky pluginu ani nenastaví worker službu. Vždy instalujte pomocí `npx claude-mem install` nebo výše uvedených příkazů `/plugin`.
+> **Poznámka:** Claude-Mem je také publikován na npm, ale `npm install -g claude-mem` nainstaluje **pouze SDK/knihovnu** — neregistruje háčky pluginu ani nenastaví worker službu. Vždy instalujte pomocí `npx hummem install` nebo výše uvedených příkazů `/plugin`.
 
 ### 🦞 OpenClaw Gateway
 
@@ -384,10 +384,7 @@ mezi open source a komerčním využitím.
 
 - **Dokumentace**: [docs/](docs/)
 - **Problémy**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
-- **Repositář**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
-- **Oficiální účet X**: [@Claude_Memory](https://x.com/Claude_Memory)
-- **Oficiální Discord**: [Připojit se k Discordu](https://discord.com/invite/J4wttp9vDu)
-- **Autor**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
+- **Repositář**: [github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
 
 ---
 

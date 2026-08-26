@@ -78,7 +78,7 @@ Configure which Claude model compresses your observations (only applies when `CL
 
 ### Picking via the Installer
 
-`npx claude-mem install` prompts for the Claude model (when the Claude provider is selected) and persists the choice to `~/.claude-mem/settings.json`.
+`npx hummem install` prompts for the Claude model (when the Claude provider is selected) and persists the choice to `~/.claude-mem/settings.json`.
 
 ### Manual Configuration
 
@@ -127,7 +127,7 @@ The data directory location depends on the environment:
 ```
 ~/.claude-mem/
 ├── claude-mem.db           # SQLite database
-├── .install-version        # Version marker written by `npx claude-mem install`/`repair`
+├── .install-version        # Version marker written by `npx hummem install`/`repair`
 ├── settings.json           # Worker port + provider/model settings
 └── logs/
     ├── worker-out.log      # Worker stdout logs
@@ -451,7 +451,7 @@ Hook timeouts are written into `plugin/hooks/hooks.json` by the installer. The c
 - PostToolUse (observation): 120s
 - Stop (summary): 120s
 
-The Setup hook never installs anything — runtime install (Bun, uv, `bun install`) happens in `npx claude-mem install` / `npx claude-mem repair` outside the session lifecycle.
+The Setup hook never installs anything — runtime install (Bun, uv, `bun install`) happens in `npx hummem install` / `npx hummem repair` outside the session lifecycle.
 
 ### Worker Memory Limit
 

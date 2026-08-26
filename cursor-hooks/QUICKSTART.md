@@ -51,10 +51,10 @@ claude-mem settings set CLAUDE_MEM_OPENROUTER_API_KEY your-api-key
 ## Start Worker
 
 ```bash
-claude-mem start
+hummem start
 
 # Verify it's running
-claude-mem status
+hummem status
 ```
 
 ## Restart Cursor

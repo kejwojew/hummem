@@ -106,19 +106,19 @@
 Cài đặt chỉ với một lệnh duy nhất:
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 Hoặc cài đặt cho OpenCode:
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 Hoặc cài đặt cho Antigravity CLI ([hướng dẫn cài đặt](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 Hoặc cài đặt từ chợ plugin ngay trong Claude Code:
@@ -131,7 +131,7 @@ Hoặc cài đặt từ chợ plugin ngay trong Claude Code:
 
 Khởi động lại Claude Code. Ngữ cảnh từ các phiên trước sẽ tự động xuất hiện trong các phiên mới.
 
-> **Lưu ý:** Claude-Mem cũng được phát hành trên npm, nhưng `npm install -g claude-mem` chỉ cài đặt **SDK/thư viện** — nó không đăng ký các hook của plugin hay thiết lập dịch vụ worker. Hãy luôn cài đặt qua `npx claude-mem install` hoặc các lệnh `/plugin` ở trên.
+> **Lưu ý:** Claude-Mem cũng được phát hành trên npm, nhưng `npm install -g claude-mem` chỉ cài đặt **SDK/thư viện** — nó không đăng ký các hook của plugin hay thiết lập dịch vụ worker. Hãy luôn cài đặt qua `npx hummem install` hoặc các lệnh `/plugin` ở trên.
 
 ### 🦞 OpenClaw Gateway
 
@@ -384,10 +384,7 @@ mở/thương mại.
 
 - **Tài Liệu**: [docs/](docs/)
 - **Vấn Đề**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
-- **Repository**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
-- **Tài Khoản X Chính Thức**: [@Claude_Memory](https://x.com/Claude_Memory)
-- **Discord Chính Thức**: [Tham gia Discord](https://discord.com/invite/J4wttp9vDu)
-- **Tác Giả**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
+- **Repository**: [github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
 
 ---
 
