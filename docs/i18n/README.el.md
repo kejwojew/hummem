@@ -4,9 +4,9 @@
   <br>
   <a href="https://github.com/thedotmack/claude-mem">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp" alt="hummem" width="400">
     </picture>
   </a>
   <br>
@@ -70,9 +70,9 @@
 <p align="center">
   <a href="https://trendshift.io/repositories/15496" target="_blank">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
     </picture>
   </a>
 </p>
@@ -85,7 +85,7 @@
       <a href="https://github.com/thedotmack/claude-mem">
         <picture>
           <img
-            src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/cm-preview.gif"
+            src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
             alt="Claude-Mem Preview"
             width="500"
           >
@@ -144,7 +144,7 @@ npx claude-mem install
 npx claude-mem install --ide opencode
 ```
 
-Ή εγκαταστήστε για το Antigravity CLI ([οδηγός εγκατάστασης](https://docs.claude-mem.ai/antigravity-cli/setup)):
+Ή εγκαταστήστε για το Antigravity CLI ([οδηγός εγκατάστασης](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
 npx claude-mem install --ide antigravity
@@ -170,7 +170,7 @@ npx claude-mem install --ide antigravity
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 ```
 
-Ο εγκαταστάτης διαχειρίζεται τις εξαρτήσεις, τη ρύθμιση του plugin, τη διαμόρφωση του πάροχου AI, την εκκίνηση του worker, καθώς και προαιρετικές ροές παρατηρήσεων σε πραγματικό χρόνο προς Telegram, Discord, Slack, και άλλα. Δείτε τον [Οδηγό Ενσωμάτωσης OpenClaw](https://docs.claude-mem.ai/openclaw-integration) για λεπτομέρειες.
+Ο εγκαταστάτης διαχειρίζεται τις εξαρτήσεις, τη ρύθμιση του plugin, τη διαμόρφωση του πάροχου AI, την εκκίνηση του worker, καθώς και προαιρετικές ροές παρατηρήσεων σε πραγματικό χρόνο προς Telegram, Discord, Slack, και άλλα. Δείτε τον [Οδηγό Ενσωμάτωσης OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) για λεπτομέρειες.
 
 **Βασικά Χαρακτηριστικά:**
 
@@ -188,35 +188,35 @@ curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 
 ## Τεκμηρίωση
 
-📚 **[Προβολή Πλήρους Τεκμηρίωσης](https://docs.claude-mem.ai/)** - Περιήγηση στον επίσημο ιστότοπο
+📚 **[Προβολή Πλήρους Τεκμηρίωσης](https://github.com/kejwojew/hummem#readme)** - Περιήγηση στον επίσημο ιστότοπο
 
 ### Ξεκινώντας
 
-- **[Οδηγός Εγκατάστασης](https://docs.claude-mem.ai/installation)** - Γρήγορη εκκίνηση & προηγμένη εγκατάσταση
-- **[Οδηγός Χρήσης](https://docs.claude-mem.ai/usage/getting-started)** - Πώς λειτουργεί αυτόματα το Claude-Mem
-- **[Εργαλεία Αναζήτησης](https://docs.claude-mem.ai/usage/search-tools)** - Ερωτήματα στο ιστορικό του έργου σας με φυσική γλώσσα
+- **[Οδηγός Εγκατάστασης](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - Γρήγορη εκκίνηση & προηγμένη εγκατάσταση
+- **[Οδηγός Χρήσης](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - Πώς λειτουργεί αυτόματα το Claude-Mem
+- **[Εργαλεία Αναζήτησης](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - Ερωτήματα στο ιστορικό του έργου σας με φυσική γλώσσα
 
 ### Βέλτιστες Πρακτικές
 
-- **[Μηχανική Πλαισίου](https://docs.claude-mem.ai/context-engineering)** - Αρχές βελτιστοποίησης πλαισίου για AI agents
-- **[Προοδευτική Αποκάλυψη](https://docs.claude-mem.ai/progressive-disclosure)** - Φιλοσοφία πίσω από τη στρατηγική προετοιμασίας πλαισίου του Claude-Mem
+- **[Μηχανική Πλαισίου](https://github.com/kejwojew/hummem/blob/main/docs/public/context-engineering.mdx)** - Αρχές βελτιστοποίησης πλαισίου για AI agents
+- **[Προοδευτική Αποκάλυψη](https://github.com/kejwojew/hummem/blob/main/docs/public/progressive-disclosure.mdx)** - Φιλοσοφία πίσω από τη στρατηγική προετοιμασίας πλαισίου του Claude-Mem
 
 ### Αρχιτεκτονική
 
-- **[Επισκόπηση](https://docs.claude-mem.ai/architecture/overview)** - Συστατικά στοιχεία συστήματος & ροή δεδομένων
-- **[Εξέλιξη Αρχιτεκτονικής](https://docs.claude-mem.ai/architecture-evolution)** - Το ταξίδι από το v3 στο v5
-- **[Αρχιτεκτονική Hooks](https://docs.claude-mem.ai/hooks-architecture)** - Πώς το Claude-Mem χρησιμοποιεί lifecycle hooks
-- **[Αναφορά Hooks](https://docs.claude-mem.ai/architecture/hooks)** - Επεξήγηση 7 hook scripts
-- **[Υπηρεσία Worker](https://docs.claude-mem.ai/architecture/worker-service)** - HTTP API & διαχείριση Bun
-- **[Βάση Δεδομένων](https://docs.claude-mem.ai/architecture/database)** - Σχήμα SQLite & αναζήτηση FTS5
-- **[Αρχιτεκτονική Αναζήτησης](https://docs.claude-mem.ai/architecture/search-architecture)** - Υβριδική αναζήτηση με βάση δεδομένων διανυσμάτων Chroma
+- **[Επισκόπηση](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)** - Συστατικά στοιχεία συστήματος & ροή δεδομένων
+- **[Εξέλιξη Αρχιτεκτονικής](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture-evolution.mdx)** - Το ταξίδι από το v3 στο v5
+- **[Αρχιτεκτονική Hooks](https://github.com/kejwojew/hummem/blob/main/docs/public/hooks-architecture.mdx)** - Πώς το Claude-Mem χρησιμοποιεί lifecycle hooks
+- **[Αναφορά Hooks](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/hooks.mdx)** - Επεξήγηση 7 hook scripts
+- **[Υπηρεσία Worker](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/worker-service.mdx)** - HTTP API & διαχείριση Bun
+- **[Βάση Δεδομένων](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/database.mdx)** - Σχήμα SQLite & αναζήτηση FTS5
+- **[Αρχιτεκτονική Αναζήτησης](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/search-architecture.mdx)** - Υβριδική αναζήτηση με βάση δεδομένων διανυσμάτων Chroma
 
 ### Διαμόρφωση & Ανάπτυξη
 
-- **[Διαμόρφωση](https://docs.claude-mem.ai/configuration)** - Μεταβλητές περιβάλλοντος & ρυθμίσεις
-- **[Ανάπτυξη](https://docs.claude-mem.ai/development)** - Κατασκευή, δοκιμή, συνεισφορά
-- **[Κλάδοι Έκδοσης](https://docs.claude-mem.ai/branches)** - Ροή κλάδων stable, core-dev, και community-edge
-- **[Αντιμετώπιση Προβλημάτων](https://docs.claude-mem.ai/troubleshooting)** - Συνήθη προβλήματα & λύσεις
+- **[Διαμόρφωση](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** - Μεταβλητές περιβάλλοντος & ρυθμίσεις
+- **[Ανάπτυξη](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** - Κατασκευή, δοκιμή, συνεισφορά
+- **[Κλάδοι Έκδοσης](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** - Ροή κλάδων stable, core-dev, και community-edge
+- **[Αντιμετώπιση Προβλημάτων](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** - Συνήθη προβλήματα & λύσεις
 
 ---
 
@@ -231,7 +231,7 @@ curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 5. **Δεξιότητα mem-search** - Ερωτήματα φυσικής γλώσσας με προοδευτική αποκάλυψη
 6. **Βάση Δεδομένων Διανυσμάτων Chroma** - Υβριδική σημασιολογική + αναζήτηση λέξεων-κλειδιών για έξυπνη ανάκτηση πλαισίου
 
-Δείτε την [Επισκόπηση Αρχιτεκτονικής](https://docs.claude-mem.ai/architecture/overview) για λεπτομέρειες.
+Δείτε την [Επισκόπηση Αρχιτεκτονικής](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx) για λεπτομέρειες.
 
 ---
 
@@ -270,7 +270,7 @@ search(query="authentication bug", type="bugfix", limit=10)
 get_observations(ids=[123, 456])
 ```
 
-Δείτε τον [Οδηγό Εργαλείων Αναζήτησης](https://docs.claude-mem.ai/usage/search-tools) για λεπτομερή παραδείγματα.
+Δείτε τον [Οδηγό Εργαλείων Αναζήτησης](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx) για λεπτομερή παραδείγματα.
 
 ---
 
@@ -278,7 +278,7 @@ get_observations(ids=[123, 456])
 
 Οι σταθερές εκδόσεις κυκλοφορούν από τον κλάδο `main` και δημοσιεύονται στο npm. Οι κλάδοι `core-dev` και
 `community-edge` εκτελούνται από τον πηγαίο κώδικα για πρώιμες διορθώσεις αξιοπιστίας και
-ενσωματώσεις της κοινότητας. Δείτε τους **[Κλάδους Έκδοσης](https://docs.claude-mem.ai/branches)**
+ενσωματώσεις της κοινότητας. Δείτε τους **[Κλάδους Έκδοσης](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)**
 για τη ροή κλάδων και τις οδηγίες εκτέλεσης μη σταθερών εκδόσεων.
 
 ---
@@ -308,7 +308,7 @@ npm : The term 'npm' is not recognized as the name of a cmdlet
 
 Οι ρυθμίσεις διαχειρίζονται στο `~/.claude-mem/settings.json` (δημιουργείται αυτόματα με προεπιλογές κατά την πρώτη εκτέλεση). Διαμορφώστε το μοντέλο AI, τη θύρα worker, τον κατάλογο δεδομένων, το επίπεδο καταγραφής και τις ρυθμίσεις εισαγωγής πλαισίου.
 
-Δείτε τον **[Οδηγό Διαμόρφωσης](https://docs.claude-mem.ai/configuration)** για όλες τις διαθέσιμες ρυθμίσεις και παραδείγματα.
+Δείτε τον **[Οδηγό Διαμόρφωσης](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** για όλες τις διαθέσιμες ρυθμίσεις και παραδείγματα.
 
 ### Διαμόρφωση Λειτουργίας & Γλώσσας
 
@@ -353,7 +353,7 @@ ls ~/.claude/plugins/marketplaces/thedotmack/plugin/modes/
 
 ## Ανάπτυξη
 
-Δείτε τον **[Οδηγό Ανάπτυξης](https://docs.claude-mem.ai/development)** για οδηγίες κατασκευής, δοκιμών και ροής εργασίας συνεισφοράς.
+Δείτε τον **[Οδηγό Ανάπτυξης](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** για οδηγίες κατασκευής, δοκιμών και ροής εργασίας συνεισφοράς.
 
 ---
 
@@ -361,7 +361,7 @@ ls ~/.claude/plugins/marketplaces/thedotmack/plugin/modes/
 
 Εάν αντιμετωπίζετε προβλήματα, περιγράψτε το πρόβλημα στο Claude και η δεξιότητα troubleshoot θα διαγνώσει αυτόματα και θα παράσχει λύσεις.
 
-Δείτε τον **[Οδηγό Αντιμετώπισης Προβλημάτων](https://docs.claude-mem.ai/troubleshooting)** για συνήθη προβλήματα και λύσεις.
+Δείτε τον **[Οδηγό Αντιμετώπισης Προβλημάτων](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** για συνήθη προβλήματα και λύσεις.
 
 ---
 
@@ -386,10 +386,10 @@ npm run bug-report
 
 Το Claude-Mem κυκλοφορεί από τρεις κλάδους: `main` (σταθερός), `core-dev`, και
 `community-edge`. Μόνο ο `main` δημοσιεύεται στο npm· οι υπόλοιποι εκτελούνται από
-τον πηγαίο κώδικα. Δείτε τους [Κλάδους Έκδοσης](https://docs.claude-mem.ai/branches) για τη
+τον πηγαίο κώδικα. Δείτε τους [Κλάδους Έκδοσης](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx) για τη
 στρατηγική και τις οδηγίες τοπικής εκτέλεσης.
 
-Δείτε τον [Οδηγό Ανάπτυξης](https://docs.claude-mem.ai/development) για τη ροή εργασίας συνεισφοράς.
+Δείτε τον [Οδηγό Ανάπτυξης](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx) για τη ροή εργασίας συνεισφοράς.
 
 ---
 

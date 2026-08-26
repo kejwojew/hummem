@@ -4,9 +4,9 @@
   <br>
   <a href="https://github.com/thedotmack/claude-mem">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp" alt="hummem" width="400">
     </picture>
   </a>
   <br>
@@ -70,9 +70,9 @@
 <p align="center">
   <a href="https://trendshift.io/repositories/15496" target="_blank">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
     </picture>
   </a>
 </p>
@@ -85,7 +85,7 @@
       <a href="https://github.com/thedotmack/claude-mem">
         <picture>
           <img
-            src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/cm-preview.gif"
+            src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
             alt="Claude-Mem Preview"
             width="500"
           >
@@ -144,7 +144,7 @@ Atau instal untuk OpenCode:
 npx claude-mem install --ide opencode
 ```
 
-Atau instal untuk Antigravity CLI ([panduan pengaturan](https://docs.claude-mem.ai/antigravity-cli/setup)):
+Atau instal untuk Antigravity CLI ([panduan pengaturan](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
 npx claude-mem install --ide antigravity
@@ -170,7 +170,7 @@ Instal claude-mem sebagai plugin memori persisten pada gateway [OpenClaw](https:
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 ```
 
-Installer ini menangani dependensi, pengaturan plugin, konfigurasi penyedia AI, startup worker, dan feed observasi real-time opsional ke Telegram, Discord, Slack, dan lainnya. Lihat [Panduan Integrasi OpenClaw](https://docs.claude-mem.ai/openclaw-integration) untuk detail.
+Installer ini menangani dependensi, pengaturan plugin, konfigurasi penyedia AI, startup worker, dan feed observasi real-time opsional ke Telegram, Discord, Slack, dan lainnya. Lihat [Panduan Integrasi OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) untuk detail.
 
 **Fitur Utama:**
 
@@ -188,35 +188,35 @@ Installer ini menangani dependensi, pengaturan plugin, konfigurasi penyedia AI, 
 
 ## Dokumentasi
 
-📚 **[Lihat Dokumentasi Lengkap](https://docs.claude-mem.ai/)** - Jelajahi di situs web resmi
+📚 **[Lihat Dokumentasi Lengkap](https://github.com/kejwojew/hummem#readme)** - Jelajahi di situs web resmi
 
 ### Memulai
 
-- **[Panduan Instalasi](https://docs.claude-mem.ai/installation)** - Mulai cepat & instalasi lanjutan
-- **[Panduan Penggunaan](https://docs.claude-mem.ai/usage/getting-started)** - Bagaimana Claude-Mem bekerja secara otomatis
-- **[Alat Pencarian](https://docs.claude-mem.ai/usage/search-tools)** - Query riwayat proyek Anda dengan bahasa alami
+- **[Panduan Instalasi](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - Mulai cepat & instalasi lanjutan
+- **[Panduan Penggunaan](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - Bagaimana Claude-Mem bekerja secara otomatis
+- **[Alat Pencarian](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - Query riwayat proyek Anda dengan bahasa alami
 
 ### Praktik Terbaik
 
-- **[Context Engineering](https://docs.claude-mem.ai/context-engineering)** - Prinsip optimisasi konteks agen AI
-- **[Progressive Disclosure](https://docs.claude-mem.ai/progressive-disclosure)** - Filosofi di balik strategi priming konteks Claude-Mem
+- **[Context Engineering](https://github.com/kejwojew/hummem/blob/main/docs/public/context-engineering.mdx)** - Prinsip optimisasi konteks agen AI
+- **[Progressive Disclosure](https://github.com/kejwojew/hummem/blob/main/docs/public/progressive-disclosure.mdx)** - Filosofi di balik strategi priming konteks Claude-Mem
 
 ### Arsitektur
 
-- **[Ringkasan](https://docs.claude-mem.ai/architecture/overview)** - Komponen sistem & aliran data
-- **[Evolusi Arsitektur](https://docs.claude-mem.ai/architecture-evolution)** - Perjalanan dari v3 ke v5
-- **[Arsitektur Hooks](https://docs.claude-mem.ai/hooks-architecture)** - Bagaimana Claude-Mem menggunakan lifecycle hooks
-- **[Referensi Hooks](https://docs.claude-mem.ai/architecture/hooks)** - 7 skrip hook dijelaskan
-- **[Worker Service](https://docs.claude-mem.ai/architecture/worker-service)** - HTTP API & manajemen Bun
-- **[Database](https://docs.claude-mem.ai/architecture/database)** - Skema SQLite & pencarian FTS5
-- **[Arsitektur Pencarian](https://docs.claude-mem.ai/architecture/search-architecture)** - Pencarian hybrid dengan database vektor Chroma
+- **[Ringkasan](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)** - Komponen sistem & aliran data
+- **[Evolusi Arsitektur](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture-evolution.mdx)** - Perjalanan dari v3 ke v5
+- **[Arsitektur Hooks](https://github.com/kejwojew/hummem/blob/main/docs/public/hooks-architecture.mdx)** - Bagaimana Claude-Mem menggunakan lifecycle hooks
+- **[Referensi Hooks](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/hooks.mdx)** - 7 skrip hook dijelaskan
+- **[Worker Service](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/worker-service.mdx)** - HTTP API & manajemen Bun
+- **[Database](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/database.mdx)** - Skema SQLite & pencarian FTS5
+- **[Arsitektur Pencarian](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/search-architecture.mdx)** - Pencarian hybrid dengan database vektor Chroma
 
 ### Konfigurasi & Pengembangan
 
-- **[Konfigurasi](https://docs.claude-mem.ai/configuration)** - Variabel environment & pengaturan
-- **[Pengembangan](https://docs.claude-mem.ai/development)** - Membangun, testing, kontribusi
-- **[Release Branches](https://docs.claude-mem.ai/branches)** - Alur branch stable, core-dev, dan community-edge
-- **[Pemecahan Masalah](https://docs.claude-mem.ai/troubleshooting)** - Masalah umum & solusi
+- **[Konfigurasi](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** - Variabel environment & pengaturan
+- **[Pengembangan](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** - Membangun, testing, kontribusi
+- **[Release Branches](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** - Alur branch stable, core-dev, dan community-edge
+- **[Pemecahan Masalah](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** - Masalah umum & solusi
 
 ---
 
@@ -231,7 +231,7 @@ Installer ini menangani dependensi, pengaturan plugin, konfigurasi penyedia AI, 
 5. **mem-search Skill** - Query bahasa alami dengan progressive disclosure
 6. **Chroma Vector Database** - Pencarian hybrid semantik + keyword untuk pengambilan konteks yang cerdas
 
-Lihat [Ringkasan Arsitektur](https://docs.claude-mem.ai/architecture/overview) untuk detail.
+Lihat [Ringkasan Arsitektur](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx) untuk detail.
 
 ---
 
@@ -270,7 +270,7 @@ search(query="authentication bug", type="bugfix", limit=10)
 get_observations(ids=[123, 456])
 ```
 
-Lihat [Panduan Alat Pencarian](https://docs.claude-mem.ai/usage/search-tools) untuk contoh detail.
+Lihat [Panduan Alat Pencarian](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx) untuk contoh detail.
 
 ---
 
@@ -278,7 +278,7 @@ Lihat [Panduan Alat Pencarian](https://docs.claude-mem.ai/usage/search-tools) un
 
 Rilis stabil dikirim dari `main` dan dipublikasikan ke npm. `core-dev` dan
 `community-edge` adalah branch yang dijalankan dari source untuk perbaikan reliabilitas awal dan
-integrasi komunitas. Lihat **[Release Branches](https://docs.claude-mem.ai/branches)**
+integrasi komunitas. Lihat **[Release Branches](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)**
 untuk alur branch dan instruksi menjalankan versi non-stable.
 
 ---
@@ -308,7 +308,7 @@ Pastikan Node.js dan npm sudah terinstal dan ditambahkan ke PATH Anda. Unduh ins
 
 Pengaturan dikelola di `~/.claude-mem/settings.json` (otomatis dibuat dengan default saat pertama kali dijalankan). Konfigurasi model AI, port worker, direktori data, level log, dan pengaturan injeksi konteks.
 
-Lihat **[Panduan Konfigurasi](https://docs.claude-mem.ai/configuration)** untuk semua pengaturan dan contoh yang tersedia.
+Lihat **[Panduan Konfigurasi](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** untuk semua pengaturan dan contoh yang tersedia.
 
 ### Konfigurasi Mode & Bahasa
 
@@ -353,7 +353,7 @@ Restart Claude Code untuk menerapkan konfigurasi mode baru.
 
 ## Pengembangan
 
-Lihat **[Panduan Pengembangan](https://docs.claude-mem.ai/development)** untuk instruksi build, testing, dan alur kerja kontribusi.
+Lihat **[Panduan Pengembangan](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** untuk instruksi build, testing, dan alur kerja kontribusi.
 
 ---
 
@@ -361,7 +361,7 @@ Lihat **[Panduan Pengembangan](https://docs.claude-mem.ai/development)** untuk i
 
 Jika mengalami masalah, jelaskan masalah ke Claude dan troubleshoot skill akan secara otomatis mendiagnosis dan memberikan perbaikan.
 
-Lihat **[Panduan Pemecahan Masalah](https://docs.claude-mem.ai/troubleshooting)** untuk masalah umum dan solusi.
+Lihat **[Panduan Pemecahan Masalah](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** untuk masalah umum dan solusi.
 
 ---
 
@@ -386,10 +386,10 @@ Kontribusi sangat dipersilakan! Silakan:
 
 Claude-Mem dikirim dari tiga branch: `main` (stable), `core-dev`, dan
 `community-edge`. Hanya `main` yang dipublikasikan ke npm; yang lainnya dijalankan dari
-source. Lihat [Release Branches](https://docs.claude-mem.ai/branches) untuk
+source. Lihat [Release Branches](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx) untuk
 strategi dan instruksi menjalankan secara lokal.
 
-Lihat [Panduan Pengembangan](https://docs.claude-mem.ai/development) untuk alur kerja kontribusi.
+Lihat [Panduan Pengembangan](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx) untuk alur kerja kontribusi.
 
 ---
 

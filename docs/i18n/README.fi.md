@@ -4,9 +4,9 @@
   <br>
   <a href="https://github.com/thedotmack/claude-mem">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp" alt="hummem" width="400">
     </picture>
   </a>
   <br>
@@ -70,9 +70,9 @@
 <p align="center">
   <a href="https://trendshift.io/repositories/15496" target="_blank">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
     </picture>
   </a>
 </p>
@@ -85,7 +85,7 @@
       <a href="https://github.com/thedotmack/claude-mem">
         <picture>
           <img
-            src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/cm-preview.gif"
+            src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
             alt="Claude-Mem Preview"
             width="500"
           >
@@ -144,7 +144,7 @@ Tai asenna OpenCodelle:
 npx claude-mem install --ide opencode
 ```
 
-Tai asenna Antigravity CLI:lle ([asennusopas](https://docs.claude-mem.ai/antigravity-cli/setup)):
+Tai asenna Antigravity CLI:lle ([asennusopas](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
 npx claude-mem install --ide antigravity
@@ -170,7 +170,7 @@ Asenna claude-mem pysyväksi muistipluginiksi [OpenClaw](https://openclaw.ai)-yh
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 ```
 
-Asennusohjelma hoitaa riippuvuudet, plugin-asetukset, AI-palveluntarjoajan määrityksen, workerin käynnistyksen ja valinnaiset reaaliaikaiset havaintosyötteet Telegramiin, Discordiin, Slackiin ja muihin. Katso lisätietoja [OpenClaw-integraatio-oppaasta](https://docs.claude-mem.ai/openclaw-integration).
+Asennusohjelma hoitaa riippuvuudet, plugin-asetukset, AI-palveluntarjoajan määrityksen, workerin käynnistyksen ja valinnaiset reaaliaikaiset havaintosyötteet Telegramiin, Discordiin, Slackiin ja muihin. Katso lisätietoja [OpenClaw-integraatio-oppaasta](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx).
 
 **Keskeiset ominaisuudet:**
 
@@ -188,35 +188,35 @@ Asennusohjelma hoitaa riippuvuudet, plugin-asetukset, AI-palveluntarjoajan mää
 
 ## Dokumentaatio
 
-📚 **[Näytä täydellinen dokumentaatio](https://docs.claude-mem.ai/)** - Selaa virallisella verkkosivustolla
+📚 **[Näytä täydellinen dokumentaatio](https://github.com/kejwojew/hummem#readme)** - Selaa virallisella verkkosivustolla
 
 ### Aloitus
 
-- **[Asennusopas](https://docs.claude-mem.ai/installation)** - Pikaopas ja edistynyt asennus
-- **[Käyttöopas](https://docs.claude-mem.ai/usage/getting-started)** - Miten Claude-Mem toimii automaattisesti
-- **[Hakutyökalut](https://docs.claude-mem.ai/usage/search-tools)** - Kysy projektihistoriaasi luonnollisella kielellä
+- **[Asennusopas](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - Pikaopas ja edistynyt asennus
+- **[Käyttöopas](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - Miten Claude-Mem toimii automaattisesti
+- **[Hakutyökalut](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - Kysy projektihistoriaasi luonnollisella kielellä
 
 ### Parhaat käytännöt
 
-- **[Kontekstisuunnittelu](https://docs.claude-mem.ai/context-engineering)** - AI-agentin kontekstin optimointiperiaatteet
-- **[Asteittainen paljastaminen](https://docs.claude-mem.ai/progressive-disclosure)** - Filosofia Claude-Mem-kontekstin valmistelustrategian takana
+- **[Kontekstisuunnittelu](https://github.com/kejwojew/hummem/blob/main/docs/public/context-engineering.mdx)** - AI-agentin kontekstin optimointiperiaatteet
+- **[Asteittainen paljastaminen](https://github.com/kejwojew/hummem/blob/main/docs/public/progressive-disclosure.mdx)** - Filosofia Claude-Mem-kontekstin valmistelustrategian takana
 
 ### Arkkitehtuuri
 
-- **[Yleiskatsaus](https://docs.claude-mem.ai/architecture/overview)** - Järjestelmän komponentit ja datavirta
-- **[Arkkitehtuurin kehitys](https://docs.claude-mem.ai/architecture-evolution)** - Matka versiosta v3 versioon v5
-- **[Koukku-arkkitehtuuri](https://docs.claude-mem.ai/hooks-architecture)** - Miten Claude-Mem käyttää elinkaarikoukkuja
-- **[Koukkuviittaus](https://docs.claude-mem.ai/architecture/hooks)** - 7 koukku-skriptiä selitettynä
-- **[Worker-palvelu](https://docs.claude-mem.ai/architecture/worker-service)** - HTTP API ja Bun-hallinta
-- **[Tietokanta](https://docs.claude-mem.ai/architecture/database)** - SQLite-skeema ja FTS5-haku
-- **[Hakuarkkitehtuuri](https://docs.claude-mem.ai/architecture/search-architecture)** - Hybridihaku Chroma-vektoritietokannalla
+- **[Yleiskatsaus](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)** - Järjestelmän komponentit ja datavirta
+- **[Arkkitehtuurin kehitys](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture-evolution.mdx)** - Matka versiosta v3 versioon v5
+- **[Koukku-arkkitehtuuri](https://github.com/kejwojew/hummem/blob/main/docs/public/hooks-architecture.mdx)** - Miten Claude-Mem käyttää elinkaarikoukkuja
+- **[Koukkuviittaus](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/hooks.mdx)** - 7 koukku-skriptiä selitettynä
+- **[Worker-palvelu](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/worker-service.mdx)** - HTTP API ja Bun-hallinta
+- **[Tietokanta](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/database.mdx)** - SQLite-skeema ja FTS5-haku
+- **[Hakuarkkitehtuuri](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/search-architecture.mdx)** - Hybridihaku Chroma-vektoritietokannalla
 
 ### Asetukset ja kehitys
 
-- **[Asetukset](https://docs.claude-mem.ai/configuration)** - Ympäristömuuttujat ja asetukset
-- **[Kehitys](https://docs.claude-mem.ai/development)** - Rakentaminen, testaus, osallistuminen
-- **[Julkaisuhaarat](https://docs.claude-mem.ai/branches)** - Stable-, core-dev- ja community-edge-haarojen kulku
-- **[Vianmääritys](https://docs.claude-mem.ai/troubleshooting)** - Yleiset ongelmat ja ratkaisut
+- **[Asetukset](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** - Ympäristömuuttujat ja asetukset
+- **[Kehitys](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** - Rakentaminen, testaus, osallistuminen
+- **[Julkaisuhaarat](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** - Stable-, core-dev- ja community-edge-haarojen kulku
+- **[Vianmääritys](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** - Yleiset ongelmat ja ratkaisut
 
 ---
 
@@ -231,7 +231,7 @@ Asennusohjelma hoitaa riippuvuudet, plugin-asetukset, AI-palveluntarjoajan mää
 5. **mem-search-taito** - Luonnollisen kielen kyselyt asteittaisella paljastamisella
 6. **Chroma-vektoritietokanta** - Hybridi semanttinen + avainsanahaku älykkääseen kontekstin hakuun
 
-Katso [Arkkitehtuurin yleiskatsaus](https://docs.claude-mem.ai/architecture/overview) yksityiskohdista.
+Katso [Arkkitehtuurin yleiskatsaus](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx) yksityiskohdista.
 
 ---
 
@@ -270,7 +270,7 @@ search(query="authentication bug", type="bugfix", limit=10)
 get_observations(ids=[123, 456])
 ```
 
-Katso [Hakutyökalujen opas](https://docs.claude-mem.ai/usage/search-tools) yksityiskohtaisia esimerkkejä varten.
+Katso [Hakutyökalujen opas](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx) yksityiskohtaisia esimerkkejä varten.
 
 ---
 
@@ -278,7 +278,7 @@ Katso [Hakutyökalujen opas](https://docs.claude-mem.ai/usage/search-tools) yksi
 
 Vakaat julkaisut toimitetaan `main`-haarasta ja julkaistaan npm:ssä. `core-dev`- ja
 `community-edge`-haarat ovat lähdekoodista ajettavia haaroja varhaisia luotettavuuskorjauksia ja
-yhteisöintegraatioita varten. Katso **[Julkaisuhaarat](https://docs.claude-mem.ai/branches)**
+yhteisöintegraatioita varten. Katso **[Julkaisuhaarat](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)**
 haarojen kulusta ja ei-vakaiden versioiden ajo-ohjeista.
 
 ---
@@ -308,7 +308,7 @@ Varmista, että Node.js ja npm on asennettu ja lisätty PATH-muuttujaan. Lataa u
 
 Asetuksia hallitaan tiedostossa `~/.claude-mem/settings.json` (luodaan automaattisesti oletusarvoilla ensimmäisellä suorituskerralla). Määritä AI-malli, worker-portti, datahakemisto, lokitaso ja kontekstin injektointiasetukset.
 
-Katso **[Asetusopas](https://docs.claude-mem.ai/configuration)** kaikista saatavilla olevista asetuksista ja esimerkeistä.
+Katso **[Asetusopas](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** kaikista saatavilla olevista asetuksista ja esimerkeistä.
 
 ### Tilan ja kielen määritys
 
@@ -353,7 +353,7 @@ Käynnistä Claude Code uudelleen soveltaaksesi uuden tila-asetuksen.
 
 ## Kehitys
 
-Katso **[Kehitysopas](https://docs.claude-mem.ai/development)** rakennusohjeista, testauksesta ja osallistumisen työnkulusta.
+Katso **[Kehitysopas](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** rakennusohjeista, testauksesta ja osallistumisen työnkulusta.
 
 ---
 
@@ -361,7 +361,7 @@ Katso **[Kehitysopas](https://docs.claude-mem.ai/development)** rakennusohjeista
 
 Jos kohtaat ongelmia, kuvaile ongelma Claudelle ja troubleshoot-taito diagnosoi automaattisesti ja tarjoaa korjauksia.
 
-Katso **[Vianmääritysopas](https://docs.claude-mem.ai/troubleshooting)** yleisistä ongelmista ja ratkaisuista.
+Katso **[Vianmääritysopas](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** yleisistä ongelmista ja ratkaisuista.
 
 ---
 
@@ -386,10 +386,10 @@ Osallistuminen on tervetullutta! Ole hyvä ja:
 
 Claude-Mem toimitetaan kolmesta haarasta: `main` (vakaa), `core-dev` ja
 `community-edge`. Vain `main` julkaistaan npm:ssä; muut ajetaan
-lähdekoodista. Katso [Julkaisuhaarat](https://docs.claude-mem.ai/branches) strategiasta ja
+lähdekoodista. Katso [Julkaisuhaarat](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx) strategiasta ja
 paikallisista ajo-ohjeista.
 
-Katso [Kehitysopas](https://docs.claude-mem.ai/development) osallistumisen työnkulusta.
+Katso [Kehitysopas](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx) osallistumisen työnkulusta.
 
 ---
 

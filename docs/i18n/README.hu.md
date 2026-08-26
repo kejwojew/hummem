@@ -4,9 +4,9 @@
   <br>
   <a href="https://github.com/thedotmack/claude-mem">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp" alt="hummem" width="400">
     </picture>
   </a>
   <br>
@@ -70,9 +70,9 @@
 <p align="center">
   <a href="https://trendshift.io/repositories/15496" target="_blank">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
     </picture>
   </a>
 </p>
@@ -85,7 +85,7 @@
       <a href="https://github.com/thedotmack/claude-mem">
         <picture>
           <img
-            src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/cm-preview.gif"
+            src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
             alt="Claude-Mem Preview"
             width="500"
           >
@@ -144,7 +144,7 @@ Vagy telepítés OpenCode-hoz:
 npx claude-mem install --ide opencode
 ```
 
-Vagy telepítés Antigravity CLI-hez ([beállítási útmutató](https://docs.claude-mem.ai/antigravity-cli/setup)):
+Vagy telepítés Antigravity CLI-hez ([beállítási útmutató](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
 npx claude-mem install --ide antigravity
@@ -170,7 +170,7 @@ Telepítse a claude-mem-et tartós memória pluginként az [OpenClaw](https://op
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 ```
 
-A telepítő kezeli a függőségeket, a plugin beállítását, az AI szolgáltató konfigurációját, a worker indítását, valamint az opcionális valós idejű megfigyelési feedeket Telegramra, Discordra, Slackre és másokra. Részletekért lásd az [OpenClaw integrációs útmutatót](https://docs.claude-mem.ai/openclaw-integration).
+A telepítő kezeli a függőségeket, a plugin beállítását, az AI szolgáltató konfigurációját, a worker indítását, valamint az opcionális valós idejű megfigyelési feedeket Telegramra, Discordra, Slackre és másokra. Részletekért lásd az [OpenClaw integrációs útmutatót](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx).
 
 **Főbb jellemzők:**
 
@@ -188,35 +188,35 @@ A telepítő kezeli a függőségeket, a plugin beállítását, az AI szolgált
 
 ## Dokumentáció
 
-📚 **[Teljes dokumentáció megtekintése](https://docs.claude-mem.ai/)** - Böngészés a hivatalos weboldalon
+📚 **[Teljes dokumentáció megtekintése](https://github.com/kejwojew/hummem#readme)** - Böngészés a hivatalos weboldalon
 
 ### Első lépések
 
-- **[Telepítési útmutató](https://docs.claude-mem.ai/installation)** - Gyors indítás és haladó telepítés
-- **[Használati útmutató](https://docs.claude-mem.ai/usage/getting-started)** - Hogyan működik automatikusan a Claude-Mem
-- **[Keresési eszközök](https://docs.claude-mem.ai/usage/search-tools)** - Projekt előzmények lekérdezése természetes nyelvvel
+- **[Telepítési útmutató](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - Gyors indítás és haladó telepítés
+- **[Használati útmutató](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - Hogyan működik automatikusan a Claude-Mem
+- **[Keresési eszközök](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - Projekt előzmények lekérdezése természetes nyelvvel
 
 ### Bevált gyakorlatok
 
-- **[Kontextus tervezés](https://docs.claude-mem.ai/context-engineering)** - AI ügynök kontextus optimalizálási elvek
-- **[Progresszív felfedés](https://docs.claude-mem.ai/progressive-disclosure)** - A Claude-Mem kontextus előkészítési stratégiájának filozófiája
+- **[Kontextus tervezés](https://github.com/kejwojew/hummem/blob/main/docs/public/context-engineering.mdx)** - AI ügynök kontextus optimalizálási elvek
+- **[Progresszív felfedés](https://github.com/kejwojew/hummem/blob/main/docs/public/progressive-disclosure.mdx)** - A Claude-Mem kontextus előkészítési stratégiájának filozófiája
 
 ### Architektúra
 
-- **[Áttekintés](https://docs.claude-mem.ai/architecture/overview)** - Rendszerkomponensek és adatfolyam
-- **[Architektúra fejlődés](https://docs.claude-mem.ai/architecture-evolution)** - Az út a v3-tól a v5-ig
-- **[Hooks architektúra](https://docs.claude-mem.ai/hooks-architecture)** - Hogyan használja a Claude-Mem az életciklus hookokat
-- **[Hooks referencia](https://docs.claude-mem.ai/architecture/hooks)** - 7 hook szkript magyarázata
-- **[Worker szolgáltatás](https://docs.claude-mem.ai/architecture/worker-service)** - HTTP API és Bun kezelés
-- **[Adatbázis](https://docs.claude-mem.ai/architecture/database)** - SQLite séma és FTS5 keresés
-- **[Keresési architektúra](https://docs.claude-mem.ai/architecture/search-architecture)** - Hibrid keresés Chroma vektor adatbázissal
+- **[Áttekintés](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)** - Rendszerkomponensek és adatfolyam
+- **[Architektúra fejlődés](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture-evolution.mdx)** - Az út a v3-tól a v5-ig
+- **[Hooks architektúra](https://github.com/kejwojew/hummem/blob/main/docs/public/hooks-architecture.mdx)** - Hogyan használja a Claude-Mem az életciklus hookokat
+- **[Hooks referencia](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/hooks.mdx)** - 7 hook szkript magyarázata
+- **[Worker szolgáltatás](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/worker-service.mdx)** - HTTP API és Bun kezelés
+- **[Adatbázis](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/database.mdx)** - SQLite séma és FTS5 keresés
+- **[Keresési architektúra](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/search-architecture.mdx)** - Hibrid keresés Chroma vektor adatbázissal
 
 ### Konfiguráció és fejlesztés
 
-- **[Konfiguráció](https://docs.claude-mem.ai/configuration)** - Környezeti változók és beállítások
-- **[Fejlesztés](https://docs.claude-mem.ai/development)** - Építés, tesztelés, hozzájárulás
-- **[Kiadási ágak](https://docs.claude-mem.ai/branches)** - A stable, core-dev és community-edge ágak folyamata
-- **[Hibaelhárítás](https://docs.claude-mem.ai/troubleshooting)** - Gyakori problémák és megoldások
+- **[Konfiguráció](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** - Környezeti változók és beállítások
+- **[Fejlesztés](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** - Építés, tesztelés, hozzájárulás
+- **[Kiadási ágak](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** - A stable, core-dev és community-edge ágak folyamata
+- **[Hibaelhárítás](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** - Gyakori problémák és megoldások
 
 ---
 
@@ -231,7 +231,7 @@ A telepítő kezeli a függőségeket, a plugin beállítását, az AI szolgált
 5. **mem-search Skill** - Természetes nyelvi lekérdezések progresszív felfedéssel
 6. **Chroma vektor adatbázis** - Hibrid szemantikus + kulcsszó keresés intelligens kontextus-visszakereséshez
 
-Részletekért lásd az [Architektúra áttekintést](https://docs.claude-mem.ai/architecture/overview).
+Részletekért lásd az [Architektúra áttekintést](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx).
 
 ---
 
@@ -270,7 +270,7 @@ search(query="authentication bug", type="bugfix", limit=10)
 get_observations(ids=[123, 456])
 ```
 
-Részletes példákért lásd a [Keresési eszközök útmutatót](https://docs.claude-mem.ai/usage/search-tools).
+Részletes példákért lásd a [Keresési eszközök útmutatót](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx).
 
 ---
 
@@ -278,7 +278,7 @@ Részletes példákért lásd a [Keresési eszközök útmutatót](https://docs.
 
 A stabil kiadások a `main` ágból jelennek meg, és az npm-re kerülnek publikálásra. A `core-dev` és a
 `community-edge` forráskódból futtatott ágak a korai megbízhatósági javításokhoz és a
-közösségi integrációkhoz. Lásd a **[Kiadási ágak](https://docs.claude-mem.ai/branches)** oldalt
+közösségi integrációkhoz. Lásd a **[Kiadási ágak](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** oldalt
 az ágfolyamatért és a nem-stabil futtatási utasításokért.
 
 ---
@@ -308,7 +308,7 @@ Győződjön meg róla, hogy a Node.js és az npm telepítve van, és hozzá van
 
 A beállítások a `~/.claude-mem/settings.json` fájlban kezelhetők (automatikusan létrejön alapértelmezett értékekkel az első futtatáskor). Konfigurálható az AI modell, worker port, adatkönyvtár, naplózási szint és kontextus beillesztési beállítások.
 
-Az összes elérhető beállításért és példákért lásd a **[Konfigurációs útmutatót](https://docs.claude-mem.ai/configuration)**.
+Az összes elérhető beállításért és példákért lásd a **[Konfigurációs útmutatót](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)**.
 
 ### Mód és nyelv konfiguráció
 
@@ -353,7 +353,7 @@ Indítsa újra a Claude Code-ot az új mód konfiguráció alkalmazásához.
 
 ## Fejlesztés
 
-Az építési utasításokért, tesztelésért és hozzájárulási munkafolyamatért lásd a **[Fejlesztési útmutatót](https://docs.claude-mem.ai/development)**.
+Az építési utasításokért, tesztelésért és hozzájárulási munkafolyamatért lásd a **[Fejlesztési útmutatót](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)**.
 
 ---
 
@@ -361,7 +361,7 @@ Az építési utasításokért, tesztelésért és hozzájárulási munkafolyama
 
 Problémák esetén írja le a problémát Claude-nak, és a troubleshoot skill automatikusan diagnosztizálja és javítási megoldásokat kínál.
 
-Gyakori problémákért és megoldásokért lásd a **[Hibaelhárítási útmutatót](https://docs.claude-mem.ai/troubleshooting)**.
+Gyakori problémákért és megoldásokért lásd a **[Hibaelhárítási útmutatót](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)**.
 
 ---
 
@@ -386,10 +386,10 @@ A hozzájárulásokat szívesen fogadjuk! Kérjük:
 
 A Claude-Mem három ágból jelenik meg: `main` (stabil), `core-dev` és
 `community-edge`. Kizárólag a `main` kerül publikálásra az npm-en; a többi
-forráskódból fut. Lásd a [Kiadási ágak](https://docs.claude-mem.ai/branches) oldalt a
+forráskódból fut. Lásd a [Kiadási ágak](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx) oldalt a
 stratégiáért és a helyi futtatási utasításokért.
 
-Lásd a [Fejlesztési útmutatót](https://docs.claude-mem.ai/development) a hozzájárulási munkafolyamatért.
+Lásd a [Fejlesztési útmutatót](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx) a hozzájárulási munkafolyamatért.
 
 ---
 

@@ -4,9 +4,9 @@
   <br>
   <a href="https://github.com/thedotmack/claude-mem">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp" alt="hummem" width="400">
     </picture>
   </a>
   <br>
@@ -70,9 +70,9 @@
 <p align="center">
   <a href="https://trendshift.io/repositories/15496" target="_blank">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
     </picture>
   </a>
 </p>
@@ -85,7 +85,7 @@
       <a href="https://github.com/thedotmack/claude-mem">
         <picture>
           <img
-            src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/cm-preview.gif"
+            src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
             alt="Claude-Mem Preview"
             width="500"
           >
@@ -144,7 +144,7 @@ Hoặc cài đặt cho OpenCode:
 npx claude-mem install --ide opencode
 ```
 
-Hoặc cài đặt cho Antigravity CLI ([hướng dẫn cài đặt](https://docs.claude-mem.ai/antigravity-cli/setup)):
+Hoặc cài đặt cho Antigravity CLI ([hướng dẫn cài đặt](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
 npx claude-mem install --ide antigravity
@@ -170,7 +170,7 @@ Cài đặt claude-mem như một plugin bộ nhớ liên tục trên các gatew
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 ```
 
-Trình cài đặt xử lý các phần phụ thuộc, thiết lập plugin, cấu hình nhà cung cấp AI, khởi động worker, và tùy chọn gửi luồng quan sát thời gian thực đến Telegram, Discord, Slack, và nhiều hơn nữa. Xem [Hướng Dẫn Tích Hợp OpenClaw](https://docs.claude-mem.ai/openclaw-integration) để biết chi tiết.
+Trình cài đặt xử lý các phần phụ thuộc, thiết lập plugin, cấu hình nhà cung cấp AI, khởi động worker, và tùy chọn gửi luồng quan sát thời gian thực đến Telegram, Discord, Slack, và nhiều hơn nữa. Xem [Hướng Dẫn Tích Hợp OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) để biết chi tiết.
 
 **Tính Năng Chính:**
 
@@ -188,35 +188,35 @@ Trình cài đặt xử lý các phần phụ thuộc, thiết lập plugin, c�
 
 ## Tài Liệu
 
-📚 **[Xem Tài Liệu Đầy Đủ](https://docs.claude-mem.ai/)** - Duyệt trên trang web chính thức
+📚 **[Xem Tài Liệu Đầy Đủ](https://github.com/kejwojew/hummem#readme)** - Duyệt trên trang web chính thức
 
 ### Bắt Đầu
 
-- **[Hướng Dẫn Cài Đặt](https://docs.claude-mem.ai/installation)** - Bắt đầu nhanh & cài đặt nâng cao
-- **[Hướng Dẫn Sử Dụng](https://docs.claude-mem.ai/usage/getting-started)** - Cách Claude-Mem hoạt động tự động
-- **[Công Cụ Tìm Kiếm](https://docs.claude-mem.ai/usage/search-tools)** - Truy vấn lịch sử dự án bằng ngôn ngữ tự nhiên
+- **[Hướng Dẫn Cài Đặt](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - Bắt đầu nhanh & cài đặt nâng cao
+- **[Hướng Dẫn Sử Dụng](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - Cách Claude-Mem hoạt động tự động
+- **[Công Cụ Tìm Kiếm](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - Truy vấn lịch sử dự án bằng ngôn ngữ tự nhiên
 
 ### Thực Hành Tốt Nhất
 
-- **[Kỹ Thuật Ngữ Cảnh](https://docs.claude-mem.ai/context-engineering)** - Các nguyên tắc tối ưu hóa ngữ cảnh cho AI agent
-- **[Tiết Lộ Tuần Tự](https://docs.claude-mem.ai/progressive-disclosure)** - Triết lý đằng sau chiến lược chuẩn bị ngữ cảnh của Claude-Mem
+- **[Kỹ Thuật Ngữ Cảnh](https://github.com/kejwojew/hummem/blob/main/docs/public/context-engineering.mdx)** - Các nguyên tắc tối ưu hóa ngữ cảnh cho AI agent
+- **[Tiết Lộ Tuần Tự](https://github.com/kejwojew/hummem/blob/main/docs/public/progressive-disclosure.mdx)** - Triết lý đằng sau chiến lược chuẩn bị ngữ cảnh của Claude-Mem
 
 ### Kiến Trúc
 
-- **[Tổng Quan](https://docs.claude-mem.ai/architecture/overview)** - Các thành phần hệ thống & luồng dữ liệu
-- **[Phát Triển Kiến Trúc](https://docs.claude-mem.ai/architecture-evolution)** - Hành trình từ v3 đến v5
-- **[Kiến Trúc Hooks](https://docs.claude-mem.ai/hooks-architecture)** - Cách Claude-Mem sử dụng lifecycle hooks
-- **[Tham Chiếu Hooks](https://docs.claude-mem.ai/architecture/hooks)** - Giải thích 7 hook scripts
-- **[Worker Service](https://docs.claude-mem.ai/architecture/worker-service)** - HTTP API & quản lý Bun
-- **[Cơ Sở Dữ Liệu](https://docs.claude-mem.ai/architecture/database)** - Schema SQLite & tìm kiếm FTS5
-- **[Kiến Trúc Tìm Kiếm](https://docs.claude-mem.ai/architecture/search-architecture)** - Tìm kiếm kết hợp với cơ sở dữ liệu vector Chroma
+- **[Tổng Quan](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)** - Các thành phần hệ thống & luồng dữ liệu
+- **[Phát Triển Kiến Trúc](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture-evolution.mdx)** - Hành trình từ v3 đến v5
+- **[Kiến Trúc Hooks](https://github.com/kejwojew/hummem/blob/main/docs/public/hooks-architecture.mdx)** - Cách Claude-Mem sử dụng lifecycle hooks
+- **[Tham Chiếu Hooks](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/hooks.mdx)** - Giải thích 7 hook scripts
+- **[Worker Service](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/worker-service.mdx)** - HTTP API & quản lý Bun
+- **[Cơ Sở Dữ Liệu](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/database.mdx)** - Schema SQLite & tìm kiếm FTS5
+- **[Kiến Trúc Tìm Kiếm](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/search-architecture.mdx)** - Tìm kiếm kết hợp với cơ sở dữ liệu vector Chroma
 
 ### Cấu Hình & Phát Triển
 
-- **[Cấu Hình](https://docs.claude-mem.ai/configuration)** - Biến môi trường & cài đặt
-- **[Phát Triển](https://docs.claude-mem.ai/development)** - Xây dựng, kiểm thử, đóng góp
-- **[Nhánh Phát Hành](https://docs.claude-mem.ai/branches)** - Luồng các nhánh stable, core-dev, và community-edge
-- **[Khắc Phục Sự Cố](https://docs.claude-mem.ai/troubleshooting)** - Các vấn đề thường gặp & giải pháp
+- **[Cấu Hình](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** - Biến môi trường & cài đặt
+- **[Phát Triển](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** - Xây dựng, kiểm thử, đóng góp
+- **[Nhánh Phát Hành](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** - Luồng các nhánh stable, core-dev, và community-edge
+- **[Khắc Phục Sự Cố](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** - Các vấn đề thường gặp & giải pháp
 
 ---
 
@@ -231,7 +231,7 @@ Trình cài đặt xử lý các phần phụ thuộc, thiết lập plugin, c�
 5. **mem-search Skill** - Truy vấn ngôn ngữ tự nhiên với tiết lộ tuần tự
 6. **Chroma Vector Database** - Tìm kiếm kết hợp ngữ nghĩa + từ khóa để truy xuất ngữ cảnh thông minh
 
-Xem [Tổng Quan Kiến Trúc](https://docs.claude-mem.ai/architecture/overview) để biết chi tiết.
+Xem [Tổng Quan Kiến Trúc](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx) để biết chi tiết.
 
 ---
 
@@ -270,7 +270,7 @@ search(query="authentication bug", type="bugfix", limit=10)
 get_observations(ids=[123, 456])
 ```
 
-Xem [Hướng Dẫn Công Cụ Tìm Kiếm](https://docs.claude-mem.ai/usage/search-tools) để biết các ví dụ chi tiết.
+Xem [Hướng Dẫn Công Cụ Tìm Kiếm](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx) để biết các ví dụ chi tiết.
 
 ---
 
@@ -278,7 +278,7 @@ Xem [Hướng Dẫn Công Cụ Tìm Kiếm](https://docs.claude-mem.ai/usage/sea
 
 Các bản phát hành ổn định được xây dựng từ `main` và phát hành lên npm. `core-dev` và
 `community-edge` là các nhánh chạy trực tiếp từ mã nguồn dành cho các bản sửa lỗi độ tin cậy
-sớm và các tích hợp cộng đồng. Xem **[Nhánh Phát Hành](https://docs.claude-mem.ai/branches)**
+sớm và các tích hợp cộng đồng. Xem **[Nhánh Phát Hành](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)**
 để biết luồng nhánh và hướng dẫn chạy phiên bản không ổn định.
 
 ---
@@ -308,7 +308,7 @@ Hãy đảm bảo rằng Node.js và npm đã được cài đặt và thêm và
 
 Cài đặt được quản lý trong `~/.claude-mem/settings.json` (tự động tạo với giá trị mặc định khi chạy lần đầu). Cấu hình mô hình AI, cổng worker, thư mục dữ liệu, mức độ log và cài đặt chèn ngữ cảnh.
 
-Xem **[Hướng Dẫn Cấu Hình](https://docs.claude-mem.ai/configuration)** để biết tất cả các cài đặt và ví dụ có sẵn.
+Xem **[Hướng Dẫn Cấu Hình](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** để biết tất cả các cài đặt và ví dụ có sẵn.
 
 ### Cấu Hình Chế Độ & Ngôn Ngữ
 
@@ -353,7 +353,7 @@ Khởi động lại Claude Code để áp dụng cấu hình chế độ mới.
 
 ## Phát Triển
 
-Xem **[Hướng Dẫn Phát Triển](https://docs.claude-mem.ai/development)** để biết hướng dẫn xây dựng, kiểm thử và quy trình đóng góp.
+Xem **[Hướng Dẫn Phát Triển](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** để biết hướng dẫn xây dựng, kiểm thử và quy trình đóng góp.
 
 ---
 
@@ -361,7 +361,7 @@ Xem **[Hướng Dẫn Phát Triển](https://docs.claude-mem.ai/development)** �
 
 Nếu gặp sự cố, hãy mô tả vấn đề cho Claude và kỹ năng troubleshoot sẽ tự động chẩn đoán và cung cấp các bản sửa lỗi.
 
-Xem **[Hướng Dẫn Khắc Phục Sự Cố](https://docs.claude-mem.ai/troubleshooting)** để biết các vấn đề thường gặp và giải pháp.
+Xem **[Hướng Dẫn Khắc Phục Sự Cố](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** để biết các vấn đề thường gặp và giải pháp.
 
 ---
 
@@ -386,10 +386,10 @@ Chúng tôi hoan nghênh các đóng góp! Vui lòng:
 
 Claude-Mem được phát hành từ ba nhánh: `main` (ổn định), `core-dev`, và
 `community-edge`. Chỉ `main` được phát hành lên npm; các nhánh còn lại được chạy từ
-mã nguồn. Xem [Nhánh Phát Hành](https://docs.claude-mem.ai/branches) để biết
+mã nguồn. Xem [Nhánh Phát Hành](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx) để biết
 chiến lược và hướng dẫn chạy cục bộ.
 
-Xem [Hướng Dẫn Phát Triển](https://docs.claude-mem.ai/development) để biết quy trình đóng góp.
+Xem [Hướng Dẫn Phát Triển](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx) để biết quy trình đóng góp.
 
 ---
 

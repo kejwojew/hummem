@@ -4,9 +4,9 @@
   <br>
   <a href="https://github.com/thedotmack/claude-mem">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp" alt="hummem" width="400">
     </picture>
   </a>
   <br>
@@ -70,9 +70,9 @@
 <p align="center">
   <a href="https://trendshift.io/repositories/15496" target="_blank">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
     </picture>
   </a>
 </p>
@@ -85,7 +85,7 @@
       <a href="https://github.com/thedotmack/claude-mem">
         <picture>
           <img
-            src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/cm-preview.gif"
+            src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
             alt="Claude-Mem Preview"
             width="500"
           >
@@ -144,7 +144,7 @@ npx claude-mem install
 npx claude-mem install --ide opencode
 ```
 
-Або встановіть для Antigravity CLI ([посібник із налаштування](https://docs.claude-mem.ai/antigravity-cli/setup)):
+Або встановіть для Antigravity CLI ([посібник із налаштування](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
 npx claude-mem install --ide antigravity
@@ -170,7 +170,7 @@ npx claude-mem install --ide antigravity
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 ```
 
-Інсталятор обробляє залежності, налаштування плагіна, конфігурацію AI-провайдера, запуск воркера та опціональні потоки спостережень у реальному часі до Telegram, Discord, Slack та інших. Дивіться [Посібник з інтеграції OpenClaw](https://docs.claude-mem.ai/openclaw-integration) для деталей.
+Інсталятор обробляє залежності, налаштування плагіна, конфігурацію AI-провайдера, запуск воркера та опціональні потоки спостережень у реальному часі до Telegram, Discord, Slack та інших. Дивіться [Посібник з інтеграції OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) для деталей.
 
 **Ключові можливості:**
 
@@ -188,35 +188,35 @@ curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 
 ## Документація
 
-📚 **[Переглянути повну документацію](https://docs.claude-mem.ai/)** - Переглянути на офіційному сайті
+📚 **[Переглянути повну документацію](https://github.com/kejwojew/hummem#readme)** - Переглянути на офіційному сайті
 
 ### Початок роботи
 
-- **[Посібник з встановлення](https://docs.claude-mem.ai/installation)** - Швидкий старт і розширене встановлення
-- **[Посібник з використання](https://docs.claude-mem.ai/usage/getting-started)** - Як Claude-Mem працює автоматично
-- **[Інструменти пошуку](https://docs.claude-mem.ai/usage/search-tools)** - Запитуйте історію свого проєкту природною мовою
+- **[Посібник з встановлення](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - Швидкий старт і розширене встановлення
+- **[Посібник з використання](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - Як Claude-Mem працює автоматично
+- **[Інструменти пошуку](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - Запитуйте історію свого проєкту природною мовою
 
 ### Найкращі практики
 
-- **[Інженерія контексту](https://docs.claude-mem.ai/context-engineering)** - Принципи оптимізації контексту AI-агента
-- **[Прогресивне розкриття](https://docs.claude-mem.ai/progressive-disclosure)** - Філософія стратегії підготовки контексту Claude-Mem
+- **[Інженерія контексту](https://github.com/kejwojew/hummem/blob/main/docs/public/context-engineering.mdx)** - Принципи оптимізації контексту AI-агента
+- **[Прогресивне розкриття](https://github.com/kejwojew/hummem/blob/main/docs/public/progressive-disclosure.mdx)** - Філософія стратегії підготовки контексту Claude-Mem
 
 ### Архітектура
 
-- **[Огляд](https://docs.claude-mem.ai/architecture/overview)** - Компоненти системи та потік даних
-- **[Еволюція архітектури](https://docs.claude-mem.ai/architecture-evolution)** - Шлях від v3 до v5
-- **[Архітектура хуків](https://docs.claude-mem.ai/hooks-architecture)** - Як Claude-Mem використовує хуки життєвого циклу
-- **[Довідник хуків](https://docs.claude-mem.ai/architecture/hooks)** - Пояснення 7 скриптів хуків
-- **[Сервіс воркера](https://docs.claude-mem.ai/architecture/worker-service)** - HTTP API та управління Bun
-- **[База даних](https://docs.claude-mem.ai/architecture/database)** - Схема SQLite та пошук FTS5
-- **[Архітектура пошуку](https://docs.claude-mem.ai/architecture/search-architecture)** - Гібридний пошук з векторною базою даних Chroma
+- **[Огляд](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)** - Компоненти системи та потік даних
+- **[Еволюція архітектури](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture-evolution.mdx)** - Шлях від v3 до v5
+- **[Архітектура хуків](https://github.com/kejwojew/hummem/blob/main/docs/public/hooks-architecture.mdx)** - Як Claude-Mem використовує хуки життєвого циклу
+- **[Довідник хуків](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/hooks.mdx)** - Пояснення 7 скриптів хуків
+- **[Сервіс воркера](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/worker-service.mdx)** - HTTP API та управління Bun
+- **[База даних](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/database.mdx)** - Схема SQLite та пошук FTS5
+- **[Архітектура пошуку](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/search-architecture.mdx)** - Гібридний пошук з векторною базою даних Chroma
 
 ### Конфігурація та розробка
 
-- **[Конфігурація](https://docs.claude-mem.ai/configuration)** - Змінні середовища та налаштування
-- **[Розробка](https://docs.claude-mem.ai/development)** - Збірка, тестування, внесок
-- **[Гілки релізів](https://docs.claude-mem.ai/branches)** - Потік гілок stable, core-dev та community-edge
-- **[Усунення несправностей](https://docs.claude-mem.ai/troubleshooting)** - Поширені проблеми та рішення
+- **[Конфігурація](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** - Змінні середовища та налаштування
+- **[Розробка](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** - Збірка, тестування, внесок
+- **[Гілки релізів](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** - Потік гілок stable, core-dev та community-edge
+- **[Усунення несправностей](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** - Поширені проблеми та рішення
 
 ---
 
@@ -231,7 +231,7 @@ curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 5. **Навичка mem-search** - Запити природною мовою з прогресивним розкриттям
 6. **Векторна база даних Chroma** - Гібридний семантичний + ключовий пошук для інтелектуального отримання контексту
 
-Дивіться [Огляд архітектури](https://docs.claude-mem.ai/architecture/overview) для деталей.
+Дивіться [Огляд архітектури](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx) для деталей.
 
 ---
 
@@ -270,7 +270,7 @@ search(query="authentication bug", type="bugfix", limit=10)
 get_observations(ids=[123, 456])
 ```
 
-Дивіться [Посібник з інструментів пошуку](https://docs.claude-mem.ai/usage/search-tools) для детальних прикладів.
+Дивіться [Посібник з інструментів пошуку](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx) для детальних прикладів.
 
 ---
 
@@ -278,7 +278,7 @@ get_observations(ids=[123, 456])
 
 Стабільні релізи випускаються з `main` і публікуються в npm. `core-dev` та
 `community-edge` — це гілки, що запускаються з вихідного коду, для ранніх виправлень надійності та
-інтеграцій зі спільнотою. Дивіться **[Гілки релізів](https://docs.claude-mem.ai/branches)**
+інтеграцій зі спільнотою. Дивіться **[Гілки релізів](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)**
 для потоку гілок та інструкцій із запуску нестабільних версій.
 
 ---
@@ -308,7 +308,7 @@ npm : The term 'npm' is not recognized as the name of a cmdlet
 
 Налаштування керуються в `~/.claude-mem/settings.json` (автоматично створюється зі стандартними значеннями при першому запуску). Налаштуйте модель AI, порт воркера, каталог даних, рівень журналювання та параметри впровадження контексту.
 
-Дивіться **[Посібник з конфігурації](https://docs.claude-mem.ai/configuration)** для всіх доступних налаштувань та прикладів.
+Дивіться **[Посібник з конфігурації](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** для всіх доступних налаштувань та прикладів.
 
 ### Конфігурація режиму та мови
 
@@ -353,7 +353,7 @@ ls ~/.claude/plugins/marketplaces/thedotmack/plugin/modes/
 
 ## Розробка
 
-Дивіться **[Посібник з розробки](https://docs.claude-mem.ai/development)** для інструкцій зі збірки, тестування та робочого процесу внеску.
+Дивіться **[Посібник з розробки](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** для інструкцій зі збірки, тестування та робочого процесу внеску.
 
 ---
 
@@ -361,7 +361,7 @@ ls ~/.claude/plugins/marketplaces/thedotmack/plugin/modes/
 
 Якщо виникають проблеми, опишіть проблему Claude, і навичка troubleshoot автоматично діагностує та надасть виправлення.
 
-Дивіться **[Посібник з усунення несправностей](https://docs.claude-mem.ai/troubleshooting)** для поширених проблем та рішень.
+Дивіться **[Посібник з усунення несправностей](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** для поширених проблем та рішень.
 
 ---
 
@@ -386,10 +386,10 @@ npm run bug-report
 
 Claude-Mem випускається з трьох гілок: `main` (стабільна), `core-dev` та
 `community-edge`. Лише `main` публікується в npm; інші запускаються з
-вихідного коду. Дивіться [Гілки релізів](https://docs.claude-mem.ai/branches) щодо
+вихідного коду. Дивіться [Гілки релізів](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx) щодо
 стратегії та інструкцій із локального запуску.
 
-Дивіться [Посібник з розробки](https://docs.claude-mem.ai/development) для робочого процесу внеску.
+Дивіться [Посібник з розробки](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx) для робочого процесу внеску.
 
 ---
 
