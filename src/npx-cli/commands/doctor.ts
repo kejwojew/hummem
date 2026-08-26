@@ -12,6 +12,7 @@ import { isPluginInstalled, marketplaceDirectory, readPluginVersion } from '../u
 import { getBunVersion, getUvVersion, isInstallCurrent } from '../install/setup-runtime.js';
 import { SettingsDefaultsManager } from '../../shared/SettingsDefaultsManager.js';
 import { resolveDataDir } from '../../shared/paths.js';
+import { detectLegacyEnv } from '../../shared/legacy-env.js';
 
 type CheckStatus = 'ok' | 'warn' | 'fail';
 
@@ -115,7 +116,27 @@ export async function runDoctorCommand(): Promise<void> {
     required: false, // worker can be intentionally stopped; don't hard-fail
   });
 
-  // 6. Last recorded install error (surface remediation if present).
+  // 6. Deprecated environment variables. The legacy names still work, so this
+  // is never a failure — but a shadowed variable (both names set) is the most
+  // confusing state a user can be in, and it is invisible without this report.
+  const legacyEnv = detectLegacyEnv();
+  if (legacyEnv.length > 0) {
+    const shadowed = legacyEnv.filter((e) => e.shadowed);
+    const detail =
+      shadowed.length > 0
+        ? `${legacyEnv.length} set; ${shadowed.length} overridden by a HUMMEM_* equivalent and having no effect: ` +
+          shadowed.map((e) => e.legacyName).join(', ')
+        : `${legacyEnv.length} set (still honoured): ` +
+          legacyEnv.map((e) => e.legacyName).join(', ');
+    checks.push({
+      name: 'Deprecated env vars',
+      status: 'warn',
+      detail: `${detail} — rename to HUMMEM_*; see MIGRATION.md`,
+      required: false,
+    });
+  }
+
+  // 7. Last recorded install error (surface remediation if present).
   const lastErrorPath = join(dataDir, 'last-install-error.json');
   if (existsSync(lastErrorPath)) {
     let detail = `present at ${lastErrorPath}`;
