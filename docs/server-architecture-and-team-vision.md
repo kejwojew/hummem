@@ -194,7 +194,7 @@ That last point matters: any client written against the legacy worker keeps work
 
 For a developer running claude-mem on one machine, server-beta is invisible. Here's what their first run looks like:
 
-1. `npx claude-mem install` (or upgrading to a server-beta-enabled build).
+1. `npx hummem install` (or upgrading to a server-beta-enabled build).
 2. `bootstrapServerApiKey()` (`src/services/hooks/server-bootstrap.ts`) runs on first hook fire. It:
    - finds-or-creates a `local-hook-team` row in `teams`,
    - finds-or-creates a `local-hook-project` row in `projects`,
@@ -398,7 +398,7 @@ This is the "we don't pick winners" property: a team that prefers Gemini for cos
 
 ## 10. Developer experience walkthrough
 
-**Day one (single user).** `npx claude-mem install`. Open Claude Code. Type. Observations capture. After a few sessions, search returns relevant prior context. Nothing else to learn.
+**Day one (single user).** `npx hummem install`. Open Claude Code. Type. Observations capture. After a few sessions, search returns relevant prior context. Nothing else to learn.
 
 **Day one (team).** A team admin runs `docker compose up -d` against the project's `docker-compose.yml`. They mint api keys for each developer:
 

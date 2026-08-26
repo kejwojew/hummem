@@ -106,19 +106,19 @@
 Tek bir komutla kurun:
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 Ya da OpenCode için kurun:
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 Ya da Antigravity CLI için kurun ([kurulum kılavuzu](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 Ya da Claude Code içindeki plugin pazaryerinden kurun:
@@ -131,7 +131,7 @@ Ya da Claude Code içindeki plugin pazaryerinden kurun:
 
 Claude Code'u yeniden başlatın. Önceki oturumlardaki bağlam otomatik olarak yeni oturumlarda görünecektir.
 
-> **Not:** Claude-Mem npm'de de yayımlanmıştır, ancak `npm install -g claude-mem` yalnızca **SDK/kütüphaneyi** kurar — plugin hook'larını kaydetmez veya worker servisini kurmaz. Her zaman `npx claude-mem install` veya yukarıdaki `/plugin` komutlarıyla kurun.
+> **Not:** Claude-Mem npm'de de yayımlanmıştır, ancak `npm install -g claude-mem` yalnızca **SDK/kütüphaneyi** kurar — plugin hook'larını kaydetmez veya worker servisini kurmaz. Her zaman `npx hummem install` veya yukarıdaki `/plugin` komutlarıyla kurun.
 
 ### 🦞 OpenClaw Gateway
 
@@ -384,10 +384,7 @@ açık/ticari sınır için [docs/license.md](docs/license.md) ve
 
 - **Dokümantasyon**: [docs/](docs/)
 - **Sorunlar**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
-- **Depo**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
-- **Resmi X Hesabı**: [@Claude_Memory](https://x.com/Claude_Memory)
-- **Resmi Discord**: [Discord'a Katıl](https://discord.com/invite/J4wttp9vDu)
-- **Yazar**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
+- **Depo**: [github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
 
 ---
 

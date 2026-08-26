@@ -106,19 +106,19 @@
 התקן בפקודה בודדת:
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 או התקן עבור OpenCode:
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 או התקן עבור Antigravity CLI ([מדריך הגדרה](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 או התקן משוק התוספים בתוך Claude Code:
@@ -131,7 +131,7 @@ npx claude-mem install --ide antigravity
 
 הפעל מחדש את Claude Code. הקשר מהפעלות קודמות יופיע אוטומטית בהפעלות חדשות.
 
-> **הערה:** Claude-Mem מפורסם גם ב-npm, אך `npm install -g claude-mem` מתקין רק את **ה-SDK/ספרייה** — הוא אינו רושם את hooks התוסף ואינו מגדיר את שירות ה-worker. תמיד יש להתקין באמצעות `npx claude-mem install` או פקודות `/plugin` שלעיל.
+> **הערה:** Claude-Mem מפורסם גם ב-npm, אך `npm install -g claude-mem` מתקין רק את **ה-SDK/ספרייה** — הוא אינו רושם את hooks התוסף ואינו מגדיר את שירות ה-worker. תמיד יש להתקין באמצעות `npx hummem install` או פקודות `/plugin` שלעיל.
 
 ### 🦞 OpenClaw Gateway
 
@@ -384,10 +384,7 @@ Claude-Mem מופץ תחת רישיון Apache License 2.0.
 
 - **תיעוד**: [docs/](docs/)
 - **בעיות**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
-- **מאגר**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
-- **חשבון X רשמי**: [@Claude_Memory](https://x.com/Claude_Memory)
-- **דיסקורד רשמי**: [הצטרף לדיסקורד](https://discord.com/invite/J4wttp9vDu)
-- **מחבר**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
+- **מאגר**: [github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
 
 ---
 

@@ -5,7 +5,7 @@ import { join } from 'path';
 import { runTranscriptCommand } from '../../src/services/transcripts/cli.js';
 import { parseWorkerServiceCommand } from '../../src/services/worker-service.js';
 
-describe('npx claude-mem transcript watch fallback (2450)', () => {
+describe('npx hummem transcript watch fallback (2450)', () => {
   it('parseWorkerServiceCommand routes "transcript <sub>" argv to command=transcript + args=[sub, ...]', () => {
     const parsedWatch = parseWorkerServiceCommand(['transcript', 'watch']);
     expect(parsedWatch.command).toBe('transcript');

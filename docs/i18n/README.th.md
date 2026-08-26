@@ -106,19 +106,19 @@
 ติดตั้งด้วยคำสั่งเดียว:
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 หรือติดตั้งสำหรับ OpenCode:
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 หรือติดตั้งสำหรับ Antigravity CLI ([คู่มือการตั้งค่า](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 หรือติดตั้งจาก plugin marketplace ภายใน Claude Code:
@@ -131,7 +131,7 @@ npx claude-mem install --ide antigravity
 
 รีสตาร์ท Claude Code บริบทจากเซสชันก่อนหน้าจะปรากฏในเซสชันใหม่โดยอัตโนมัติ
 
-> **หมายเหตุ:** Claude-Mem ยังถูกเผยแพร่บน npm ด้วย แต่ `npm install -g claude-mem` จะติดตั้งเฉพาะ **SDK/library เท่านั้น** — จะไม่ลงทะเบียน plugin hooks หรือตั้งค่า worker service ให้ ควรติดตั้งผ่าน `npx claude-mem install` หรือคำสั่ง `/plugin` ด้านบนเสมอ
+> **หมายเหตุ:** Claude-Mem ยังถูกเผยแพร่บน npm ด้วย แต่ `npm install -g claude-mem` จะติดตั้งเฉพาะ **SDK/library เท่านั้น** — จะไม่ลงทะเบียน plugin hooks หรือตั้งค่า worker service ให้ ควรติดตั้งผ่าน `npx hummem install` หรือคำสั่ง `/plugin` ด้านบนเสมอ
 
 ### 🦞 OpenClaw Gateway
 
@@ -384,10 +384,7 @@ Claude-Mem อยู่ภายใต้ใบอนุญาต Apache License
 
 - **เอกสาร**: [docs/](docs/)
 - **ปัญหา**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
-- **Repository**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
-- **บัญชี X อย่างเป็นทางการ**: [@Claude_Memory](https://x.com/Claude_Memory)
-- **Discord อย่างเป็นทางการ**: [เข้าร่วม Discord](https://discord.com/invite/J4wttp9vDu)
-- **ผู้เขียน**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
+- **Repository**: [github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
 
 ---
 
