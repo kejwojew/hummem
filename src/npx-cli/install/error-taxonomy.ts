@@ -94,7 +94,7 @@ export const ERROR_CATEGORIES: ErrorCategory[] = [
     severity: ErrorSeverity.ABORT,
     match: (cause) => /\bERESOLVE\b/.test(causeMessage(cause)),
     remediation: () =>
-      'ERESOLVE peer-dependency conflict in marketplace deps that --legacy-peer-deps could not resolve. Open an issue at https://github.com/thedotmack/claude-mem/issues with the conflicting peer ranges shown above.',
+      'ERESOLVE peer-dependency conflict in marketplace deps that --legacy-peer-deps could not resolve. Open an issue at https://github.com/kejwojew/hummem/issues with the conflicting peer ranges shown above.',
   },
   {
     id: 'marketplace-dir-not-writable',
@@ -159,7 +159,7 @@ export const ERROR_CATEGORIES: ErrorCategory[] = [
     severity: ErrorSeverity.ABORT,
     match: () => true,
     remediation: (ctx) =>
-      `An unexpected installer error occurred. Capture ${ctx.dataDir}/last-install-error.json and open an issue at https://github.com/thedotmack/claude-mem/issues.`,
+      `An unexpected installer error occurred. Capture ${ctx.dataDir}/last-install-error.json and open an issue at https://github.com/kejwojew/hummem/issues.`,
   },
 ];
 

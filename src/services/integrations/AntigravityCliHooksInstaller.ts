@@ -494,7 +494,7 @@ Examples:
   hummem antigravity-cli status      # Check if installed
   hummem antigravity-cli uninstall   # Remove hooks + MCP
 
-For more info: https://docs.claude-mem.ai/antigravity-cli/setup
+For more info: https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx
       `);
       return 0;
   }

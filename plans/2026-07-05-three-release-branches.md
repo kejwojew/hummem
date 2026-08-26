@@ -91,7 +91,7 @@ ones: `build-and-sync`, `release`, `release:patch|minor|major`).
    group pages array (after `"development"`). Keep JSON valid.
 2. `README.md` contributing section (~line 374): add a short line pointing to the
    Release Branches doc — "claude-mem ships from three branches: `main` (stable),
-   `core-dev`, `community-edge`. See [Release Branches](https://docs.claude-mem.ai/branches)."
+   `core-dev`, `community-edge`. See [Release Branches](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)."
 
 **Verify:** `node -e "JSON.parse(require('fs').readFileSync('docs/public/docs.json','utf8'))"`
 exits clean. README renders the link.

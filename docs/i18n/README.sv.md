@@ -2,11 +2,11 @@
 
 <h1 align="center">
   <br>
-  <a href="https://github.com/thedotmack/claude-mem">
+  <a href="https://github.com/kejwojew/hummem">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp" alt="hummem" width="400">
     </picture>
   </a>
   <br>
@@ -67,51 +67,22 @@
   </a>
 </p>
 
-<p align="center">
-  <a href="https://trendshift.io/repositories/15496" target="_blank">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
-    </picture>
-  </a>
-</p>
 
 <br>
 
 <table align="center">
   <tr>
     <td align="center">
-      <a href="https://github.com/thedotmack/claude-mem">
+      <a href="https://github.com/kejwojew/hummem">
         <picture>
           <img
-            src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/cm-preview.gif"
-            alt="Claude-Mem Preview"
+            src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
+            alt="hummem preview"
             width="500"
           >
         </picture>
       </a>
-    </td>
-    <td align="center">
-      <a href="https://www.star-history.com/#thedotmack/claude-mem&Date">
-        <picture>
-          <source
-            media="(prefers-color-scheme: dark)"
-            srcset="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&theme=dark&legend=top-left"
-          />
-          <source
-            media="(prefers-color-scheme: light)"
-            srcset="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&legend=top-left"
-          />
-          <img
-            alt="Star History Chart"
-            src="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&legend=top-left"
-            width="500"
-          />
-        </picture>
-      </a>
-    </td>
-  </tr>
+    </td>  </tr>
 </table>
 
 <p align="center">
@@ -144,7 +115,7 @@ Eller installera för OpenCode:
 npx claude-mem install --ide opencode
 ```
 
-Eller installera för Antigravity CLI ([installationsguide](https://docs.claude-mem.ai/antigravity-cli/setup)):
+Eller installera för Antigravity CLI ([installationsguide](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
 npx claude-mem install --ide antigravity
@@ -153,7 +124,7 @@ npx claude-mem install --ide antigravity
 Eller installera från plugin-marknadsplatsen inuti Claude Code:
 
 ```bash
-/plugin marketplace add thedotmack/claude-mem
+/plugin marketplace add kejwojew/hummem
 
 /plugin install claude-mem
 ```
@@ -170,7 +141,7 @@ Installera claude-mem som en persistent minnesplugin på [OpenClaw](https://open
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 ```
 
-Installationsprogrammet hanterar beroenden, plugin-konfiguration, konfiguration av AI-leverantör, uppstart av worker samt valfria realtidsobservationsflöden till Telegram, Discord, Slack med flera. Se [OpenClaw-integrationsguiden](https://docs.claude-mem.ai/openclaw-integration) för mer information.
+Installationsprogrammet hanterar beroenden, plugin-konfiguration, konfiguration av AI-leverantör, uppstart av worker samt valfria realtidsobservationsflöden till Telegram, Discord, Slack med flera. Se [OpenClaw-integrationsguiden](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) för mer information.
 
 **Nyckelfunktioner:**
 
@@ -188,35 +159,35 @@ Installationsprogrammet hanterar beroenden, plugin-konfiguration, konfiguration 
 
 ## Dokumentation
 
-📚 **[Visa fullständig dokumentation](https://docs.claude-mem.ai/)** - Bläddra på den officiella webbplatsen
+📚 **[Visa fullständig dokumentation](https://github.com/kejwojew/hummem#readme)** - Bläddra på den officiella webbplatsen
 
 ### Komma igång
 
-- **[Installationsguide](https://docs.claude-mem.ai/installation)** - Snabbstart och avancerad installation
-- **[Användarguide](https://docs.claude-mem.ai/usage/getting-started)** - Hur Claude-Mem fungerar automatiskt
-- **[Sökverktyg](https://docs.claude-mem.ai/usage/search-tools)** - Sök i din projekthistorik med naturligt språk
+- **[Installationsguide](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - Snabbstart och avancerad installation
+- **[Användarguide](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - Hur Claude-Mem fungerar automatiskt
+- **[Sökverktyg](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - Sök i din projekthistorik med naturligt språk
 
 ### Bästa praxis
 
-- **[Context Engineering](https://docs.claude-mem.ai/context-engineering)** - Optimeringsprinciper för AI-agentkontext
-- **[Progressiv visning](https://docs.claude-mem.ai/progressive-disclosure)** - Filosofin bakom Claude-Mems kontextpriming-strategi
+- **[Context Engineering](https://github.com/kejwojew/hummem/blob/main/docs/public/context-engineering.mdx)** - Optimeringsprinciper för AI-agentkontext
+- **[Progressiv visning](https://github.com/kejwojew/hummem/blob/main/docs/public/progressive-disclosure.mdx)** - Filosofin bakom Claude-Mems kontextpriming-strategi
 
 ### Arkitektur
 
-- **[Översikt](https://docs.claude-mem.ai/architecture/overview)** - Systemkomponenter och dataflöde
-- **[Arkitekturutveckling](https://docs.claude-mem.ai/architecture-evolution)** - Resan från v3 till v5
-- **[Hooks-arkitektur](https://docs.claude-mem.ai/hooks-architecture)** - Hur Claude-Mem använder livscykelkrokar
-- **[Hooks-referens](https://docs.claude-mem.ai/architecture/hooks)** - 7 hook-skript förklarade
-- **[Worker Service](https://docs.claude-mem.ai/architecture/worker-service)** - HTTP API och Bun-hantering
-- **[Databas](https://docs.claude-mem.ai/architecture/database)** - SQLite-schema och FTS5-sökning
-- **[Sökarkitektur](https://docs.claude-mem.ai/architecture/search-architecture)** - Hybridsökning med Chroma-vektordatabas
+- **[Översikt](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)** - Systemkomponenter och dataflöde
+- **[Arkitekturutveckling](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture-evolution.mdx)** - Resan från v3 till v5
+- **[Hooks-arkitektur](https://github.com/kejwojew/hummem/blob/main/docs/public/hooks-architecture.mdx)** - Hur Claude-Mem använder livscykelkrokar
+- **[Hooks-referens](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/hooks.mdx)** - 7 hook-skript förklarade
+- **[Worker Service](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/worker-service.mdx)** - HTTP API och Bun-hantering
+- **[Databas](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/database.mdx)** - SQLite-schema och FTS5-sökning
+- **[Sökarkitektur](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/search-architecture.mdx)** - Hybridsökning med Chroma-vektordatabas
 
 ### Konfiguration och utveckling
 
-- **[Konfiguration](https://docs.claude-mem.ai/configuration)** - Miljövariabler och inställningar
-- **[Utveckling](https://docs.claude-mem.ai/development)** - Bygga, testa, bidra
-- **[Release-grenar](https://docs.claude-mem.ai/branches)** - Flödet mellan stable-, core-dev- och community-edge-grenarna
-- **[Felsökning](https://docs.claude-mem.ai/troubleshooting)** - Vanliga problem och lösningar
+- **[Konfiguration](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** - Miljövariabler och inställningar
+- **[Utveckling](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** - Bygga, testa, bidra
+- **[Release-grenar](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** - Flödet mellan stable-, core-dev- och community-edge-grenarna
+- **[Felsökning](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** - Vanliga problem och lösningar
 
 ---
 
@@ -231,7 +202,7 @@ Installationsprogrammet hanterar beroenden, plugin-konfiguration, konfiguration 
 5. **mem-search-färdighet** - Naturligspråkssökningar med progressiv visning
 6. **Chroma-vektordatabas** - Hybrid semantisk + nyckelordssökning för intelligent kontexthämtning
 
-Se [Arkitekturöversikt](https://docs.claude-mem.ai/architecture/overview) för detaljer.
+Se [Arkitekturöversikt](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx) för detaljer.
 
 ---
 
@@ -270,7 +241,7 @@ search(query="authentication bug", type="bugfix", limit=10)
 get_observations(ids=[123, 456])
 ```
 
-Se [Sökverktygsguide](https://docs.claude-mem.ai/usage/search-tools) för detaljerade exempel.
+Se [Sökverktygsguide](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx) för detaljerade exempel.
 
 ---
 
@@ -278,7 +249,7 @@ Se [Sökverktygsguide](https://docs.claude-mem.ai/usage/search-tools) för detal
 
 Stabila utgåvor levereras från `main` och publiceras till npm. `core-dev` och
 `community-edge` är källkörda grenar för tidiga tillförlitlighetsfixar och
-community-integrationer. Se **[Release-grenar](https://docs.claude-mem.ai/branches)**
+community-integrationer. Se **[Release-grenar](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)**
 för grenflödet och instruktioner för att köra icke-stabila versioner.
 
 ---
@@ -308,7 +279,7 @@ Se till att Node.js och npm är installerade och tillagda i din PATH. Ladda ner 
 
 Inställningar hanteras i `~/.claude-mem/settings.json` (skapas automatiskt med standardvärden vid första körning). Konfigurera AI-modell, worker-port, datakatalog, loggnivå och inställningar för kontextinjektion.
 
-Se **[Konfigurationsguide](https://docs.claude-mem.ai/configuration)** för alla tillgängliga inställningar och exempel.
+Se **[Konfigurationsguide](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** för alla tillgängliga inställningar och exempel.
 
 ### Konfiguration av läge och språk
 
@@ -353,7 +324,7 @@ Starta om Claude Code för att tillämpa den nya lägeskonfigurationen.
 
 ## Utveckling
 
-Se **[Utvecklingsguide](https://docs.claude-mem.ai/development)** för bygginstruktioner, testning och bidragsarbetsflöde.
+Se **[Utvecklingsguide](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** för bygginstruktioner, testning och bidragsarbetsflöde.
 
 ---
 
@@ -361,7 +332,7 @@ Se **[Utvecklingsguide](https://docs.claude-mem.ai/development)** för bygginstr
 
 Om du upplever problem, beskriv problemet för Claude så kommer felsökningsfärdigheten automatiskt att diagnostisera och tillhandahålla lösningar.
 
-Se **[Felsökningsguide](https://docs.claude-mem.ai/troubleshooting)** för vanliga problem och lösningar.
+Se **[Felsökningsguide](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** för vanliga problem och lösningar.
 
 ---
 
@@ -386,10 +357,10 @@ Bidrag är välkomna! Vänligen:
 
 Claude-Mem levereras från tre grenar: `main` (stabil), `core-dev` och
 `community-edge`. Endast `main` publiceras till npm; de andra körs från
-källkod. Se [Release-grenar](https://docs.claude-mem.ai/branches) för
+källkod. Se [Release-grenar](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx) för
 strategin och instruktioner för lokal körning.
 
-Se [Utvecklingsguide](https://docs.claude-mem.ai/development) för bidragsarbetsflöde.
+Se [Utvecklingsguide](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx) för bidragsarbetsflöde.
 
 ---
 
@@ -412,8 +383,8 @@ mellan öppen och kommersiell användning.
 ## Support
 
 - **Dokumentation**: [docs/](docs/)
-- **Problem**: [GitHub Issues](https://github.com/thedotmack/claude-mem/issues)
-- **Repository**: [github.com/thedotmack/claude-mem](https://github.com/thedotmack/claude-mem)
+- **Problem**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
+- **Repository**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
 - **Officiellt X-konto**: [@Claude_Memory](https://x.com/Claude_Memory)
 - **Officiell Discord**: [Gå med i Discord](https://discord.com/invite/J4wttp9vDu)
 - **Författare**: Alex Newman ([@thedotmack](https://github.com/thedotmack))

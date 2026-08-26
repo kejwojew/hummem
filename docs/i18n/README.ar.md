@@ -4,11 +4,11 @@
 
 <h1 align="center">
   <br>
-  <a href="https://github.com/thedotmack/claude-mem">
+  <a href="https://github.com/kejwojew/hummem">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp" alt="hummem" width="400">
     </picture>
   </a>
   <br>
@@ -69,51 +69,22 @@
   </a>
 </p>
 
-<p align="center">
-  <a href="https://trendshift.io/repositories/15496" target="_blank">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
-    </picture>
-  </a>
-</p>
 
 <br>
 
 <table align="center">
   <tr>
     <td align="center">
-      <a href="https://github.com/thedotmack/claude-mem">
+      <a href="https://github.com/kejwojew/hummem">
         <picture>
           <img
-            src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/cm-preview.gif"
-            alt="Claude-Mem Preview"
+            src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
+            alt="hummem preview"
             width="500"
           >
         </picture>
       </a>
-    </td>
-    <td align="center">
-      <a href="https://www.star-history.com/#thedotmack/claude-mem&Date">
-        <picture>
-          <source
-            media="(prefers-color-scheme: dark)"
-            srcset="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&theme=dark&legend=top-left"
-          />
-          <source
-            media="(prefers-color-scheme: light)"
-            srcset="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&legend=top-left"
-          />
-          <img
-            alt="Star History Chart"
-            src="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&legend=top-left"
-            width="500"
-          />
-        </picture>
-      </a>
-    </td>
-  </tr>
+    </td>  </tr>
 </table>
 
 <p align="center">
@@ -146,7 +117,7 @@ npx claude-mem install
 npx claude-mem install --ide opencode
 ```
 
-أو قم بالتثبيت لـ Antigravity CLI ([دليل الإعداد](https://docs.claude-mem.ai/antigravity-cli/setup)):
+أو قم بالتثبيت لـ Antigravity CLI ([دليل الإعداد](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
 npx claude-mem install --ide antigravity
@@ -155,7 +126,7 @@ npx claude-mem install --ide antigravity
 أو قم بالتثبيت من متجر الإضافات (plugin marketplace) داخل Claude Code:
 
 ```bash
-/plugin marketplace add thedotmack/claude-mem
+/plugin marketplace add kejwojew/hummem
 
 /plugin install claude-mem
 ```
@@ -172,7 +143,7 @@ npx claude-mem install --ide antigravity
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 ```
 
-يتولى برنامج التثبيت التبعيات، وإعداد الإضافة، وتهيئة مزوّد الذكاء الاصطناعي، وتشغيل العامل (worker)، بالإضافة إلى بثّ اختياري للملاحظات في الوقت الفعلي إلى Telegram وDiscord وSlack وغيرها. راجع [دليل تكامل OpenClaw](https://docs.claude-mem.ai/openclaw-integration) للتفاصيل.
+يتولى برنامج التثبيت التبعيات، وإعداد الإضافة، وتهيئة مزوّد الذكاء الاصطناعي، وتشغيل العامل (worker)، بالإضافة إلى بثّ اختياري للملاحظات في الوقت الفعلي إلى Telegram وDiscord وSlack وغيرها. راجع [دليل تكامل OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) للتفاصيل.
 
 **الميزات الرئيسية:**
 
@@ -190,35 +161,35 @@ curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 
 ## المستندات
 
-📚 **[عرض التوثيق الكامل](https://docs.claude-mem.ai/)** - تصفح على الموقع الرسمي
+📚 **[عرض التوثيق الكامل](https://github.com/kejwojew/hummem#readme)** - تصفح على الموقع الرسمي
 
 ### البدء
 
-- **[دليل التثبيت](https://docs.claude-mem.ai/installation)** - البدء السريع والتثبيت المتقدم
-- **[دليل الاستخدام](https://docs.claude-mem.ai/usage/getting-started)** - كيف يعمل Claude-Mem تلقائياً
-- **[أدوات البحث](https://docs.claude-mem.ai/usage/search-tools)** - استعلم عن سجل مشروعك باللغة الطبيعية
+- **[دليل التثبيت](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - البدء السريع والتثبيت المتقدم
+- **[دليل الاستخدام](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - كيف يعمل Claude-Mem تلقائياً
+- **[أدوات البحث](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - استعلم عن سجل مشروعك باللغة الطبيعية
 
 ### أفضل الممارسات
 
-- **[هندسة السياق](https://docs.claude-mem.ai/context-engineering)** - مبادئ تحسين سياق وكيل الذكاء الاصطناعي
-- **[الكشف التدريجي](https://docs.claude-mem.ai/progressive-disclosure)** - الفلسفة وراء استراتيجية تهيئة السياق في Claude-Mem
+- **[هندسة السياق](https://github.com/kejwojew/hummem/blob/main/docs/public/context-engineering.mdx)** - مبادئ تحسين سياق وكيل الذكاء الاصطناعي
+- **[الكشف التدريجي](https://github.com/kejwojew/hummem/blob/main/docs/public/progressive-disclosure.mdx)** - الفلسفة وراء استراتيجية تهيئة السياق في Claude-Mem
 
 ### البنية المعمارية
 
-- **[نظرة عامة](https://docs.claude-mem.ai/architecture/overview)** - مكونات النظام وتدفق البيانات
-- **[تطور البنية المعمارية](https://docs.claude-mem.ai/architecture-evolution)** - رحلة التطور من v3 إلى v5
-- **[بنية برامج الربط (Hooks)](https://docs.claude-mem.ai/hooks-architecture)** - كيف يستخدم Claude-Mem خطافات دورة الحياة
-- **[مرجع برامج الربط (Hooks)](https://docs.claude-mem.ai/architecture/hooks)** - شرح 7 سكريبتات خطافات
-- **[خدمة العامل](https://docs.claude-mem.ai/architecture/worker-service)** - واجهة HTTP API وإدارة Bun
-- **[قاعدة البيانات](https://docs.claude-mem.ai/architecture/database)** - مخطط SQLite وبحث FTS5
-- **[بنية البحث](https://docs.claude-mem.ai/architecture/search-architecture)** - البحث الهجين مع قاعدة بيانات المتجهات Chroma
+- **[نظرة عامة](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)** - مكونات النظام وتدفق البيانات
+- **[تطور البنية المعمارية](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture-evolution.mdx)** - رحلة التطور من v3 إلى v5
+- **[بنية برامج الربط (Hooks)](https://github.com/kejwojew/hummem/blob/main/docs/public/hooks-architecture.mdx)** - كيف يستخدم Claude-Mem خطافات دورة الحياة
+- **[مرجع برامج الربط (Hooks)](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/hooks.mdx)** - شرح 7 سكريبتات خطافات
+- **[خدمة العامل](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/worker-service.mdx)** - واجهة HTTP API وإدارة Bun
+- **[قاعدة البيانات](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/database.mdx)** - مخطط SQLite وبحث FTS5
+- **[بنية البحث](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/search-architecture.mdx)** - البحث الهجين مع قاعدة بيانات المتجهات Chroma
 
 ### الإعدادات والتطوير
 
-- **[الإعدادات](https://docs.claude-mem.ai/configuration)** - متغيرات البيئة والإعدادات
-- **[التطوير](https://docs.claude-mem.ai/development)** - البناء، الاختبار، والمساهمة
-- **[فروع الإصدارات](https://docs.claude-mem.ai/branches)** - تدفق فروع Stable وcore-dev وcommunity-edge
-- **[استكشاف الأخطاء وإصلاحها](https://docs.claude-mem.ai/troubleshooting)** - المشكلات الشائعة والحلول
+- **[الإعدادات](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** - متغيرات البيئة والإعدادات
+- **[التطوير](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** - البناء، الاختبار، والمساهمة
+- **[فروع الإصدارات](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** - تدفق فروع Stable وcore-dev وcommunity-edge
+- **[استكشاف الأخطاء وإصلاحها](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** - المشكلات الشائعة والحلول
 
 ---
 
@@ -233,7 +204,7 @@ curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 5. **مهارة mem-search** - استعلامات باللغة الطبيعية مع الكشف التدريجي
 6. **قاعدة بيانات المتجهات Chroma** - بحث هجين دلالي + بالكلمات المفتاحية لاسترجاع سياق ذكي
 
-راجع [نظرة عامة على البنية المعمارية](https://docs.claude-mem.ai/architecture/overview) للتفاصيل.
+راجع [نظرة عامة على البنية المعمارية](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx) للتفاصيل.
 
 ---
 
@@ -272,13 +243,13 @@ search(query="authentication bug", type="bugfix", limit=10)
 get_observations(ids=[123, 456])
 ```
 
-راجع [دليل أدوات البحث](https://docs.claude-mem.ai/usage/search-tools) لأمثلة مفصلة.
+راجع [دليل أدوات البحث](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx) لأمثلة مفصلة.
 
 ---
 
 ## فروع الإصدارات
 
-يتم إصدار النسخ المستقرة من فرع `main` ونشرها على npm. أما `core-dev` و`community-edge` فهما فرعان يتم تشغيلهما من المصدر لإصلاحات الموثوقية المبكرة وتكاملات المجتمع. راجع **[فروع الإصدارات](https://docs.claude-mem.ai/branches)** لمعرفة تدفق الفروع وتعليمات التشغيل غير المستقر.
+يتم إصدار النسخ المستقرة من فرع `main` ونشرها على npm. أما `core-dev` و`community-edge` فهما فرعان يتم تشغيلهما من المصدر لإصلاحات الموثوقية المبكرة وتكاملات المجتمع. راجع **[فروع الإصدارات](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** لمعرفة تدفق الفروع وتعليمات التشغيل غير المستقر.
 
 ---
 
@@ -307,7 +278,7 @@ npm : The term 'npm' is not recognized as the name of a cmdlet
 
 تتم إدارة الإعدادات في `~/.claude-mem/settings.json` (يُنشأ تلقائياً بالقيم الافتراضية عند التشغيل الأول). قم بتهيئة نموذج الذكاء الاصطناعي، ومنفذ العامل (worker port)، ودليل البيانات، ومستوى السجل (log level)، وإعدادات حقن السياق.
 
-راجع **[دليل الإعدادات](https://docs.claude-mem.ai/configuration)** لجميع الإعدادات المتاحة والأمثلة.
+راجع **[دليل الإعدادات](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** لجميع الإعدادات المتاحة والأمثلة.
 
 ### إعدادات الوضع واللغة
 
@@ -353,7 +324,7 @@ ls ~/.claude/plugins/marketplaces/thedotmack/plugin/modes/
 
 ## التطوير
 
-راجع **[دليل التطوير](https://docs.claude-mem.ai/development)** لتعليمات البناء، والاختبار، وسير عمل المساهمة.
+راجع **[دليل التطوير](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** لتعليمات البناء، والاختبار، وسير عمل المساهمة.
 
 ---
 
@@ -361,7 +332,7 @@ ls ~/.claude/plugins/marketplaces/thedotmack/plugin/modes/
 
 إذا واجهت مشكلات، اشرح المشكلة لـ Claude وستقوم مهارة troubleshoot تلقائياً بتشخيصها وتقديم الحلول.
 
-راجع **[دليل استكشاف الأخطاء وإصلاحها](https://docs.claude-mem.ai/troubleshooting)** للمشكلات الشائعة والحلول.
+راجع **[دليل استكشاف الأخطاء وإصلاحها](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** للمشكلات الشائعة والحلول.
 
 ---
 
@@ -384,9 +355,9 @@ npm run bug-report
 4. تحديث المستندات
 5. تقديم Pull Request
 
-يتم إصدار Claude-Mem من ثلاثة فروع: `main` (المستقر)، و`core-dev`، و`community-edge`. يُنشر `main` فقط على npm؛ أما الفروع الأخرى فيتم تشغيلها من المصدر. راجع [فروع الإصدارات](https://docs.claude-mem.ai/branches) للاطلاع على الاستراتيجية وتعليمات التشغيل المحلي.
+يتم إصدار Claude-Mem من ثلاثة فروع: `main` (المستقر)، و`core-dev`، و`community-edge`. يُنشر `main` فقط على npm؛ أما الفروع الأخرى فيتم تشغيلها من المصدر. راجع [فروع الإصدارات](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx) للاطلاع على الاستراتيجية وتعليمات التشغيل المحلي.
 
-راجع [دليل التطوير](https://docs.claude-mem.ai/development) لسير عمل المساهمة.
+راجع [دليل التطوير](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx) لسير عمل المساهمة.
 
 ---
 
@@ -406,8 +377,8 @@ Claude-Mem مرخّص بموجب رخصة Apache 2.0.
 ## الدعم
 
 - **التوثيق**: [docs/](docs/)
-- **المشكلات**: [GitHub Issues](https://github.com/thedotmack/claude-mem/issues)
-- **المستودع**: [github.com/thedotmack/claude-mem](https://github.com/thedotmack/claude-mem)
+- **المشكلات**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
+- **المستودع**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
 - **حساب X الرسمي**: [@Claude_Memory](https://x.com/Claude_Memory)
 - **Discord الرسمي**: [انضم إلى Discord](https://discord.com/invite/J4wttp9vDu)
 - **المؤلف**: Alex Newman ([@thedotmack](https://github.com/thedotmack))

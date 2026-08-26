@@ -34,8 +34,8 @@ Use claude-mem's persistent memory in Cursor without a Claude Code subscription.
 
 ```bash
 # Clone the repository
-git clone https://github.com/thedotmack/claude-mem.git
-cd claude-mem
+git clone https://github.com/kejwojew/hummem.git
+cd hummem
 
 # Install dependencies
 bun install
@@ -190,7 +190,7 @@ If you hit the 1500 requests/day limit:
 
 - Read [README.md](README.md) for detailed hook documentation
 - Check [CONTEXT-INJECTION.md](CONTEXT-INJECTION.md) for context behavior details
-- Visit https://docs.claude-mem.ai for full documentation
+- Visit https://github.com/kejwojew/hummem#readme for full documentation
 
 ## Quick Reference
 
@@ -221,8 +221,8 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 ```powershell
 # Clone and build
-git clone https://github.com/thedotmack/claude-mem.git
-cd claude-mem
+git clone https://github.com/kejwojew/hummem.git
+cd hummem
 bun install
 bun run build
 

@@ -2,11 +2,11 @@
 
 <h1 align="center">
   <br>
-  <a href="https://github.com/thedotmack/claude-mem">
+  <a href="https://github.com/kejwojew/hummem">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp" alt="hummem" width="400">
     </picture>
   </a>
   <br>
@@ -67,51 +67,22 @@
   </a>
 </p>
 
-<p align="center">
-  <a href="https://trendshift.io/repositories/15496" target="_blank">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
-    </picture>
-  </a>
-</p>
 
 <br>
 
 <table align="center">
   <tr>
     <td align="center">
-      <a href="https://github.com/thedotmack/claude-mem">
+      <a href="https://github.com/kejwojew/hummem">
         <picture>
           <img
-            src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/cm-preview.gif"
-            alt="Claude-Mem Preview"
+            src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
+            alt="hummem preview"
             width="500"
           >
         </picture>
       </a>
-    </td>
-    <td align="center">
-      <a href="https://www.star-history.com/#thedotmack/claude-mem&Date">
-        <picture>
-          <source
-            media="(prefers-color-scheme: dark)"
-            srcset="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&theme=dark&legend=top-left"
-          />
-          <source
-            media="(prefers-color-scheme: light)"
-            srcset="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&legend=top-left"
-          />
-          <img
-            alt="Star History Chart"
-            src="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&legend=top-left"
-            width="500"
-          />
-        </picture>
-      </a>
-    </td>
-  </tr>
+    </td>  </tr>
 </table>
 
 <p align="center">
@@ -144,7 +115,7 @@ npx claude-mem install
 npx claude-mem install --ide opencode
 ```
 
-หรือติดตั้งสำหรับ Antigravity CLI ([คู่มือการตั้งค่า](https://docs.claude-mem.ai/antigravity-cli/setup)):
+หรือติดตั้งสำหรับ Antigravity CLI ([คู่มือการตั้งค่า](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
 npx claude-mem install --ide antigravity
@@ -153,7 +124,7 @@ npx claude-mem install --ide antigravity
 หรือติดตั้งจาก plugin marketplace ภายใน Claude Code:
 
 ```bash
-/plugin marketplace add thedotmack/claude-mem
+/plugin marketplace add kejwojew/hummem
 
 /plugin install claude-mem
 ```
@@ -170,7 +141,7 @@ npx claude-mem install --ide antigravity
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 ```
 
-ตัวติดตั้งจะจัดการ dependencies การตั้งค่าปลั๊กอิน การกำหนดค่า AI provider การเริ่มต้น worker และฟีดการสังเกตแบบเรียลไทม์ที่เป็นทางเลือกไปยัง Telegram, Discord, Slack และอื่นๆ ดู [คู่มือการผสานรวม OpenClaw](https://docs.claude-mem.ai/openclaw-integration) สำหรับรายละเอียด
+ตัวติดตั้งจะจัดการ dependencies การตั้งค่าปลั๊กอิน การกำหนดค่า AI provider การเริ่มต้น worker และฟีดการสังเกตแบบเรียลไทม์ที่เป็นทางเลือกไปยัง Telegram, Discord, Slack และอื่นๆ ดู [คู่มือการผสานรวม OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) สำหรับรายละเอียด
 
 **คุณสมบัติหลัก:**
 
@@ -188,35 +159,35 @@ curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 
 ## เอกสาร
 
-📚 **[ดูเอกสารฉบับเต็ม](https://docs.claude-mem.ai/)** - เรียกดูบนเว็บไซต์อย่างเป็นทางการ
+📚 **[ดูเอกสารฉบับเต็ม](https://github.com/kejwojew/hummem#readme)** - เรียกดูบนเว็บไซต์อย่างเป็นทางการ
 
 ### เริ่มต้นใช้งาน
 
-- **[คู่มือการติดตั้ง](https://docs.claude-mem.ai/installation)** - เริ่มต้นอย่างรวดเร็วและการติดตั้งขั้นสูง
-- **[คู่มือการใช้งาน](https://docs.claude-mem.ai/usage/getting-started)** - วิธีที่ Claude-Mem ทำงานโดยอัตโนมัติ
-- **[เครื่องมือค้นหา](https://docs.claude-mem.ai/usage/search-tools)** - สืบค้นประวัติโปรเจกต์ของคุณด้วยภาษาธรรมชาติ
+- **[คู่มือการติดตั้ง](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - เริ่มต้นอย่างรวดเร็วและการติดตั้งขั้นสูง
+- **[คู่มือการใช้งาน](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - วิธีที่ Claude-Mem ทำงานโดยอัตโนมัติ
+- **[เครื่องมือค้นหา](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - สืบค้นประวัติโปรเจกต์ของคุณด้วยภาษาธรรมชาติ
 
 ### แนวปฏิบัติที่ดี
 
-- **[Context Engineering](https://docs.claude-mem.ai/context-engineering)** - หลักการปรับบริบทสำหรับเอเจนต์ AI
-- **[Progressive Disclosure](https://docs.claude-mem.ai/progressive-disclosure)** - ปรัชญาเบื้องหลังกลยุทธ์การเตรียมบริบทของ Claude-Mem
+- **[Context Engineering](https://github.com/kejwojew/hummem/blob/main/docs/public/context-engineering.mdx)** - หลักการปรับบริบทสำหรับเอเจนต์ AI
+- **[Progressive Disclosure](https://github.com/kejwojew/hummem/blob/main/docs/public/progressive-disclosure.mdx)** - ปรัชญาเบื้องหลังกลยุทธ์การเตรียมบริบทของ Claude-Mem
 
 ### สถาปัตยกรรม
 
-- **[ภาพรวม](https://docs.claude-mem.ai/architecture/overview)** - ส่วนประกอบของระบบและการไหลของข้อมูล
-- **[วิวัฒนาการของสถาปัตยกรรม](https://docs.claude-mem.ai/architecture-evolution)** - การเดินทางจาก v3 สู่ v5
-- **[สถาปัตยกรรม Hooks](https://docs.claude-mem.ai/hooks-architecture)** - วิธีที่ Claude-Mem ใช้ lifecycle hooks
-- **[การอ้างอิง Hooks](https://docs.claude-mem.ai/architecture/hooks)** - อธิบาย hook scripts ทั้ง 7 ตัว
-- **[Worker Service](https://docs.claude-mem.ai/architecture/worker-service)** - HTTP API และการจัดการ Bun
-- **[ฐานข้อมูล](https://docs.claude-mem.ai/architecture/database)** - SQLite schema และการค้นหา FTS5
-- **[สถาปัตยกรรมการค้นหา](https://docs.claude-mem.ai/architecture/search-architecture)** - การค้นหาแบบไฮบริดด้วยฐานข้อมูลเวกเตอร์ Chroma
+- **[ภาพรวม](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)** - ส่วนประกอบของระบบและการไหลของข้อมูล
+- **[วิวัฒนาการของสถาปัตยกรรม](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture-evolution.mdx)** - การเดินทางจาก v3 สู่ v5
+- **[สถาปัตยกรรม Hooks](https://github.com/kejwojew/hummem/blob/main/docs/public/hooks-architecture.mdx)** - วิธีที่ Claude-Mem ใช้ lifecycle hooks
+- **[การอ้างอิง Hooks](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/hooks.mdx)** - อธิบาย hook scripts ทั้ง 7 ตัว
+- **[Worker Service](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/worker-service.mdx)** - HTTP API และการจัดการ Bun
+- **[ฐานข้อมูล](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/database.mdx)** - SQLite schema และการค้นหา FTS5
+- **[สถาปัตยกรรมการค้นหา](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/search-architecture.mdx)** - การค้นหาแบบไฮบริดด้วยฐานข้อมูลเวกเตอร์ Chroma
 
 ### การกำหนดค่าและการพัฒนา
 
-- **[การกำหนดค่า](https://docs.claude-mem.ai/configuration)** - ตัวแปรสภาพแวดล้อมและการตั้งค่า
-- **[การพัฒนา](https://docs.claude-mem.ai/development)** - การสร้าง การทดสอบ การมีส่วนร่วม
-- **[Release Branches](https://docs.claude-mem.ai/branches)** - ลำดับการไหลของ branch แบบ stable, core-dev และ community-edge
-- **[การแก้ไขปัญหา](https://docs.claude-mem.ai/troubleshooting)** - ปัญหาและการแก้ไขทั่วไป
+- **[การกำหนดค่า](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** - ตัวแปรสภาพแวดล้อมและการตั้งค่า
+- **[การพัฒนา](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** - การสร้าง การทดสอบ การมีส่วนร่วม
+- **[Release Branches](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** - ลำดับการไหลของ branch แบบ stable, core-dev และ community-edge
+- **[การแก้ไขปัญหา](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** - ปัญหาและการแก้ไขทั่วไป
 
 ---
 
@@ -231,7 +202,7 @@ curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 5. **mem-search Skill** - คิวรีภาษาธรรมชาติพร้อมการเปิดเผยแบบก้าวหน้า
 6. **Chroma Vector Database** - การค้นหาแบบไฮบริดทางความหมาย + คีย์เวิร์ดสำหรับการดึงบริบทอัจฉริยะ
 
-ดู [ภาพรวมสถาปัตยกรรม](https://docs.claude-mem.ai/architecture/overview) สำหรับรายละเอียด
+ดู [ภาพรวมสถาปัตยกรรม](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx) สำหรับรายละเอียด
 
 ---
 
@@ -270,7 +241,7 @@ search(query="authentication bug", type="bugfix", limit=10)
 get_observations(ids=[123, 456])
 ```
 
-ดู [คู่มือเครื่องมือค้นหา](https://docs.claude-mem.ai/usage/search-tools) สำหรับตัวอย่างโดยละเอียด
+ดู [คู่มือเครื่องมือค้นหา](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx) สำหรับตัวอย่างโดยละเอียด
 
 ---
 
@@ -278,7 +249,7 @@ get_observations(ids=[123, 456])
 
 รุ่นเสถียร (Stable) จะถูกปล่อยจาก `main` และเผยแพร่ไปยัง npm ส่วน `core-dev` และ
 `community-edge` เป็น branch ที่รันจาก source สำหรับการแก้ไขความน่าเชื่อถือในช่วงแรกและ
-การผสานรวมของชุมชน ดู **[Release Branches](https://docs.claude-mem.ai/branches)**
+การผสานรวมของชุมชน ดู **[Release Branches](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)**
 สำหรับลำดับการไหลของ branch และคำแนะนำการรันเวอร์ชันที่ไม่เสถียร
 
 ---
@@ -308,7 +279,7 @@ npm : The term 'npm' is not recognized as the name of a cmdlet
 
 การตั้งค่าจะถูกจัดการใน `~/.claude-mem/settings.json` (สร้างอัตโนมัติพร้อมค่าเริ่มต้นในการรันครั้งแรก) กำหนดค่าโมเดล AI พอร์ต worker ไดเรกทอรีข้อมูล ระดับ log และการตั้งค่าการฉีดบริบท
 
-ดู **[คู่มือการกำหนดค่า](https://docs.claude-mem.ai/configuration)** สำหรับการตั้งค่าทั้งหมดที่มีและตัวอย่าง
+ดู **[คู่มือการกำหนดค่า](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** สำหรับการตั้งค่าทั้งหมดที่มีและตัวอย่าง
 
 ### การกำหนดค่าโหมดและภาษา
 
@@ -353,7 +324,7 @@ ls ~/.claude/plugins/marketplaces/thedotmack/plugin/modes/
 
 ## การพัฒนา
 
-ดู **[คู่มือการพัฒนา](https://docs.claude-mem.ai/development)** สำหรับคำแนะนำการสร้าง การทดสอบ และขั้นตอนการมีส่วนร่วม
+ดู **[คู่มือการพัฒนา](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** สำหรับคำแนะนำการสร้าง การทดสอบ และขั้นตอนการมีส่วนร่วม
 
 ---
 
@@ -361,7 +332,7 @@ ls ~/.claude/plugins/marketplaces/thedotmack/plugin/modes/
 
 หากพบปัญหา อธิบายปัญหาให้ Claude ฟังและทักษะ troubleshoot จะวินิจฉัยและให้การแก้ไขโดยอัตโนมัติ
 
-ดู **[คู่มือการแก้ไขปัญหา](https://docs.claude-mem.ai/troubleshooting)** สำหรับปัญหาและการแก้ไขทั่วไป
+ดู **[คู่มือการแก้ไขปัญหา](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** สำหรับปัญหาและการแก้ไขทั่วไป
 
 ---
 
@@ -386,10 +357,10 @@ npm run bug-report
 
 Claude-Mem เผยแพร่จากสาม branch: `main` (stable), `core-dev`, และ
 `community-edge` มีเพียง `main` เท่านั้นที่เผยแพร่ไปยัง npm ส่วนที่เหลือรันจาก
-source ดู [Release Branches](https://docs.claude-mem.ai/branches) สำหรับ
+source ดู [Release Branches](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx) สำหรับ
 กลยุทธ์และคำแนะนำการรันในเครื่อง
 
-ดู [คู่มือการพัฒนา](https://docs.claude-mem.ai/development) สำหรับขั้นตอนการมีส่วนร่วม
+ดู [คู่มือการพัฒนา](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx) สำหรับขั้นตอนการมีส่วนร่วม
 
 ---
 
@@ -412,8 +383,8 @@ Claude-Mem อยู่ภายใต้ใบอนุญาต Apache License
 ## การสนับสนุน
 
 - **เอกสาร**: [docs/](docs/)
-- **ปัญหา**: [GitHub Issues](https://github.com/thedotmack/claude-mem/issues)
-- **Repository**: [github.com/thedotmack/claude-mem](https://github.com/thedotmack/claude-mem)
+- **ปัญหา**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
+- **Repository**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
 - **บัญชี X อย่างเป็นทางการ**: [@Claude_Memory](https://x.com/Claude_Memory)
 - **Discord อย่างเป็นทางการ**: [เข้าร่วม Discord](https://discord.com/invite/J4wttp9vDu)
 - **ผู้เขียน**: Alex Newman ([@thedotmack](https://github.com/thedotmack))

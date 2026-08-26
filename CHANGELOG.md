@@ -157,7 +157,7 @@ This release ships the complete two-lane sync architecture between your local cl
 - **Canonical v2 projection pipeline** and SyncHub-only client cutover
 - Hardened verifier authentication on the sync hub
 
-**Sync is OFF by default.** `CLAUDE_MEM_CLOUD_SYNC_HUB_URL` defaults to empty — nothing leaves your machine unless you configure a hub URL (see the `cloud-sync` skill or https://docs.claude-mem.ai/cloud-sync).
+**Sync is OFF by default.** `CLAUDE_MEM_CLOUD_SYNC_HUB_URL` defaults to empty — nothing leaves your machine unless you configure a hub URL (see the `cloud-sync` skill or https://github.com/kejwojew/hummem/blob/main/docs/public/cloud-sync.mdx).
 
 ### Fixes
 
@@ -385,7 +385,7 @@ claude-mem's growth metrics now extend back before telemetry existed. On the fir
 - `CLAUDE_MEM_TELEMETRY_DEBUG=1` dry-runs the full payload to stderr without sending anything.
 - Legacy epoch normalization and corrupt-row guards keep bad timestamps out of the historical record; partial days are never shipped.
 
-Full disclosure documented at [docs.claude-mem.ai/telemetry](https://docs.claude-mem.ai/telemetry).
+Full disclosure documented at [docs.claude-mem.ai/telemetry](https://github.com/kejwojew/hummem/blob/main/docs/public/telemetry.mdx).
 
 **PR**: #2912
 
@@ -431,7 +431,7 @@ Triple-restart soak (3× consecutive verified restarts, zero duplicate/EADDRINUS
 
 ## Telemetry Reliability Signals (Plan 14)
 
-claude-mem instrumented success well — failure was invisible. This release adds the five highest-value missing reliability signals (#2874). Everything is closed-enum/count-only, whitelisted in the scrubber, and disclosed in both the [public docs](https://docs.claude-mem.ai/telemetry) and `claude-mem telemetry`.
+claude-mem instrumented success well — failure was invisible. This release adds the five highest-value missing reliability signals (#2874). Everything is closed-enum/count-only, whitelisted in the scrubber, and disclosed in both the [public docs](https://github.com/kejwojew/hummem/blob/main/docs/public/telemetry.mdx) and `claude-mem telemetry`.
 
 ### Search retrieval quality (`search_performed`)
 - `result_count`, `search_strategy` (`chroma|fts|filter_only`), `chroma_available`, `fallback_reason` (`none|chroma_connection|chroma_error|chroma_not_initialized`)
@@ -463,7 +463,7 @@ claude-mem instrumented success well — failure was invisible. This release add
 ## Privacy
 
 - No change to the IP promise: raw IP addresses are still **never attached to events by the client and never stored** — the sender IP is used transiently at ingest for the coarse-location lookup, then discarded.
-- The telemetry docs (https://docs.claude-mem.ai/telemetry) and the `npx claude-mem telemetry enable` consent screen now disclose the ingest-derived coarse location.
+- The telemetry docs (https://github.com/kejwojew/hummem/blob/main/docs/public/telemetry.mdx) and the `npx claude-mem telemetry enable` consent screen now disclose the ingest-derived coarse location.
 
 ## Tests
 
@@ -491,7 +491,7 @@ Every analytics number claude-mem reports about itself is now real, provider-rep
 - The `ide` person property on `worker_started` never populated — the lookup queried a legacy table and silently threw on every start since it shipped.
 - Epoch math now normalizes legacy seconds-unit rows (a few hundred per install) that would have reported install ages of ~20,000 days.
 
-All new properties are whitelisted in the scrubber, documented at https://docs.claude-mem.ai/telemetry, and shown in the `npx claude-mem telemetry` consent screen. Telemetry remains anonymous and opt-out (`npx claude-mem telemetry disable`).
+All new properties are whitelisted in the scrubber, documented at https://github.com/kejwojew/hummem/blob/main/docs/public/telemetry.mdx, and shown in the `npx claude-mem telemetry` consent screen. Telemetry remains anonymous and opt-out (`npx claude-mem telemetry disable`).
 
 ## [13.5.2] - 2026-06-10
 
@@ -539,7 +539,7 @@ Any one of these turns it off:
 
 `npx claude-mem telemetry status` shows the current state and which setting decided it. The installer asks once at the end of `npx claude-mem install`, and your answer is never re-asked.
 
-Full documentation of every field and event: https://docs.claude-mem.ai/telemetry
+Full documentation of every field and event: https://github.com/kejwojew/hummem/blob/main/docs/public/telemetry.mdx
 
 ### Also in this release
 
@@ -2565,7 +2565,7 @@ OpenClaw Gateway
 
 All observation recording and MEMORY.md syncs are fire-and-forget — they never block the agent.
 
-📖 Full documentation: [OpenClaw Integration Guide](https://docs.claude-mem.ai/docs/openclaw-integration)
+📖 Full documentation: [OpenClaw Integration Guide](https://github.com/kejwojew/hummem#readme)
 
 ---
 
@@ -3545,7 +3545,7 @@ Full MCP server integration for Cursor:
 
 ## Documentation
 
-Full documentation available at [docs.claude-mem.ai/cursor](https://docs.claude-mem.ai/cursor):
+Full documentation available at [docs.claude-mem.ai/cursor](https://github.com/kejwojew/hummem#readme):
 - Cursor Integration Overview
 - Gemini Setup Guide (free tier)
 - OpenRouter Setup Guide
@@ -3564,7 +3564,7 @@ bun run cursor:setup
 ### For Claude Code Users
 
 ```bash
-/plugin marketplace add thedotmack/claude-mem
+/plugin marketplace add kejwojew/hummem
 /plugin install claude-mem
 claude-mem cursor install
 ```
@@ -3796,7 +3796,7 @@ This release introduces **Google Gemini API** as an alternative to the Claude Ag
 
 ### 📚 Documentation
 
-- New [Gemini Provider documentation](https://docs.claude-mem.ai/usage/gemini-provider) with setup guide and troubleshooting
+- New [Gemini Provider documentation](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/gemini-provider.mdx) with setup guide and troubleshooting
 
 ### ⚙️ New Settings
 
@@ -4769,7 +4769,7 @@ This refactoring reduces code duplication and makes the installation process mor
 ## 🔗 Links
 
 - [Full Changelog](https://github.com/thedotmack/claude-mem/blob/main/CHANGELOG.md#711---2025-12-12)
-- [Documentation](https://docs.claude-mem.ai)
+- [Documentation](https://github.com/kejwojew/hummem#readme)
 
 ## [7.1.0] - 2025-12-13
 
@@ -5055,7 +5055,7 @@ This release brings comprehensive documentation updates to reflect all features 
 
 ---
 
-📚 Full documentation available at [docs.claude-mem.ai](https://docs.claude-mem.ai)
+📚 Full documentation available at [docs.claude-mem.ai](https://github.com/kejwojew/hummem#readme)
 
 ## [6.4.9] - 2025-12-02
 
@@ -5965,7 +5965,7 @@ Or restart Claude Code to auto-update.
 ### 📦 Installation
 
 ```bash
-/plugin marketplace add thedotmack/claude-mem
+/plugin marketplace add kejwojew/hummem
 /plugin install claude-mem
 ```
 
@@ -6491,7 +6491,7 @@ This release should completely resolve installation issues. The smart installer 
 
 Install via Claude Code marketplace:
 ```bash
-/plugin marketplace add https://raw.githubusercontent.com/thedotmack/claude-mem/main/.claude-plugin/marketplace.json
+/plugin marketplace add https://raw.githubusercontent.com/kejwojew/hummem/main/.claude-plugin/marketplace.json
 /plugin install claude-mem
 ```
 
