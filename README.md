@@ -58,51 +58,22 @@
   </a>
 </p>
 
-<p align="center">
-  <a href="https://trendshift.io/repositories/15496" target="_blank">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
-    </picture>
-  </a>
-</p>
 
 <br>
 
 <table align="center">
   <tr>
     <td align="center">
-      <a href="https://github.com/thedotmack/claude-mem">
+      <a href="https://github.com/kejwojew/hummem">
         <picture>
           <img
             src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
-            alt="Claude-Mem Preview"
+            alt="hummem preview"
             width="500"
           >
         </picture>
       </a>
-    </td>
-    <td align="center">
-      <a href="https://www.star-history.com/#thedotmack/claude-mem&Date">
-        <picture>
-          <source
-            media="(prefers-color-scheme: dark)"
-            srcset="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&theme=dark&legend=top-left"
-          />
-          <source
-            media="(prefers-color-scheme: light)"
-            srcset="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&legend=top-left"
-          />
-          <img
-            alt="Star History Chart"
-            src="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&legend=top-left"
-            width="500"
-          />
-        </picture>
-      </a>
-    </td>
-  </tr>
+    </td>  </tr>
 </table>
 
 <p align="center">
@@ -150,7 +121,7 @@ npx hummem install --ide kimi
 Or install from the plugin marketplace inside Claude Code:
 
 ```bash
-/plugin marketplace add thedotmack/claude-mem
+/plugin marketplace add kejwojew/hummem
 
 /plugin install hummem
 ```
@@ -410,20 +381,11 @@ open/commercial boundary.
 ## Support
 
 - **Documentation**: [docs/](docs/)
-- **Issues**: [GitHub Issues](https://github.com/thedotmack/claude-mem/issues)
-- **Repository**: [github.com/thedotmack/claude-mem](https://github.com/thedotmack/claude-mem)
-- **Official X Account**: [@Claude_Memory](https://x.com/Claude_Memory)
-- **Official Discord**: [Join Discord](https://discord.com/invite/J4wttp9vDu)
-- **Author**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
+- **Issues**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
+- **Repository**: [github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
+- **Migrating from claude-mem**: [MIGRATION.md](MIGRATION.md)
+- **Project lineage**: [PROVENANCE.md](PROVENANCE.md)
 
 ---
 
 **Built with Claude Agent SDK** | **Works with Claude Code** | **Made with TypeScript**
-
----
-
-### What About CMEM?
-
-CMEM is a token created by a 3rd party but officially embraced by the creator of Claude-Mem (Alex Newman, @thedotmack). The token acts as a community catalyst for growth and a vehicle for bringing CMEM to the developers and knowledge workers that need it most.
-
-Official BASE CA: 0x76b1967eec0ccaeb001bbbb2b40dc4badba31ba3
