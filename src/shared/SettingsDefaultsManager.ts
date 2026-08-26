@@ -4,6 +4,7 @@ import { join } from 'path';
 import { homedir, hostname } from 'os';
 import { HOOK_TIMEOUTS, getTimeout } from './hook-constants.js';
 import { parseJsonWithBom, writeJsonFileAtomic } from './atomic-json.js';
+import { canonicalNameFor, readEnv } from './legacy-env.js';
 
 // A fresh settings.json is seeded with EVERY default (see loadFromFile), and
 // persisted values then win over DEFAULTS. So any install created after the
@@ -282,8 +283,18 @@ export class SettingsDefaultsManager {
     return { ...this.DEFAULTS };
   }
 
+  /**
+   * Read a setting, preferring the canonical `HUMMEM_*` environment variable
+   * over the deprecated `CLAUDE_MEM_*` one that names this key.
+   *
+   * Keys are still *declared* as `CLAUDE_MEM_*` because that is the on-disk
+   * settings.json schema; renaming the schema would invalidate every existing
+   * settings file. The environment namespace is what users type, so that is
+   * what gets the canonical name.
+   */
   static get(key: keyof SettingsDefaults): string {
-    return process.env[key] ?? this.DEFAULTS[key];
+    const canonicalName = canonicalNameFor(key) ?? key;
+    return readEnv(canonicalName) ?? process.env[key] ?? this.DEFAULTS[key];
   }
 
   static getInt(key: keyof SettingsDefaults): number {
@@ -291,17 +302,21 @@ export class SettingsDefaultsManager {
     return parseInt(value, 10);
   }
 
+  /**
+   * Overlay environment variables onto values loaded from settings.json.
+   *
+   * For every key, the canonical `HUMMEM_*` variable wins over the deprecated
+   * `CLAUDE_MEM_*` one — an operator setting the new name to fix something must
+   * not be silently overridden by a stale value in a shell profile.
+   */
   private static applyEnvOverrides(settings: SettingsDefaults): SettingsDefaults {
     const result = { ...settings };
     for (const key of Object.keys(this.DEFAULTS) as Array<keyof SettingsDefaults>) {
-      if (process.env[key] !== undefined) {
-        result[key] = process.env[key]!;
+      const canonicalName = canonicalNameFor(key) ?? key;
+      const value = readEnv(canonicalName) ?? process.env[key];
+      if (value !== undefined) {
+        result[key] = value;
       }
-    }
-    // hummem's canonical data-dir env wins over the legacy CLAUDE_MEM_DATA_DIR
-    // (mirrors resolveDataDir() precedence in src/shared/paths.ts).
-    if (process.env.HUMMEM_DATA_DIR !== undefined) {
-      result.CLAUDE_MEM_DATA_DIR = process.env.HUMMEM_DATA_DIR;
     }
     return result;
   }
@@ -355,10 +370,19 @@ export class SettingsDefaultsManager {
         }
       }
 
+      // A settings file may spell a key either way. The schema key is the
+      // legacy name (renaming it would invalidate every existing file), but a
+      // user who wrote HUMMEM_* by hand — matching the documented environment
+      // namespace — must not be silently ignored, so accept both and let the
+      // canonical spelling win.
       const result: SettingsDefaults = { ...this.DEFAULTS };
       for (const key of Object.keys(this.DEFAULTS) as Array<keyof SettingsDefaults>) {
-        if (flatSettings[key] !== undefined) {
-          result[key] = flatSettings[key];
+        const canonicalKey = canonicalNameFor(key);
+        const value =
+          (canonicalKey !== undefined ? flatSettings[canonicalKey] : undefined) ??
+          flatSettings[key];
+        if (value !== undefined) {
+          result[key] = value;
         }
       }
 
