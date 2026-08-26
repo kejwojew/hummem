@@ -56,6 +56,9 @@ reports/
 sandbox/
 
 # memory-eval harness artifacts (machine-specific)
+# These are derived from a live memory database and therefore contain real
+# user prompts and file paths. They must never be committed — see
+# scripts/check-privacy.cjs and PROVENANCE.md.
 scripts/memory-eval/reports/
 scripts/memory-eval/.gold-cache.json
 scripts/memory-eval/gold.json
@@ -63,3 +66,8 @@ scripts/memory-eval/pilot/embeddings.npz
 scripts/memory-eval/pilot/observations.jsonl
 scripts/memory-eval/pilot/e5-top5.json
 scripts/memory-eval/pilot/pilot-results.json
+scripts/memory-eval/**/*.jsonl
+
+# Git archival bundles and ref manifests (large, local-only backups)
+*.bundle
+*-forkrefs-manifest-*.txt
