@@ -1365,7 +1365,7 @@ async function promptTelemetryOptIn(): Promise<void> {
 
   p.log.message(styleText('dim', 
     'Anonymous install ID only — no prompts, file paths, code, or project names, ever.\n'
-    + 'Details: https://docs.claude-mem.ai/telemetry · Change anytime: hummem telemetry disable',
+    + 'Details: https://github.com/kejwojew/hummem/blob/main/docs/public/telemetry.mdx · Change anytime: hummem telemetry disable',
   ));
   const consent = await p.confirm({
     message: 'Share anonymized usage data with CMEM? It is on by default and helps us make the product better.',

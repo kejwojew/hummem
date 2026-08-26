@@ -915,7 +915,7 @@ Examples:
   hummem cursor uninstall            # Remove from current project
   hummem cursor status               # Check if hooks are installed
 
-For more info: https://docs.claude-mem.ai/cursor
+For more info: https://github.com/kejwojew/hummem#readme
       `),0}}var Ru=ue(require("path"),1),jL=require("os"),Ft=require("fs");ne();var vo=ue(require("path"),1),Y0=require("os"),Cs=require("fs");Xh();g_();var UL=`# hummem: Cross-Session Memory
 
 *No context yet. Complete your first session and context will appear here.*
@@ -1006,7 +1006,7 @@ Examples:
   hummem antigravity-cli status      # Check if installed
   hummem antigravity-cli uninstall   # Remove hooks + MCP
 
-For more info: https://docs.claude-mem.ai/antigravity-cli/setup
+For more info: https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx
       `),0}}var zL=require("bun:sqlite"),WJ=require("crypto");Ie();ne();var LJ=require("crypto");function MJ(t,e,r){return(0,LJ.createHash)("sha256").update([t||"",e||"",r||""].join("\0")).digest("hex").slice(0,16)}_f();lr();lr();function HJ(t,e,r,n,s){let i=Date.now()-n,o=s!==void 0?"up.session_db_id = ?":"up.content_session_id = ?",a=s??e;return t.prepare(`
     SELECT
       up.*,

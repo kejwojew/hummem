@@ -469,7 +469,7 @@ Examples:
   hummem cursor uninstall            # Remove from current project
   hummem cursor status               # Check if hooks are installed
 
-For more info: https://docs.claude-mem.ai/cursor
+For more info: https://github.com/kejwojew/hummem#readme
       `);
       return 0;
     }
