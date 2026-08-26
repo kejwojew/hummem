@@ -1,24 +1,24 @@
 {
   "name": "hummem",
-  "version": "13.15.2",
-  "description": "Memory compression system for AI coding assistants - persist context across sessions (hummem, a claude-mem fork)",
+  "version": "1.0.0",
+  "description": "Persistent memory for AI coding assistants - durable context across sessions",
   "author": {
-    "name": "Alex Newman",
-    "url": "https://github.com/thedotmack"
+    "name": "hummem contributors",
+    "url": "https://github.com/kejwojew"
   },
-  "homepage": "https://github.com/thedotmack/claude-mem#readme",
-  "repository": "https://github.com/thedotmack/claude-mem",
+  "homepage": "https://github.com/kejwojew/hummem#readme",
+  "repository": "https://github.com/kejwojew/hummem",
   "license": "Apache-2.0",
   "keywords": [
-    "claude",
-    "claude-code",
-    "claude-agent-sdk",
+    "ai",
+    "agent",
+    "memory",
+    "context",
     "mcp",
     "plugin",
-    "memory",
-    "compression",
     "knowledge-graph",
-    "transcript",
+    "embeddings",
+    "semantic-search",
     "typescript",
     "nodejs"
   ],
@@ -29,13 +29,13 @@
     "displayName": "hummem",
     "shortDescription": "Persistent memory and context compression across coding sessions.",
     "longDescription": "hummem captures coding-session activity, compresses it into reusable observations, and injects relevant context back into future Claude Code and Codex-compatible sessions.",
-    "developerName": "Alex Newman",
+    "developerName": "hummem contributors",
     "category": "Productivity",
     "capabilities": [
       "Interactive",
       "Write"
     ],
-    "websiteURL": "https://github.com/thedotmack/claude-mem",
+    "websiteURL": "https://github.com/kejwojew/hummem",
     "defaultPrompt": [
       "Find what I already learned about this codebase before I start a new task.",
       "Show recent observations related to the files I am editing right now.",
