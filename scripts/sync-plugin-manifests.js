@@ -37,6 +37,7 @@ function syncCodexPlugin(plugin, pkg) {
     author: {
       ...author,
       name: normalizeAuthorName(pkg.author),
+      url: deriveAuthorUrl(pkg.repository),
     },
     interface: {
       ...plugin.interface,
@@ -69,11 +70,26 @@ function normalizeAuthorName(author) {
   return '';
 }
 
+/**
+ * package.json carries an npm-style repository URL (`git+https://…​.git`).
+ * Plugin manifests are consumed by IDE UIs that render the value as a link,
+ * so strip the npm-only prefix and suffix to yield a browsable URL.
+ */
 function normalizeRepositoryUrl(repository) {
-  if (typeof repository === 'string') return repository.replace(/\.git$/, '');
-  if (repository && typeof repository === 'object' && typeof repository.url === 'string')
-    return repository.url.replace(/\.git$/, '');
-  return '';
+  const raw =
+    typeof repository === 'string'
+      ? repository
+      : repository && typeof repository === 'object' && typeof repository.url === 'string'
+        ? repository.url
+        : '';
+  return raw.replace(/^git\+/, '').replace(/\.git$/, '');
+}
+
+/** Derive the owner page from the repository URL so it can never drift. */
+function deriveAuthorUrl(repository) {
+  const url = normalizeRepositoryUrl(repository);
+  const match = /^https?:\/\/github\.com\/([^/]+)\//.exec(url);
+  return match ? `https://github.com/${match[1]}` : url;
 }
 
 function main() {
