@@ -4,9 +4,9 @@
   <br>
   <a href="https://github.com/thedotmack/claude-mem">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp" alt="hummem" width="400">
     </picture>
   </a>
   <br>
@@ -70,9 +70,9 @@
 <p align="center">
   <a href="https://trendshift.io/repositories/15496" target="_blank">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
     </picture>
   </a>
 </p>
@@ -85,7 +85,7 @@
       <a href="https://github.com/thedotmack/claude-mem">
         <picture>
           <img
-            src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/cm-preview.gif"
+            src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
             alt="Claude-Mem Preview"
             width="500"
           >
@@ -144,7 +144,7 @@ Nebo instalace pro OpenCode:
 npx claude-mem install --ide opencode
 ```
 
-Nebo instalace pro Antigravity CLI ([návod k nastavení](https://docs.claude-mem.ai/antigravity-cli/setup)):
+Nebo instalace pro Antigravity CLI ([návod k nastavení](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
 npx claude-mem install --ide antigravity
@@ -170,7 +170,7 @@ Nainstalujte claude-mem jako plugin trvalé paměti na gateway [OpenClaw](https:
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 ```
 
-Instalátor se stará o závislosti, nastavení pluginu, konfiguraci AI poskytovatele, spuštění workeru a volitelné feedy pozorování v reálném čase do Telegramu, Discordu, Slacku a dalších. Podrobnosti najdete v [Průvodci integrací OpenClaw](https://docs.claude-mem.ai/openclaw-integration).
+Instalátor se stará o závislosti, nastavení pluginu, konfiguraci AI poskytovatele, spuštění workeru a volitelné feedy pozorování v reálném čase do Telegramu, Discordu, Slacku a dalších. Podrobnosti najdete v [Průvodci integrací OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx).
 
 **Klíčové vlastnosti:**
 
@@ -188,35 +188,35 @@ Instalátor se stará o závislosti, nastavení pluginu, konfiguraci AI poskytov
 
 ## Dokumentace
 
-📚 **[Zobrazit kompletní dokumentaci](https://docs.claude-mem.ai/)** - Procházet na oficiálních stránkách
+📚 **[Zobrazit kompletní dokumentaci](https://github.com/kejwojew/hummem#readme)** - Procházet na oficiálních stránkách
 
 ### Začínáme
 
-- **[Průvodce instalací](https://docs.claude-mem.ai/installation)** - Rychlý start a pokročilá instalace
-- **[Průvodce použitím](https://docs.claude-mem.ai/usage/getting-started)** - Jak Claude-Mem funguje automaticky
-- **[Vyhledávací nástroje](https://docs.claude-mem.ai/usage/search-tools)** - Dotazujte se na historii projektu pomocí přirozeného jazyka
+- **[Průvodce instalací](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - Rychlý start a pokročilá instalace
+- **[Průvodce použitím](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - Jak Claude-Mem funguje automaticky
+- **[Vyhledávací nástroje](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - Dotazujte se na historii projektu pomocí přirozeného jazyka
 
 ### Osvědčené postupy
 
-- **[Context Engineering](https://docs.claude-mem.ai/context-engineering)** - Principy optimalizace kontextu AI agenta
-- **[Postupné odhalování](https://docs.claude-mem.ai/progressive-disclosure)** - Filozofie strategie přípravy kontextu Claude-Mem
+- **[Context Engineering](https://github.com/kejwojew/hummem/blob/main/docs/public/context-engineering.mdx)** - Principy optimalizace kontextu AI agenta
+- **[Postupné odhalování](https://github.com/kejwojew/hummem/blob/main/docs/public/progressive-disclosure.mdx)** - Filozofie strategie přípravy kontextu Claude-Mem
 
 ### Architektura
 
-- **[Přehled](https://docs.claude-mem.ai/architecture/overview)** - Systémové komponenty a tok dat
-- **[Evoluce architektury](https://docs.claude-mem.ai/architecture-evolution)** - Cesta z v3 na v5
-- **[Architektura háčků](https://docs.claude-mem.ai/hooks-architecture)** - Jak Claude-Mem používá lifecycle hooks
-- **[Reference háčků](https://docs.claude-mem.ai/architecture/hooks)** - Vysvětlení 7 hook skriptů
-- **[Worker Service](https://docs.claude-mem.ai/architecture/worker-service)** - HTTP API a správa Bun
-- **[Databáze](https://docs.claude-mem.ai/architecture/database)** - SQLite schéma a FTS5 vyhledávání
-- **[Architektura vyhledávání](https://docs.claude-mem.ai/architecture/search-architecture)** - Hybridní vyhledávání s vektorovou databází Chroma
+- **[Přehled](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)** - Systémové komponenty a tok dat
+- **[Evoluce architektury](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture-evolution.mdx)** - Cesta z v3 na v5
+- **[Architektura háčků](https://github.com/kejwojew/hummem/blob/main/docs/public/hooks-architecture.mdx)** - Jak Claude-Mem používá lifecycle hooks
+- **[Reference háčků](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/hooks.mdx)** - Vysvětlení 7 hook skriptů
+- **[Worker Service](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/worker-service.mdx)** - HTTP API a správa Bun
+- **[Databáze](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/database.mdx)** - SQLite schéma a FTS5 vyhledávání
+- **[Architektura vyhledávání](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/search-architecture.mdx)** - Hybridní vyhledávání s vektorovou databází Chroma
 
 ### Konfigurace a vývoj
 
-- **[Konfigurace](https://docs.claude-mem.ai/configuration)** - Proměnné prostředí a nastavení
-- **[Vývoj](https://docs.claude-mem.ai/development)** - Sestavení, testování, přispívání
-- **[Vydávací větve](https://docs.claude-mem.ai/branches)** - Tok větví stable, core-dev a community-edge
-- **[Řešení problémů](https://docs.claude-mem.ai/troubleshooting)** - Běžné problémy a řešení
+- **[Konfigurace](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** - Proměnné prostředí a nastavení
+- **[Vývoj](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** - Sestavení, testování, přispívání
+- **[Vydávací větve](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** - Tok větví stable, core-dev a community-edge
+- **[Řešení problémů](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** - Běžné problémy a řešení
 
 ---
 
@@ -231,7 +231,7 @@ Instalátor se stará o závislosti, nastavení pluginu, konfiguraci AI poskytov
 5. **mem-search dovednost** - Dotazy v přirozeném jazyce s postupným odhalováním
 6. **Chroma vektorová databáze** - Hybridní sémantické + klíčové vyhledávání pro inteligentní vyhledávání kontextu
 
-Podrobnosti najdete v [Přehledu architektury](https://docs.claude-mem.ai/architecture/overview).
+Podrobnosti najdete v [Přehledu architektury](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx).
 
 ---
 
@@ -270,7 +270,7 @@ search(query="authentication bug", type="bugfix", limit=10)
 get_observations(ids=[123, 456])
 ```
 
-Podrobné příklady najdete v [Průvodci vyhledávacími nástroji](https://docs.claude-mem.ai/usage/search-tools).
+Podrobné příklady najdete v [Průvodci vyhledávacími nástroji](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx).
 
 ---
 
@@ -279,7 +279,7 @@ Podrobné příklady najdete v [Průvodci vyhledávacími nástroji](https://doc
 Stabilní vydání jsou publikována z větve `main` a zveřejněna na npm. `core-dev` a
 `community-edge` jsou větve spouštěné ze zdrojového kódu určené pro včasné opravy
 spolehlivosti a komunitní integrace. Podrobnosti o toku větví a pokyny ke spuštění
-nestabilních verzí najdete v **[Vydávacích větvích](https://docs.claude-mem.ai/branches)**.
+nestabilních verzí najdete v **[Vydávacích větvích](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)**.
 
 ---
 
@@ -308,7 +308,7 @@ Ujistěte se, že Node.js a npm jsou nainstalované a přidané do vaší promě
 
 Nastavení jsou spravována v `~/.claude-mem/settings.json` (automaticky vytvořeno s výchozími hodnotami při prvním spuštění). Konfigurujte AI model, port workeru, datový adresář, úroveň logování a nastavení vkládání kontextu.
 
-Všechna dostupná nastavení a příklady najdete v **[Průvodci konfigurací](https://docs.claude-mem.ai/configuration)**.
+Všechna dostupná nastavení a příklady najdete v **[Průvodci konfigurací](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)**.
 
 ### Konfigurace režimu a jazyka
 
@@ -353,7 +353,7 @@ Restartujte Claude Code, aby se použila nová konfigurace režimu.
 
 ## Vývoj
 
-Podrobné pokyny k sestavení, testování a pracovnímu postupu pro přispívání najdete v **[Průvodci vývojem](https://docs.claude-mem.ai/development)**.
+Podrobné pokyny k sestavení, testování a pracovnímu postupu pro přispívání najdete v **[Průvodci vývojem](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)**.
 
 ---
 
@@ -361,7 +361,7 @@ Podrobné pokyny k sestavení, testování a pracovnímu postupu pro přispívá
 
 Pokud zaznamenáváte problémy, popište problém Claude a dovednost troubleshoot automaticky diagnostikuje a poskytne opravy.
 
-Běžné problémy a řešení najdete v **[Průvodci řešením problémů](https://docs.claude-mem.ai/troubleshooting)**.
+Běžné problémy a řešení najdete v **[Průvodci řešením problémů](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)**.
 
 ---
 
@@ -387,9 +387,9 @@ Příspěvky jsou vítány! Prosím:
 Claude-Mem je vydáván ze tří větví: `main` (stabilní), `core-dev` a
 `community-edge`. Na npm je publikována pouze `main`; ostatní se spouštějí ze
 zdrojového kódu. Podrobnosti o strategii a pokyny ke spuštění lokálně najdete
-ve [Vydávacích větvích](https://docs.claude-mem.ai/branches).
+ve [Vydávacích větvích](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx).
 
-Pracovní postup pro přispívání najdete v [Průvodci vývojem](https://docs.claude-mem.ai/development).
+Pracovní postup pro přispívání najdete v [Průvodci vývojem](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx).
 
 ---
 

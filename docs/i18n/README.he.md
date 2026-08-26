@@ -4,9 +4,9 @@
   <br>
   <a href="https://github.com/thedotmack/claude-mem">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp" alt="hummem" width="400">
     </picture>
   </a>
   <br>
@@ -70,9 +70,9 @@
 <p align="center">
   <a href="https://trendshift.io/repositories/15496" target="_blank">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
     </picture>
   </a>
 </p>
@@ -85,7 +85,7 @@
       <a href="https://github.com/thedotmack/claude-mem">
         <picture>
           <img
-            src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/cm-preview.gif"
+            src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
             alt="Claude-Mem Preview"
             width="500"
           >
@@ -144,7 +144,7 @@ npx claude-mem install
 npx claude-mem install --ide opencode
 ```
 
-או התקן עבור Antigravity CLI ([מדריך הגדרה](https://docs.claude-mem.ai/antigravity-cli/setup)):
+או התקן עבור Antigravity CLI ([מדריך הגדרה](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
 npx claude-mem install --ide antigravity
@@ -170,7 +170,7 @@ npx claude-mem install --ide antigravity
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 ```
 
-תוכנת ההתקנה מטפלת בתלויות, בהגדרת התוסף, בהגדרת ספק ה-AI, בהפעלת ה-worker, ובאפשרות להזין זרימות תצפיות בזמן אמת ל-Telegram, Discord, Slack ועוד. עיין ב[מדריך שילוב OpenClaw](https://docs.claude-mem.ai/openclaw-integration) לפרטים.
+תוכנת ההתקנה מטפלת בתלויות, בהגדרת התוסף, בהגדרת ספק ה-AI, בהפעלת ה-worker, ובאפשרות להזין זרימות תצפיות בזמן אמת ל-Telegram, Discord, Slack ועוד. עיין ב[מדריך שילוב OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) לפרטים.
 
 **תכונות עיקריות:**
 
@@ -188,35 +188,35 @@ curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 
 ## תיעוד
 
-📚 **[צפה בתיעוד המלא](https://docs.claude-mem.ai/)** - דפדף באתר הרשמי
+📚 **[צפה בתיעוד המלא](https://github.com/kejwojew/hummem#readme)** - דפדף באתר הרשמי
 
 ### תחילת העבודה
 
-- **[מדריך התקנה](https://docs.claude-mem.ai/installation)** - התחלה מהירה והתקנה מתקדמת
-- **[מדריך שימוש](https://docs.claude-mem.ai/usage/getting-started)** - איך Claude-Mem עובד אוטומטית
-- **[כלי חיפוש](https://docs.claude-mem.ai/usage/search-tools)** - שאל את היסטוריית הפרויקט שלך בשפה טבעית
+- **[מדריך התקנה](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - התחלה מהירה והתקנה מתקדמת
+- **[מדריך שימוש](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - איך Claude-Mem עובד אוטומטית
+- **[כלי חיפוש](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - שאל את היסטוריית הפרויקט שלך בשפה טבעית
 
 ### שיטות מומלצות
 
-- **[הנדסת הקשר](https://docs.claude-mem.ai/context-engineering)** - עקרונות אופטימיזציה של הקשר לסוכן AI
-- **[גילוי מדורג](https://docs.claude-mem.ai/progressive-disclosure)** - הפילוסופיה מאחורי אסטרטגיית הכנת ההקשר של Claude-Mem
+- **[הנדסת הקשר](https://github.com/kejwojew/hummem/blob/main/docs/public/context-engineering.mdx)** - עקרונות אופטימיזציה של הקשר לסוכן AI
+- **[גילוי מדורג](https://github.com/kejwojew/hummem/blob/main/docs/public/progressive-disclosure.mdx)** - הפילוסופיה מאחורי אסטרטגיית הכנת ההקשר של Claude-Mem
 
 ### ארכיטקטורה
 
-- **[סקירה כללית](https://docs.claude-mem.ai/architecture/overview)** - רכיבי המערכת וזרימת הנתונים
-- **[התפתחות הארכיטקטורה](https://docs.claude-mem.ai/architecture-evolution)** - המסע מגרסה v3 לגרסה v5
-- **[ארכיטקטורת Hooks](https://docs.claude-mem.ai/hooks-architecture)** - איך Claude-Mem משתמש ב-lifecycle hooks
-- **[מדריך Hooks](https://docs.claude-mem.ai/architecture/hooks)** - 7 סקריפטי hook מוסברים
-- **[שירות Worker](https://docs.claude-mem.ai/architecture/worker-service)** - HTTP API וניהול Bun
-- **[מסד נתונים](https://docs.claude-mem.ai/architecture/database)** - סכמת SQLite וחיפוש FTS5
-- **[ארכיטקטורת חיפוש](https://docs.claude-mem.ai/architecture/search-architecture)** - חיפוש היברידי עם מסד נתוני וקטורים Chroma
+- **[סקירה כללית](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)** - רכיבי המערכת וזרימת הנתונים
+- **[התפתחות הארכיטקטורה](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture-evolution.mdx)** - המסע מגרסה v3 לגרסה v5
+- **[ארכיטקטורת Hooks](https://github.com/kejwojew/hummem/blob/main/docs/public/hooks-architecture.mdx)** - איך Claude-Mem משתמש ב-lifecycle hooks
+- **[מדריך Hooks](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/hooks.mdx)** - 7 סקריפטי hook מוסברים
+- **[שירות Worker](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/worker-service.mdx)** - HTTP API וניהול Bun
+- **[מסד נתונים](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/database.mdx)** - סכמת SQLite וחיפוש FTS5
+- **[ארכיטקטורת חיפוש](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/search-architecture.mdx)** - חיפוש היברידי עם מסד נתוני וקטורים Chroma
 
 ### הגדרות ופיתוח
 
-- **[הגדרות](https://docs.claude-mem.ai/configuration)** - משתני סביבה והגדרות
-- **[פיתוח](https://docs.claude-mem.ai/development)** - בנייה, בדיקה, תרומה
-- **[ענפי שחרור](https://docs.claude-mem.ai/branches)** - זרימת הענפים Stable, core-dev, ו-community-edge
-- **[פתרון בעיות](https://docs.claude-mem.ai/troubleshooting)** - בעיות נפוצות ופתרונות
+- **[הגדרות](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** - משתני סביבה והגדרות
+- **[פיתוח](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** - בנייה, בדיקה, תרומה
+- **[ענפי שחרור](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** - זרימת הענפים Stable, core-dev, ו-community-edge
+- **[פתרון בעיות](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** - בעיות נפוצות ופתרונות
 
 ---
 
@@ -231,7 +231,7 @@ curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 5. **מיומנות mem-search** - שאילתות בשפה טבעית עם גילוי מדורג
 6. **מסד נתוני וקטורים Chroma** - חיפוש היברידי סמנטי + מילות מפתח לאחזור הקשר חכם
 
-ראה [סקירה כללית של הארכיטקטורה](https://docs.claude-mem.ai/architecture/overview) לפרטים.
+ראה [סקירה כללית של הארכיטקטורה](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx) לפרטים.
 
 ---
 
@@ -270,7 +270,7 @@ search(query="authentication bug", type="bugfix", limit=10)
 get_observations(ids=[123, 456])
 ```
 
-ראה [מדריך כלי חיפוש](https://docs.claude-mem.ai/usage/search-tools) לדוגמאות מפורטות.
+ראה [מדריך כלי חיפוש](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx) לדוגמאות מפורטות.
 
 ---
 
@@ -278,7 +278,7 @@ get_observations(ids=[123, 456])
 
 שחרורים יציבים משוחררים מהענף `main` ומפורסמים ל-npm. `core-dev` ו-
 `community-edge` הם ענפים המורצים ממקור, המיועדים לתיקוני יציבות מוקדמים ולשילובים
-קהילתיים. ראה **[ענפי שחרור](https://docs.claude-mem.ai/branches)**
+קהילתיים. ראה **[ענפי שחרור](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)**
 לזרימת הענפים ולהוראות הרצה לא-יציבות.
 
 ---
@@ -308,7 +308,7 @@ npm : The term 'npm' is not recognized as the name of a cmdlet
 
 ההגדרות מנוהלות ב-`~/.claude-mem/settings.json` (נוצר אוטומטית עם ברירות מחדל בהפעלה הראשונה). הגדר מודל AI, פורט worker, ספריית נתונים, רמת לוג, והגדרות הזרקת הקשר.
 
-ראה **[מדריך הגדרות](https://docs.claude-mem.ai/configuration)** לכל ההגדרות הזמינות ודוגמאות.
+ראה **[מדריך הגדרות](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** לכל ההגדרות הזמינות ודוגמאות.
 
 ### הגדרת מצב ושפה
 
@@ -353,7 +353,7 @@ ls ~/.claude/plugins/marketplaces/thedotmack/plugin/modes/
 
 ## פיתוח
 
-ראה **[מדריך פיתוח](https://docs.claude-mem.ai/development)** להוראות בנייה, בדיקה, ותהליך תרומה.
+ראה **[מדריך פיתוח](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** להוראות בנייה, בדיקה, ותהליך תרומה.
 
 ---
 
@@ -361,7 +361,7 @@ ls ~/.claude/plugins/marketplaces/thedotmack/plugin/modes/
 
 אם אתה נתקל בבעיות, תאר את הבעיה ל-Claude ומיומנות troubleshoot תאבחן אוטומטית ותספק תיקונים.
 
-ראה **[מדריך פתרון בעיות](https://docs.claude-mem.ai/troubleshooting)** לבעיות נפוצות ופתרונות.
+ראה **[מדריך פתרון בעיות](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** לבעיות נפוצות ופתרונות.
 
 ---
 
@@ -386,10 +386,10 @@ npm run bug-report
 
 Claude-Mem משוחרר משלושה ענפים: `main` (יציב), `core-dev`, ו-
 `community-edge`. רק `main` מפורסם ל-npm; האחרים מורצים ממקור.
-ראה [ענפי שחרור](https://docs.claude-mem.ai/branches) לאסטרטגיה ולהוראות
+ראה [ענפי שחרור](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx) לאסטרטגיה ולהוראות
 הרצה מקומיות.
 
-ראה [מדריך פיתוח](https://docs.claude-mem.ai/development) לתהליך תרומה.
+ראה [מדריך פיתוח](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx) לתהליך תרומה.
 
 ---
 

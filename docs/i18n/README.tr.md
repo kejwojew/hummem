@@ -4,9 +4,9 @@
   <br>
   <a href="https://github.com/thedotmack/claude-mem">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp" alt="hummem" width="400">
     </picture>
   </a>
   <br>
@@ -70,9 +70,9 @@
 <p align="center">
   <a href="https://trendshift.io/repositories/15496" target="_blank">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
     </picture>
   </a>
 </p>
@@ -85,7 +85,7 @@
       <a href="https://github.com/thedotmack/claude-mem">
         <picture>
           <img
-            src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/cm-preview.gif"
+            src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
             alt="Claude-Mem Preview"
             width="500"
           >
@@ -144,7 +144,7 @@ Ya da OpenCode için kurun:
 npx claude-mem install --ide opencode
 ```
 
-Ya da Antigravity CLI için kurun ([kurulum kılavuzu](https://docs.claude-mem.ai/antigravity-cli/setup)):
+Ya da Antigravity CLI için kurun ([kurulum kılavuzu](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
 npx claude-mem install --ide antigravity
@@ -170,7 +170,7 @@ Claude-mem'i tek bir komutla [OpenClaw](https://openclaw.ai) gateway'lerine kal�
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 ```
 
-Kurulum programı bağımlılıkları, plugin kurulumunu, AI sağlayıcı yapılandırmasını, worker başlatmayı ve Telegram, Discord, Slack ve daha fazlasına isteğe bağlı gerçek zamanlı gözlem akışlarını yönetir. Detaylar için [OpenClaw Entegrasyon Kılavuzu](https://docs.claude-mem.ai/openclaw-integration) bölümüne bakın.
+Kurulum programı bağımlılıkları, plugin kurulumunu, AI sağlayıcı yapılandırmasını, worker başlatmayı ve Telegram, Discord, Slack ve daha fazlasına isteğe bağlı gerçek zamanlı gözlem akışlarını yönetir. Detaylar için [OpenClaw Entegrasyon Kılavuzu](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) bölümüne bakın.
 
 **Temel Özellikler:**
 
@@ -188,35 +188,35 @@ Kurulum programı bağımlılıkları, plugin kurulumunu, AI sağlayıcı yapıl
 
 ## Documentation
 
-📚 **[Tam Dokümantasyonu Görüntüle](https://docs.claude-mem.ai/)** - Resmi web sitesinde göz atın
+📚 **[Tam Dokümantasyonu Görüntüle](https://github.com/kejwojew/hummem#readme)** - Resmi web sitesinde göz atın
 
 ### Başlarken
 
-- **[Kurulum Kılavuzu](https://docs.claude-mem.ai/installation)** - Hızlı başlangıç ve gelişmiş kurulum
-- **[Kullanım Kılavuzu](https://docs.claude-mem.ai/usage/getting-started)** - Claude-Mem otomatik olarak nasıl çalışır
-- **[Arama Araçları](https://docs.claude-mem.ai/usage/search-tools)** - Doğal dil ile proje geçmişinizi sorgulayın
+- **[Kurulum Kılavuzu](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - Hızlı başlangıç ve gelişmiş kurulum
+- **[Kullanım Kılavuzu](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - Claude-Mem otomatik olarak nasıl çalışır
+- **[Arama Araçları](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - Doğal dil ile proje geçmişinizi sorgulayın
 
 ### En İyi Uygulamalar
 
-- **[Bağlam Mühendisliği](https://docs.claude-mem.ai/context-engineering)** - AI ajan bağlam optimizasyon ilkeleri
-- **[Aşamalı Açıklama](https://docs.claude-mem.ai/progressive-disclosure)** - Claude-Mem'in bağlam hazırlama stratejisinin ardındaki felsefe
+- **[Bağlam Mühendisliği](https://github.com/kejwojew/hummem/blob/main/docs/public/context-engineering.mdx)** - AI ajan bağlam optimizasyon ilkeleri
+- **[Aşamalı Açıklama](https://github.com/kejwojew/hummem/blob/main/docs/public/progressive-disclosure.mdx)** - Claude-Mem'in bağlam hazırlama stratejisinin ardındaki felsefe
 
 ### Mimari
 
-- **[Genel Bakış](https://docs.claude-mem.ai/architecture/overview)** - Sistem bileşenleri ve veri akışı
-- **[Mimari Evrimi](https://docs.claude-mem.ai/architecture-evolution)** - v3'ten v5'e yolculuk
-- **[Hooks Mimarisi](https://docs.claude-mem.ai/hooks-architecture)** - Claude-Mem yaşam döngüsü hook'larını nasıl kullanır
-- **[Hooks Referansı](https://docs.claude-mem.ai/architecture/hooks)** - 7 hook betiği açıklandı
-- **[Worker Servisi](https://docs.claude-mem.ai/architecture/worker-service)** - HTTP API ve Bun yönetimi
-- **[Veritabanı](https://docs.claude-mem.ai/architecture/database)** - SQLite şeması ve FTS5 arama
-- **[Arama Mimarisi](https://docs.claude-mem.ai/architecture/search-architecture)** - Chroma vektör veritabanı ile hibrit arama
+- **[Genel Bakış](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)** - Sistem bileşenleri ve veri akışı
+- **[Mimari Evrimi](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture-evolution.mdx)** - v3'ten v5'e yolculuk
+- **[Hooks Mimarisi](https://github.com/kejwojew/hummem/blob/main/docs/public/hooks-architecture.mdx)** - Claude-Mem yaşam döngüsü hook'larını nasıl kullanır
+- **[Hooks Referansı](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/hooks.mdx)** - 7 hook betiği açıklandı
+- **[Worker Servisi](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/worker-service.mdx)** - HTTP API ve Bun yönetimi
+- **[Veritabanı](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/database.mdx)** - SQLite şeması ve FTS5 arama
+- **[Arama Mimarisi](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/search-architecture.mdx)** - Chroma vektör veritabanı ile hibrit arama
 
 ### Yapılandırma ve Geliştirme
 
-- **[Yapılandırma](https://docs.claude-mem.ai/configuration)** - Ortam değişkenleri ve ayarlar
-- **[Geliştirme](https://docs.claude-mem.ai/development)** - Derleme, test etme, katkıda bulunma
-- **[Sürüm Dalları](https://docs.claude-mem.ai/branches)** - Stable, core-dev ve community-edge dal akışı
-- **[Sorun Giderme](https://docs.claude-mem.ai/troubleshooting)** - Yaygın sorunlar ve çözümler
+- **[Yapılandırma](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** - Ortam değişkenleri ve ayarlar
+- **[Geliştirme](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** - Derleme, test etme, katkıda bulunma
+- **[Sürüm Dalları](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** - Stable, core-dev ve community-edge dal akışı
+- **[Sorun Giderme](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** - Yaygın sorunlar ve çözümler
 
 ---
 
@@ -231,7 +231,7 @@ Kurulum programı bağımlılıkları, plugin kurulumunu, AI sağlayıcı yapıl
 5. **mem-search Becerisi** - Aşamalı açıklama ile doğal dil sorguları
 6. **Chroma Vektör Veritabanı** - Akıllı bağlam erişimi için hibrit anlamsal + anahtar kelime arama
 
-Detaylar için [Mimari Genel Bakış](https://docs.claude-mem.ai/architecture/overview) bölümüne bakın.
+Detaylar için [Mimari Genel Bakış](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx) bölümüne bakın.
 
 ---
 
@@ -270,7 +270,7 @@ search(query="authentication bug", type="bugfix", limit=10)
 get_observations(ids=[123, 456])
 ```
 
-Detaylı örnekler için [Arama Araçları Kılavuzu](https://docs.claude-mem.ai/usage/search-tools) bölümüne bakın.
+Detaylı örnekler için [Arama Araçları Kılavuzu](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx) bölümüne bakın.
 
 ---
 
@@ -279,7 +279,7 @@ Detaylı örnekler için [Arama Araçları Kılavuzu](https://docs.claude-mem.ai
 Kararlı sürümler `main` dalından yayımlanır ve npm'e gönderilir. `core-dev` ve
 `community-edge`, erken güvenilirlik düzeltmeleri ve topluluk entegrasyonları için
 kaynaktan çalıştırılan dallardır. Dal akışı ve kararlı olmayan çalıştırma talimatları
-için **[Sürüm Dalları](https://docs.claude-mem.ai/branches)** bölümüne bakın.
+için **[Sürüm Dalları](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** bölümüne bakın.
 
 ---
 
@@ -308,7 +308,7 @@ Node.js ve npm'in kurulu olduğundan ve PATH'inize eklendiğinden emin olun. htt
 
 Ayarlar `~/.claude-mem/settings.json` dosyasında yönetilir (ilk çalıştırmada varsayılanlarla otomatik oluşturulur). AI modelini, worker portunu, veri dizinini, log seviyesini ve bağlam enjeksiyon ayarlarını yapılandırın.
 
-Tüm mevcut ayarlar ve örnekler için **[Yapılandırma Kılavuzu](https://docs.claude-mem.ai/configuration)** bölümüne bakın.
+Tüm mevcut ayarlar ve örnekler için **[Yapılandırma Kılavuzu](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** bölümüne bakın.
 
 ### Mod ve Dil Yapılandırması
 
@@ -353,7 +353,7 @@ Yeni mod yapılandırmasını uygulamak için Claude Code'u yeniden başlatın.
 
 ## Development
 
-Derleme talimatları, test etme ve katkı iş akışı için **[Geliştirme Kılavuzu](https://docs.claude-mem.ai/development)** bölümüne bakın.
+Derleme talimatları, test etme ve katkı iş akışı için **[Geliştirme Kılavuzu](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** bölümüne bakın.
 
 ---
 
@@ -361,7 +361,7 @@ Derleme talimatları, test etme ve katkı iş akışı için **[Geliştirme Kıl
 
 Sorunlarla karşılaşırsanız, sorunu Claude'a açıklayın ve troubleshoot becerisi otomatik olarak teşhis edip düzeltmeleri sağlayacaktır.
 
-Yaygın sorunlar ve çözümler için **[Sorun Giderme Kılavuzu](https://docs.claude-mem.ai/troubleshooting)** bölümüne bakın.
+Yaygın sorunlar ve çözümler için **[Sorun Giderme Kılavuzu](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** bölümüne bakın.
 
 ---
 
@@ -387,9 +387,9 @@ Katkılar memnuniyetle karşılanır! Lütfen:
 Claude-Mem üç daldan yayımlanır: `main` (kararlı), `core-dev` ve
 `community-edge`. Yalnızca `main` npm'e yayımlanır; diğerleri kaynaktan
 çalıştırılır. Strateji ve yerel çalıştırma talimatları için
-[Sürüm Dalları](https://docs.claude-mem.ai/branches) bölümüne bakın.
+[Sürüm Dalları](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx) bölümüne bakın.
 
-Katkı iş akışı için [Geliştirme Kılavuzu](https://docs.claude-mem.ai/development) bölümüne bakın.
+Katkı iş akışı için [Geliştirme Kılavuzu](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx) bölümüne bakın.
 
 ---
 

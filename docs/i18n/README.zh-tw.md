@@ -4,9 +4,9 @@
   <br>
   <a href="https://github.com/thedotmack/claude-mem">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-dark-mode.webp">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/claude-mem-logo-for-light-mode.webp" alt="Claude-Mem" width="400">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp" alt="hummem" width="400">
     </picture>
   </a>
   <br>
@@ -70,9 +70,9 @@
 <p align="center">
   <a href="https://trendshift.io/repositories/15496" target="_blank">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg">
+      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
     </picture>
   </a>
 </p>
@@ -85,7 +85,7 @@
       <a href="https://github.com/thedotmack/claude-mem">
         <picture>
           <img
-            src="https://raw.githubusercontent.com/thedotmack/claude-mem/main/docs/public/cm-preview.gif"
+            src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
             alt="Claude-Mem Preview"
             width="500"
           >
@@ -144,7 +144,7 @@ npx claude-mem install
 npx claude-mem install --ide opencode
 ```
 
-或為 Antigravity CLI 安裝（[設定指南](https://docs.claude-mem.ai/antigravity-cli/setup)）：
+或為 Antigravity CLI 安裝（[設定指南](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)）：
 
 ```bash
 npx claude-mem install --ide antigravity
@@ -170,7 +170,7 @@ npx claude-mem install --ide antigravity
 curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 ```
 
-安裝程式會處理相依性、外掛設定、AI 提供者設定、Worker 啟動，以及選用的即時觀察推播至 Telegram、Discord、Slack 等平台。詳情請參閱 [OpenClaw 整合指南](https://docs.claude-mem.ai/openclaw-integration)。
+安裝程式會處理相依性、外掛設定、AI 提供者設定、Worker 啟動，以及選用的即時觀察推播至 Telegram、Discord、Slack 等平台。詳情請參閱 [OpenClaw 整合指南](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx)。
 
 **主要功能：**
 
@@ -188,35 +188,35 @@ curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 
 ## 文件
 
-📚 **[檢視完整文件](https://docs.claude-mem.ai/)** - 於官方網站瀏覽
+📚 **[檢視完整文件](https://github.com/kejwojew/hummem#readme)** - 於官方網站瀏覽
 
 ### 入門指南
 
-- **[安裝指南](https://docs.claude-mem.ai/installation)** - 快速開始與進階安裝
-- **[使用指南](https://docs.claude-mem.ai/usage/getting-started)** - Claude-Mem 如何自動運作
-- **[搜尋工具](https://docs.claude-mem.ai/usage/search-tools)** - 使用自然語言查詢專案歷史
+- **[安裝指南](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - 快速開始與進階安裝
+- **[使用指南](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - Claude-Mem 如何自動運作
+- **[搜尋工具](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - 使用自然語言查詢專案歷史
 
 ### 最佳實務
 
-- **[脈絡工程](https://docs.claude-mem.ai/context-engineering)** - AI 代理脈絡最佳化原則
-- **[漸進式揭露](https://docs.claude-mem.ai/progressive-disclosure)** - Claude-Mem 脈絡啟動策略背後的理念
+- **[脈絡工程](https://github.com/kejwojew/hummem/blob/main/docs/public/context-engineering.mdx)** - AI 代理脈絡最佳化原則
+- **[漸進式揭露](https://github.com/kejwojew/hummem/blob/main/docs/public/progressive-disclosure.mdx)** - Claude-Mem 脈絡啟動策略背後的理念
 
 ### 架構
 
-- **[概覽](https://docs.claude-mem.ai/architecture/overview)** - 系統元件與資料流程
-- **[架構演進](https://docs.claude-mem.ai/architecture-evolution)** - 從 v3 到 v5 的旅程
-- **[Hooks 架構](https://docs.claude-mem.ai/hooks-architecture)** - Claude-Mem 如何使用生命週期掛鉤
-- **[Hooks 參考](https://docs.claude-mem.ai/architecture/hooks)** - 7 個掛鉤腳本說明
-- **[Worker 服務](https://docs.claude-mem.ai/architecture/worker-service)** - HTTP API 與 Bun 管理
-- **[資料庫](https://docs.claude-mem.ai/architecture/database)** - SQLite 結構描述與 FTS5 搜尋
-- **[搜尋架構](https://docs.claude-mem.ai/architecture/search-architecture)** - 使用 Chroma 向量資料庫的混合搜尋
+- **[概覽](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)** - 系統元件與資料流程
+- **[架構演進](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture-evolution.mdx)** - 從 v3 到 v5 的旅程
+- **[Hooks 架構](https://github.com/kejwojew/hummem/blob/main/docs/public/hooks-architecture.mdx)** - Claude-Mem 如何使用生命週期掛鉤
+- **[Hooks 參考](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/hooks.mdx)** - 7 個掛鉤腳本說明
+- **[Worker 服務](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/worker-service.mdx)** - HTTP API 與 Bun 管理
+- **[資料庫](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/database.mdx)** - SQLite 結構描述與 FTS5 搜尋
+- **[搜尋架構](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/search-architecture.mdx)** - 使用 Chroma 向量資料庫的混合搜尋
 
 ### 設定與開發
 
-- **[設定](https://docs.claude-mem.ai/configuration)** - 環境變數與設定
-- **[開發](https://docs.claude-mem.ai/development)** - 建置、測試、貢獻
-- **[發布分支](https://docs.claude-mem.ai/branches)** - Stable、core-dev 與 community-edge 分支流程
-- **[疑難排解](https://docs.claude-mem.ai/troubleshooting)** - 常見問題與解決方案
+- **[設定](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)** - 環境變數與設定
+- **[開發](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)** - 建置、測試、貢獻
+- **[發布分支](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)** - Stable、core-dev 與 community-edge 分支流程
+- **[疑難排解](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)** - 常見問題與解決方案
 
 ---
 
@@ -231,7 +231,7 @@ curl -fsSL https://install.cmem.ai/openclaw.sh | bash
 5. **mem-search 技能** - 具有漸進式揭露的自然語言查詢
 6. **Chroma 向量資料庫** - 用於智慧脈絡擷取的混合語意 + 關鍵字搜尋
 
-詳情請參閱[架構概覽](https://docs.claude-mem.ai/architecture/overview)。
+詳情請參閱[架構概覽](https://github.com/kejwojew/hummem/blob/main/docs/public/architecture/overview.mdx)。
 
 ---
 
@@ -270,7 +270,7 @@ search(query="authentication bug", type="bugfix", limit=10)
 get_observations(ids=[123, 456])
 ```
 
-詳細範例請參閱[搜尋工具指南](https://docs.claude-mem.ai/usage/search-tools)。
+詳細範例請參閱[搜尋工具指南](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)。
 
 ---
 
@@ -278,7 +278,7 @@ get_observations(ids=[123, 456])
 
 穩定版發布來自 `main` 分支並發布至 npm。`core-dev` 與
 `community-edge` 是用於早期可靠性修復與社群整合的原始碼執行分支。分支流程與非穩定版執行說明請參閱
-**[發布分支](https://docs.claude-mem.ai/branches)**。
+**[發布分支](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)**。
 
 ---
 
@@ -307,7 +307,7 @@ npm : The term 'npm' is not recognized as the name of a cmdlet
 
 設定在 `~/.claude-mem/settings.json` 中管理（首次執行時自動以預設值建立）。設定 AI 模型、Worker 連接埠、資料目錄、日誌層級與脈絡注入設定。
 
-所有可用設定與範例請參閱 **[設定指南](https://docs.claude-mem.ai/configuration)**。
+所有可用設定與範例請參閱 **[設定指南](https://github.com/kejwojew/hummem/blob/main/docs/public/configuration.mdx)**。
 
 ### 模式與語言設定
 
@@ -352,7 +352,7 @@ ls ~/.claude/plugins/marketplaces/thedotmack/plugin/modes/
 
 ## 開發
 
-建置說明、測試與貢獻工作流程請參閱 **[開發指南](https://docs.claude-mem.ai/development)**。
+建置說明、測試與貢獻工作流程請參閱 **[開發指南](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)**。
 
 ---
 
@@ -360,7 +360,7 @@ ls ~/.claude/plugins/marketplaces/thedotmack/plugin/modes/
 
 如遇問題，向 Claude 描述問題，troubleshoot 技能將自動診斷並提供修正。
 
-常見問題與解決方案請參閱 **[疑難排解指南](https://docs.claude-mem.ai/troubleshooting)**。
+常見問題與解決方案請參閱 **[疑難排解指南](https://github.com/kejwojew/hummem/blob/main/docs/public/troubleshooting.mdx)**。
 
 ---
 
@@ -385,9 +385,9 @@ npm run bug-report
 
 Claude-Mem 從三個分支發布：`main`（穩定版）、`core-dev` 與
 `community-edge`。僅 `main` 會發布至 npm；其他分支則從原始碼執行。策略與本機執行說明請參閱
-[發布分支](https://docs.claude-mem.ai/branches)。
+[發布分支](https://github.com/kejwojew/hummem/blob/main/docs/public/branches.mdx)。
 
-貢獻工作流程請參閱[開發指南](https://docs.claude-mem.ai/development)。
+貢獻工作流程請參閱[開發指南](https://github.com/kejwojew/hummem/blob/main/docs/public/development.mdx)。
 
 ---
 
