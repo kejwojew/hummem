@@ -1982,7 +1982,7 @@ test_install_sh_has_set_euo_pipefail() {
 test_install_sh_has_set_euo_pipefail
 
 test_install_sh_has_stable_url_in_usage() {
-  if grep -q 'raw.githubusercontent.com/thedotmack/claude-mem/main/openclaw/install.sh' "$INSTALL_SCRIPT"; then
+  if grep -q 'raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh' "$INSTALL_SCRIPT"; then
     test_pass "install.sh usage comment has stable raw.githubusercontent.com URL"
   else
     test_fail "install.sh should reference stable raw.githubusercontent.com URL in usage"

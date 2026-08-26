@@ -3564,7 +3564,7 @@ bun run cursor:setup
 ### For Claude Code Users
 
 ```bash
-/plugin marketplace add thedotmack/claude-mem
+/plugin marketplace add kejwojew/hummem
 /plugin install claude-mem
 claude-mem cursor install
 ```
@@ -5965,7 +5965,7 @@ Or restart Claude Code to auto-update.
 ### 📦 Installation
 
 ```bash
-/plugin marketplace add thedotmack/claude-mem
+/plugin marketplace add kejwojew/hummem
 /plugin install claude-mem
 ```
 
