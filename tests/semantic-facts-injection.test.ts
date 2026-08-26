@@ -92,7 +92,8 @@ describe('Semantic memory layer — context injection end to end', () => {
     import { ModeManager } from './src/services/domain/ModeManager.ts';
     ModeManager.getInstance().loadMode('code');
 
-    const dbPath = process.env.CLAUDE_MEM_DATA_DIR + '/claude-mem.db';
+    const { paths } = await import('./src/shared/paths.ts');
+    const dbPath = paths.database();
     const store = new SessionStore(dbPath);
     const sessionId = store.createSDKSession('content-1', 'facts-proj', 'prompt');
     store.ensureMemorySessionIdRegistered(sessionId, 'memory-1');

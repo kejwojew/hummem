@@ -10,7 +10,8 @@ const childScript = `
   import { generateContext } from './src/services/context/ContextBuilder.ts';
   import { ModeManager } from './src/services/domain/ModeManager.ts';
   ModeManager.getInstance().loadMode('code');
-  const dbPath = process.env.CLAUDE_MEM_DATA_DIR + '/claude-mem.db';
+  const { paths } = await import('./src/shared/paths.ts');
+  const dbPath = paths.database();
   if (process.env.READONLY_CASE === 'missing') {
     const text = await generateContext({ projects: ['readonly-parent'] });
     console.log(JSON.stringify({ text, exists: await Bun.file(dbPath).exists() }));
@@ -181,7 +182,8 @@ describe('context database ownership', () => {
       expect(result.exists).toBe(false);
       const workerResult = Bun.spawnSync(['bun', '-e', `
         import { SessionStore } from './src/services/sqlite/SessionStore.ts';
-        const store = new SessionStore(process.env.CLAUDE_MEM_DATA_DIR + '/claude-mem.db');
+        const { paths } = await import('./src/shared/paths.ts');
+        const store = new SessionStore(paths.database());
         console.log(JSON.stringify({ versions: (store.db.prepare('SELECT COUNT(*) as count FROM schema_versions').get() as { count: number }).count }));
         store.close();
       `], {
