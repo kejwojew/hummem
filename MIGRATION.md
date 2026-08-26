@@ -129,8 +129,25 @@ transit, and `.env` keeps its permissions — it holds provider API keys.
 | *(none)* | Dry run: print the plan and exit |
 | `--apply` | Perform the migration |
 | `--move` | Relocate instead of copying, reclaiming the disk space |
+| `--yes` | Confirm the deletion that `--move` performs |
 | `--from <dir>` | Source directory (default `~/.claude-mem`) |
 | `--to <dir>` | Target directory (default `~/.hummem`) |
+
+#### What protects you
+
+- **Nothing is written until you pass `--apply`.** The dry run is the default.
+- **Files are copied atomically.** Each one is written to a temporary name and
+  renamed into place, so an interruption can never leave a half-written file
+  that a later run mistakes for a finished one.
+- **A resumed run verifies before it skips.** An entry that already exists is
+  compared against its source and recopied if it does not match.
+- **Every entry is verified after copying.** A mismatch is reported and the
+  command exits non-zero, with your original data untouched.
+- **`--move` deletes only after verification succeeds**, and only when you pass
+  `--yes`. It is the one irreversible step in the command.
+- **A live writer stops the migration.** An unreadable Chroma lock counts as
+  occupied: a false alarm costs you one `stop`, a false all-clear can corrupt
+  the vector store.
 
 Copy mode is the default, so your old directory stays intact while you verify.
 A memory directory can approach a gigabyte, mostly vector store; if you are
@@ -141,14 +158,20 @@ database, it stops and tells you to decide which one you want.
 
 #### If you would rather not move anything
 
-Point hummem at the existing directory instead:
+You can point hummem at the existing directory:
 
 ```bash
 export HUMMEM_DATA_DIR=~/.claude-mem
 ```
 
-Both projects then share one database, so do not run both workers in this
-configuration.
+hummem then reads `claude-mem.db` **in place** and does not rename it, so the
+other install keeps working. This is supported, with two caveats:
+
+- Both projects share one SQLite database. Do not run both workers at once.
+- You gain none of the isolation the separate directory provides — a problem in
+  one install is a problem in both.
+
+Migrating is the better default; this is for verifying before you commit.
 
 ### Settings
 
