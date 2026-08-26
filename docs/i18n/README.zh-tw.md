@@ -106,19 +106,19 @@
 使用單一指令安裝：
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 或為 OpenCode 安裝：
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 或為 Antigravity CLI 安裝（[設定指南](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)）：
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 或在 Claude Code 內從外掛市集安裝：
@@ -131,7 +131,7 @@ npx claude-mem install --ide antigravity
 
 重新啟動 Claude Code。先前工作階段的脈絡將自動出現在新的工作階段中。
 
-> **注意：** Claude-Mem 也發布於 npm，但 `npm install -g claude-mem` 僅安裝 **SDK/函式庫**——它不會註冊外掛掛鉤或設定 Worker 服務。請務必透過 `npx claude-mem install` 或上述 `/plugin` 指令安裝。
+> **注意：** Claude-Mem 也發布於 npm，但 `npm install -g claude-mem` 僅安裝 **SDK/函式庫**——它不會註冊外掛掛鉤或設定 Worker 服務。請務必透過 `npx hummem install` 或上述 `/plugin` 指令安裝。
 
 ### 🦞 OpenClaw Gateway
 
@@ -381,7 +381,7 @@ Claude-Mem 採用 Apache License 2.0 授權。
 
 - **文件**：[docs/](docs/)
 - **Issues**：[GitHub Issues](https://github.com/kejwojew/hummem/issues)
-- **儲存庫**：[github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
+- **儲存庫**：[github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
 - **官方 X 帳號**：[@Claude_Memory](https://x.com/Claude_Memory)
 - **官方 Discord**：[加入 Discord](https://discord.com/invite/J4wttp9vDu)
 - **作者**：Alex Newman ([@thedotmack](https://github.com/thedotmack))

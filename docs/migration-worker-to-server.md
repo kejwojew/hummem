@@ -5,7 +5,7 @@ Claude-Mem 13 keeps the worker path in place. Server beta is an additional runti
 Compatibility commands remain available:
 
 ```sh
-claude-mem start
+hummem start
 claude-mem worker start
 claude-mem server start
 ```

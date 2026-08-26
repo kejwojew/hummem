@@ -106,19 +106,19 @@
 ایک کمانڈ کے ساتھ انسٹال کریں:
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 یا OpenCode کے لیے انسٹال کریں:
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 یا Antigravity CLI کے لیے انسٹال کریں ([سیٹ اپ گائیڈ](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 یا Claude Code کے اندر پلگ ان مارکیٹ پلیس سے انسٹال کریں:
@@ -131,7 +131,7 @@ npx claude-mem install --ide antigravity
 
 Claude Code کو دوبارہ شروع کریں۔ سابقہ سیشنز کا تناسب خودکار طور پر نئے سیشنز میں ظاہر ہوگا۔
 
-> **نوٹ:** Claude-Mem npm پر بھی شائع کیا گیا ہے، لیکن `npm install -g claude-mem` صرف **SDK/لائبریری** انسٹال کرتا ہے — یہ پلگ ان ہکس کو رجسٹر نہیں کرتا اور نہ ہی ورکر سروس سیٹ اپ کرتا ہے۔ ہمیشہ `npx claude-mem install` یا اوپر دیے گئے `/plugin` کمانڈز کے ذریعے ہی انسٹال کریں۔
+> **نوٹ:** Claude-Mem npm پر بھی شائع کیا گیا ہے، لیکن `npm install -g claude-mem` صرف **SDK/لائبریری** انسٹال کرتا ہے — یہ پلگ ان ہکس کو رجسٹر نہیں کرتا اور نہ ہی ورکر سروس سیٹ اپ کرتا ہے۔ ہمیشہ `npx hummem install` یا اوپر دیے گئے `/plugin` کمانڈز کے ذریعے ہی انسٹال کریں۔
 
 ### 🦞 OpenClaw گیٹ وے
 
@@ -382,10 +382,7 @@ MCP سرورز، انٹرپرائز نظاموں، روبوٹکس اسٹیکس،
 
 - **دستاویزات**: [docs/](docs/)
 - **مسائل**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
-- **رپوزیٹری**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
-- **سرکاری X اکاؤنٹ**: [@Claude_Memory](https://x.com/Claude_Memory)
-- **سرکاری Discord**: [Discord میں شامل ہوں](https://discord.com/invite/J4wttp9vDu)
-- **مصنف**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
+- **رپوزیٹری**: [github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
 
 ---
 

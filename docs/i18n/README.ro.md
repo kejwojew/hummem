@@ -106,19 +106,19 @@
 Instalați cu o singură comandă:
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 Sau instalați pentru OpenCode:
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 Sau instalați pentru Antigravity CLI ([ghid de configurare](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 Sau instalați din marketplace-ul de plugin-uri direct din Claude Code:
@@ -131,7 +131,7 @@ Sau instalați din marketplace-ul de plugin-uri direct din Claude Code:
 
 Reporniți Claude Code. Contextul din sesiunile anterioare va apărea automat în sesiunile noi.
 
-> **Notă:** Claude-Mem este publicat și pe npm, dar `npm install -g claude-mem` instalează **doar SDK-ul/biblioteca** — nu înregistrează hook-urile plugin-ului și nu configurează serviciul worker. Instalați întotdeauna prin `npx claude-mem install` sau comenzile `/plugin` de mai sus.
+> **Notă:** Claude-Mem este publicat și pe npm, dar `npm install -g claude-mem` instalează **doar SDK-ul/biblioteca** — nu înregistrează hook-urile plugin-ului și nu configurează serviciul worker. Instalați întotdeauna prin `npx hummem install` sau comenzile `/plugin` de mai sus.
 
 ### 🦞 OpenClaw Gateway
 
@@ -384,10 +384,7 @@ open-source/comercială.
 
 - **Documentație**: [docs/](docs/)
 - **Probleme**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
-- **Repository**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
-- **Cont Oficial X**: [@Claude_Memory](https://x.com/Claude_Memory)
-- **Discord Oficial**: [Alăturați-vă pe Discord](https://discord.com/invite/J4wttp9vDu)
-- **Autor**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
+- **Repository**: [github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
 
 ---
 

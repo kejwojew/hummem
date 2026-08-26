@@ -106,19 +106,19 @@
 Asenna yhdellä komennolla:
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 Tai asenna OpenCodelle:
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 Tai asenna Antigravity CLI:lle ([asennusopas](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 Tai asenna plugin-markkinapaikalta Claude Coden sisältä:
@@ -131,7 +131,7 @@ Tai asenna plugin-markkinapaikalta Claude Coden sisältä:
 
 Käynnistä Claude Code uudelleen. Aiempien istuntojen konteksti ilmestyy automaattisesti uusiin istuntoihin.
 
-> **Huomio:** Claude-Mem on julkaistu myös npm:ssä, mutta `npm install -g claude-mem` asentaa **vain SDK:n/kirjaston** — se ei rekisteröi plugin-koukkuja eikä määritä worker-palvelua. Asenna aina komennolla `npx claude-mem install` tai yllä olevilla `/plugin`-komennoilla.
+> **Huomio:** Claude-Mem on julkaistu myös npm:ssä, mutta `npm install -g claude-mem` asentaa **vain SDK:n/kirjaston** — se ei rekisteröi plugin-koukkuja eikä määritä worker-palvelua. Asenna aina komennolla `npx hummem install` tai yllä olevilla `/plugin`-komennoilla.
 
 ### 🦞 OpenClaw Gateway
 
@@ -384,10 +384,7 @@ avoimen/kaupallisen rajan osalta.
 
 - **Dokumentaatio**: [docs/](docs/)
 - **Ongelmat**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
-- **Repositorio**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
-- **Virallinen X-tili**: [@Claude_Memory](https://x.com/Claude_Memory)
-- **Virallinen Discord**: [Liity Discordiin](https://discord.com/invite/J4wttp9vDu)
-- **Tekijä**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
+- **Repositorio**: [github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
 
 ---
 

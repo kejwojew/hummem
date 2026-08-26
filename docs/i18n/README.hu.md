@@ -106,19 +106,19 @@
 Telepítés egyetlen paranccsal:
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 Vagy telepítés OpenCode-hoz:
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 Vagy telepítés Antigravity CLI-hez ([beállítási útmutató](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 Vagy telepítés a plugin marketplace-ről a Claude Code-on belül:
@@ -131,7 +131,7 @@ Vagy telepítés a plugin marketplace-ről a Claude Code-on belül:
 
 Indítsa újra a Claude Code-ot. A korábbi munkamenetek kontextusa automatikusan megjelenik az új munkamenetekben.
 
-> **Megjegyzés:** A Claude-Mem az npm-en is elérhető, de az `npm install -g claude-mem` csak a **SDK/könyvtár** részt telepíti — nem regisztrálja a plugin hookokat, és nem állítja be a worker szolgáltatást. Mindig a `npx claude-mem install` vagy a fenti `/plugin` parancsok segítségével telepítsen.
+> **Megjegyzés:** A Claude-Mem az npm-en is elérhető, de az `npm install -g claude-mem` csak a **SDK/könyvtár** részt telepíti — nem regisztrálja a plugin hookokat, és nem állítja be a worker szolgáltatást. Mindig a `npx hummem install` vagy a fenti `/plugin` parancsok segítségével telepítsen.
 
 ### 🦞 OpenClaw Gateway
 
@@ -384,10 +384,7 @@ nyílt/kereskedelmi határvonalért.
 
 - **Dokumentáció**: [docs/](docs/)
 - **Hibák**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
-- **Tároló**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
-- **Hivatalos X fiók**: [@Claude_Memory](https://x.com/Claude_Memory)
-- **Hivatalos Discord**: [Csatlakozás a Discordhoz](https://discord.com/invite/J4wttp9vDu)
-- **Szerző**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
+- **Tároló**: [github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
 
 ---
 

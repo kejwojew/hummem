@@ -108,19 +108,19 @@
 قم بالتثبيت بأمر واحد:
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 أو قم بالتثبيت لـ OpenCode:
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 أو قم بالتثبيت لـ Antigravity CLI ([دليل الإعداد](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 أو قم بالتثبيت من متجر الإضافات (plugin marketplace) داخل Claude Code:
@@ -133,7 +133,7 @@ npx claude-mem install --ide antigravity
 
 أعد تشغيل Claude Code. سيظهر السياق من الجلسات السابقة تلقائياً في الجلسات الجديدة.
 
-> **ملاحظة:** يُنشر Claude-Mem أيضاً على npm، إلا أن الأمر `npm install -g claude-mem` يُثبّت **حزمة الـ SDK/المكتبة فقط** — ولا يقوم بتسجيل خطافات الإضافة (plugin hooks) ولا بإعداد خدمة العامل (worker service). قم دائماً بالتثبيت عبر `npx claude-mem install` أو أوامر `/plugin` المذكورة أعلاه.
+> **ملاحظة:** يُنشر Claude-Mem أيضاً على npm، إلا أن الأمر `npm install -g claude-mem` يُثبّت **حزمة الـ SDK/المكتبة فقط** — ولا يقوم بتسجيل خطافات الإضافة (plugin hooks) ولا بإعداد خدمة العامل (worker service). قم دائماً بالتثبيت عبر `npx hummem install` أو أوامر `/plugin` المذكورة أعلاه.
 
 ### 🦞 بوابة OpenClaw (OpenClaw Gateway)
 
@@ -378,10 +378,7 @@ Claude-Mem مرخّص بموجب رخصة Apache 2.0.
 
 - **التوثيق**: [docs/](docs/)
 - **المشكلات**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
-- **المستودع**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
-- **حساب X الرسمي**: [@Claude_Memory](https://x.com/Claude_Memory)
-- **Discord الرسمي**: [انضم إلى Discord](https://discord.com/invite/J4wttp9vDu)
-- **المؤلف**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
+- **المستودع**: [github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
 
 ---
 

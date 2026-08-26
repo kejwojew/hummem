@@ -106,19 +106,19 @@
 Εγκαταστήστε με μία μόνο εντολή:
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 Ή εγκαταστήστε για το OpenCode:
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 Ή εγκαταστήστε για το Antigravity CLI ([οδηγός εγκατάστασης](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 Ή εγκαταστήστε από το plugin marketplace μέσα στο Claude Code:
@@ -131,7 +131,7 @@ npx claude-mem install --ide antigravity
 
 Επανεκκινήστε το Claude Code. Το πλαίσιο από προηγούμενες συνεδρίες θα εμφανιστεί αυτόματα σε νέες συνεδρίες.
 
-> **Σημείωση:** Το Claude-Mem δημοσιεύεται επίσης στο npm, αλλά το `npm install -g claude-mem` εγκαθιστά **μόνο το SDK/library** — δεν καταχωρεί τα plugin hooks ούτε ρυθμίζει την υπηρεσία worker. Πάντα να εγκαθιστάτε μέσω του `npx claude-mem install` ή των παραπάνω εντολών `/plugin`.
+> **Σημείωση:** Το Claude-Mem δημοσιεύεται επίσης στο npm, αλλά το `npm install -g claude-mem` εγκαθιστά **μόνο το SDK/library** — δεν καταχωρεί τα plugin hooks ούτε ρυθμίζει την υπηρεσία worker. Πάντα να εγκαθιστάτε μέσω του `npx hummem install` ή των παραπάνω εντολών `/plugin`.
 
 ### 🦞 OpenClaw Gateway
 
@@ -384,10 +384,7 @@ npm run bug-report
 
 - **Τεκμηρίωση**: [docs/](docs/)
 - **Ζητήματα**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
-- **Repository**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
-- **Επίσημος Λογαριασμός X**: [@Claude_Memory](https://x.com/Claude_Memory)
-- **Επίσημο Discord**: [Συμμετοχή στο Discord](https://discord.com/invite/J4wttp9vDu)
-- **Συγγραφέας**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
+- **Repository**: [github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
 
 ---
 

@@ -81,7 +81,7 @@ export const KIMI_WORKER_PORT = '37892';
  * CLAUDE_MEM_CHROMA_ENABLED=false: the Chroma data dir is single-writer, and
  * until data dirs fully separate in production the default worker already
  * owns it — letting the Kimi instance fight for a second writer just spams
- * CHROMA_MCP errors (observed live 2026-07-29 on the claude-mem install);
+ * CHROMA_MCP errors (observed live 2026-07-29 on the hummem install);
  * disabling Chroma on this instance keeps it FTS-only.
  */
 const KIMI_INSTANCE_ENV: Record<string, string> = {
