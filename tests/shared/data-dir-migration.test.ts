@@ -8,6 +8,7 @@ import {
   statSync,
   rmSync,
   chmodSync,
+  readdirSync,
 } from 'fs';
 import { join } from 'path';
 import { tmpdir } from 'os';
@@ -279,17 +280,34 @@ describe('safety', () => {
     expect(readFileSync(join(target, 'hummem.db'), 'utf8')).toBe('sqlite-main');
   });
 
-  it('resumes a partial migration without duplicating work', () => {
+  it('resumes a partial migration, keeping entries that already match', () => {
     seedLegacyDir();
-    // Simulate an interrupted run: settings arrived, the database did not.
+    // Simulate an interrupted run: an identical copy of one file arrived, the
+    // database did not.
+    mkdirSync(target, { recursive: true });
+    writeFileSync(join(target, '.env'), readFileSync(join(source, '.env'), 'utf8'));
+
+    const result = performDataDirMigration(base());
+
+    expect(result.performed).toBe(true);
+    expect(readFileSync(join(target, 'hummem.db'), 'utf8')).toBe('sqlite-main');
+    // A byte-identical entry is left alone rather than copied again.
+    expect(result.migratedEntries).not.toContain('.env');
+    expect(result.verified).toBe(true);
+  });
+
+  it('replaces a resumed entry whose content differs from the source', () => {
+    // The counterpart to the above: "already there" is only trustworthy when
+    // the content matches. Anything else is a partial write from a failed run.
+    seedLegacyDir();
     mkdirSync(target, { recursive: true });
     writeFileSync(join(target, 'settings.json'), '{"CLAUDE_MEM_WORKER_PORT":"1"}');
 
     const result = performDataDirMigration(base());
+
     expect(result.performed).toBe(true);
-    expect(readFileSync(join(target, 'hummem.db'), 'utf8')).toBe('sqlite-main');
-    // The pre-existing file is left as-is rather than clobbered.
-    expect(result.migratedEntries).not.toContain('settings.json');
+    const migrated = JSON.parse(readFileSync(join(target, 'settings.json'), 'utf8'));
+    expect(migrated.CLAUDE_MEM_WORKER_PORT).toBe('37791');
   });
 });
 
@@ -344,5 +362,100 @@ describe('describeUnmigratedMemory', () => {
     writeFileSync(join(source, 'worker.pid'), String(process.pid));
     const notice = describeUnmigratedMemory({ ...base(), isProcessAlive: () => true });
     expect(notice!.blocker?.kind).toBe('worker-running');
+  });
+});
+
+describe('interruption safety', () => {
+  it('recopies a truncated file instead of trusting that it exists', () => {
+    // The data-loss hole: an interrupted copy leaves a short file that
+    // existsSync reports as present, so a resume skips it and the user keeps
+    // a corrupt vector store without ever being told.
+    seedLegacyDir();
+    mkdirSync(join(target, 'chroma'), { recursive: true });
+    writeFileSync(join(target, 'chroma', 'chroma.sqlite3'), 'trunc');
+
+    const result = performDataDirMigration(base());
+
+    expect(result.performed).toBe(true);
+    expect(readFileSync(join(target, 'chroma', 'chroma.sqlite3'), 'utf8')).toBe('vectors');
+    expect(result.verified).toBe(true);
+  });
+
+  it('leaves no partial file behind at the destination path', () => {
+    seedLegacyDir();
+    performDataDirMigration(base());
+    const stray = readdirSync(target).filter((n) => n.includes('hummem-partial'));
+    expect(stray).toEqual([]);
+  });
+
+  it('reports verification of every migrated entry', () => {
+    seedLegacyDir();
+    const result = performDataDirMigration(base());
+    expect(result.verified).toBe(true);
+    expect(result.mismatches).toEqual([]);
+  });
+});
+
+describe('move safety', () => {
+  it('removes the source only after the copy verifies', () => {
+    seedLegacyDir();
+    const result = performDataDirMigration({ ...base(), mode: 'move' });
+    expect(result.performed).toBe(true);
+    expect(existsSync(join(source, 'claude-mem.db'))).toBe(false);
+    expect(readFileSync(join(target, 'hummem.db'), 'utf8')).toBe('sqlite-main');
+  });
+});
+
+describe('pending write-ahead log', () => {
+  it('warns when the log holds committed data and no writer was detected', () => {
+    // The real-machine case: no worker.pid exists, yet the -wal is large.
+    // Silence here would let the user assume the database is quiescent.
+    seedLegacyDir();
+    const plan = planDataDirMigration(base());
+    expect(plan.warnings.join(' ')).toContain('write-ahead log');
+  });
+
+  it('does not warn when the log is empty', () => {
+    seedLegacyDir();
+    writeFileSync(join(source, 'claude-mem.db-wal'), '');
+    const plan = planDataDirMigration(base());
+    expect(plan.warnings.join(' ')).not.toContain('write-ahead log');
+  });
+
+  it('does not repeat the warning when a live writer already blocks', () => {
+    seedLegacyDir();
+    writeFileSync(join(source, 'worker.pid'), String(process.pid));
+    const plan = planDataDirMigration({ ...base(), isProcessAlive: () => true });
+    expect(plan.warnings.join(' ')).not.toContain('write-ahead log');
+  });
+});
+
+describe('chroma lock parsing', () => {
+  it('treats an unreadable lock as occupied rather than absent', () => {
+    // A false alarm costs one `stop`; a false all-clear can corrupt the store.
+    seedLegacyDir();
+    writeFileSync(join(source, 'chroma', '.claude-mem-chroma-writer.lock'), 'garbage');
+    const plan = planDataDirMigration(base());
+    expect(plan.blockers.map((b) => b.kind)).toContain('worker-running');
+  });
+
+  it('accepts a bare pid, not only a JSON record', () => {
+    seedLegacyDir();
+    writeFileSync(
+      join(source, 'chroma', '.claude-mem-chroma-writer.lock'),
+      String(process.pid)
+    );
+    const plan = planDataDirMigration({ ...base(), isProcessAlive: () => true });
+    expect(plan.blockers.map((b) => b.kind)).toContain('worker-running');
+  });
+
+  it('ignores a lock naming a dead process', () => {
+    seedLegacyDir();
+    writeFileSync(
+      join(source, 'chroma', '.claude-mem-chroma-writer.lock'),
+      JSON.stringify({ pid: 999999 })
+    );
+    const plan = planDataDirMigration(base());
+    expect(plan.blockers).toEqual([]);
   });
 });
