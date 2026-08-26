@@ -1,24 +1,24 @@
 {
   "name": "hummem",
-  "version": "13.15.2",
-  "description": "Memory compression system for AI coding assistants - persist context across sessions (hummem, a claude-mem fork)",
+  "version": "1.0.0",
+  "description": "Persistent memory for AI coding assistants - durable context across sessions",
   "author": {
-    "name": "Alex Newman"
+    "name": "hummem contributors"
   },
-  "repository": "https://github.com/thedotmack/claude-mem",
+  "repository": "https://github.com/kejwojew/hummem",
   "license": "Apache-2.0",
   "keywords": [
-    "claude",
-    "claude-code",
-    "claude-agent-sdk",
+    "ai",
+    "agent",
+    "memory",
+    "context",
     "mcp",
     "plugin",
-    "memory",
-    "compression",
     "knowledge-graph",
-    "transcript",
+    "embeddings",
+    "semantic-search",
     "typescript",
     "nodejs"
   ],
-  "homepage": "https://github.com/thedotmack/claude-mem#readme"
+  "homepage": "https://github.com/kejwojew/hummem#readme"
 }

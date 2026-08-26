@@ -1,29 +1,29 @@
 {
   "name": "hummem",
-  "version": "13.15.2",
-  "description": "Memory compression system for AI coding assistants - persist context across sessions (hummem, a claude-mem fork)",
+  "version": "1.0.0",
+  "description": "Persistent memory for AI coding assistants - durable context across sessions",
   "keywords": [
-    "claude",
-    "claude-code",
-    "claude-agent-sdk",
+    "ai",
+    "agent",
+    "memory",
+    "context",
     "mcp",
     "plugin",
-    "memory",
-    "compression",
     "knowledge-graph",
-    "transcript",
+    "embeddings",
+    "semantic-search",
     "typescript",
     "nodejs"
   ],
-  "author": "Alex Newman",
+  "author": "hummem contributors",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thedotmack/claude-mem.git"
+    "url": "git+https://github.com/kejwojew/hummem.git"
   },
-  "homepage": "https://github.com/thedotmack/claude-mem#readme",
+  "homepage": "https://github.com/kejwojew/hummem#readme",
   "bugs": {
-    "url": "https://github.com/thedotmack/claude-mem/issues"
+    "url": "https://github.com/kejwojew/hummem/issues"
   },
   "type": "module",
   "bin": {
@@ -62,7 +62,7 @@
     "sync-marketplace": "node scripts/sync-marketplace.cjs",
     "sync-marketplace:force": "node scripts/sync-marketplace.cjs --force",
     "build:binaries": "node scripts/build-worker-binary.js",
-    "build:cli-binary": "bun build --compile --minify ./src/services/worker-service.ts --outfile plugin/scripts/claude-mem",
+    "build:cli-binary": "bun build --compile --minify ./src/services/worker-service.ts --outfile plugin/scripts/hummem",
     "worker:logs": "tail -n 50 ~/.hummem/logs/worker-$(date +%Y-%m-%d).log",
     "worker:tail": "tail -f 50 ~/.hummem/logs/worker-$(date +%Y-%m-%d).log",
     "changelog:generate": "node scripts/generate-changelog.js",
@@ -124,7 +124,7 @@
     "@better-auth/api-key": "^1.6.16",
     "better-auth": "^1.6.16"
   },
-  "//dependencies-note": "Only deps that survive the bundler as a live `import`/`require` in a shipped artifact live here — better-auth (+ api-key) is the server-runtime auth surface, externalized from the worker bundle deliberately (see scripts/build-hooks.js). Everything else (express, bullmq, ioredis, react, react-dom, dompurify, @clack/prompts, ansi-to-html, posthog-node, shell-quote, pg, zod, @modelcontextprotocol/sdk, @anthropic-ai/claude-agent-sdk) is esbuild-inlined into the worker/server/npx bundles (or, for zod's plugin runtime copy, resolved from plugin/package.json's own dependency), so it is a build-time devDependency and is not downloaded by consumers of the `claude-mem` package.",
+  "//dependencies-note": "Only deps that survive the bundler as a live `import`/`require` in a shipped artifact live here — better-auth (+ api-key) is the server-runtime auth surface, externalized from the worker bundle deliberately (see scripts/build-hooks.js). Everything else (express, bullmq, ioredis, react, react-dom, dompurify, @clack/prompts, ansi-to-html, posthog-node, shell-quote, pg, zod, @modelcontextprotocol/sdk, @anthropic-ai/claude-agent-sdk) is esbuild-inlined into the worker/server/npx bundles (or, for zod's plugin runtime copy, resolved from plugin/package.json's own dependency), so it is a build-time devDependency and is not downloaded by consumers of the `hummem` package.",
   "overrides": {
     "tmp": "^0.2.7"
   },
