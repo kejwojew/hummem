@@ -20,6 +20,8 @@
  * (path resolution, hook shims) can use it before anything else initializes.
  */
 
+import { emitDiagnostic } from './hook-io.js';
+
 /** Prefix of the canonical namespace. */
 export const CANONICAL_PREFIX = 'HUMMEM_';
 
@@ -27,32 +29,73 @@ export const CANONICAL_PREFIX = 'HUMMEM_';
 export const LEGACY_PREFIX = 'CLAUDE_MEM_';
 
 /**
- * Names already warned about, so a variable read on a hot path cannot emit
- * one line per read. Module-level state is correct here: the lifetime that
- * matters is the process.
+ * Names already recorded, so a variable read on a hot path is noted once, not
+ * once per read. Module-level state is correct here: the lifetime that matters
+ * is the process.
  */
 const warned = new Set<string>();
 
-/** Test seam — lets a suite assert the warning fires exactly once. */
+/**
+ * Whether this process has opted in to printing deprecation notices.
+ *
+ * Off by default. These variables are read during module initialization —
+ * `DATA_DIR` resolves at import time — which is before any entry point can
+ * establish what its output contract is. Printing eagerly meant hook processes
+ * emitted deprecation text on stderr, where surrounding tooling reads stderr as
+ * evidence of a failed hook, and where the notice is unactionable mid-session
+ * anyway.
+ *
+ * So this module records by default and prints only when an entry point that
+ * owns its output says it is safe.
+ */
+let printWarnings = false;
+
+/** Test seam — resets both the recorded names and the opt-in. */
 export function resetLegacyEnvWarnings(): void {
   warned.clear();
+  printWarnings = false;
 }
 
-function shouldWarn(): boolean {
-  // Hooks speak JSON on stdout and are spawned per tool call; a deprecation
-  // notice there is noise the user cannot act on mid-session. Suppressing is
-  // safe because the same variable is reported by `hummem doctor`.
-  return process.env.HUMMEM_SUPPRESS_LEGACY_ENV_WARNING !== '1';
+/**
+ * Opt this process in to printing deprecation notices, flushing any recorded
+ * before the call.
+ *
+ * Call from entry points that own their stderr and outlive a single tool call:
+ * the CLI and the worker. Never from a hook.
+ */
+export function enableLegacyEnvWarnings(): void {
+  if (printWarnings) return;
+  printWarnings = true;
+  for (const legacyName of warned) {
+    const canonicalName = canonicalNameFor(legacyName);
+    if (canonicalName) emitWarning(legacyName, canonicalName);
+  }
+}
+
+/** Deprecated variable names this process actually read, for diagnostics. */
+export function getUsedLegacyEnvNames(): string[] {
+  return [...warned].sort();
+}
+
+function emitWarning(legacyName: string, canonicalName: string): void {
+  if (process.env.HUMMEM_SUPPRESS_LEGACY_ENV_WARNING === '1') return;
+  // stderr, never stdout: CLI commands promise machine-readable JSON on stdout.
+  //
+  // emitDiagnostic rather than the global console or the logger. Console
+  // output is invisible in background services (enforced by the logger-usage
+  // standard), and the logger transitively imports this module through
+  // paths.ts, so using it here would create an initialization cycle. hook-io
+  // has no runtime imports and writes straight to the real stderr fd.
+  emitDiagnostic(
+    `[hummem] ${legacyName} is deprecated; use ${canonicalName}. ` +
+      'The legacy name still works — see MIGRATION.md.\n'
+  );
 }
 
 function warnOnce(legacyName: string, canonicalName: string): void {
-  if (warned.has(legacyName) || !shouldWarn()) return;
+  if (warned.has(legacyName)) return;
   warned.add(legacyName);
-  // stderr, never stdout: CLI commands promise machine-readable JSON on stdout.
-  console.warn(
-    `[hummem] ${legacyName} is deprecated; use ${canonicalName}. ` +
-      'The legacy name still works — see MIGRATION.md.'
-  );
+  if (printWarnings) emitWarning(legacyName, canonicalName);
 }
 
 /**

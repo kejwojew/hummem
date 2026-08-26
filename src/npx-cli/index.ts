@@ -1,4 +1,5 @@
 import { parseArgs, styleText } from 'node:util';
+import { enableLegacyEnvWarnings } from '../shared/legacy-env.js';
 import { readPluginVersion } from './utils/paths.js';
 import type { InstallOptions } from './commands/install.js';
 
@@ -100,6 +101,10 @@ function parseInstallOptions(argv: string[]): InstallOptions {
 }
 
 async function main(): Promise<void> {
+  // The CLI owns its stderr and is user-facing, so deprecation notices are
+  // both safe to print and actionable here. Hooks never opt in.
+  enableLegacyEnvWarnings();
+
   switch (command) {
     case '':
     case 'install': {
