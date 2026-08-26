@@ -4,7 +4,7 @@ Title: Bug: SDK Agent fails on Windows when username contains spaces
 
 ## Bug Report
 
-**Summary:** Claude SDK Agent fails to start on Windows when the user's path contains spaces (e.g., `C:\Users\Anderson Wang\`), causing PostToolUse hooks to hang indefinitely.
+**Summary:** Claude SDK Agent fails to start on Windows when the user's path contains spaces (e.g., `C:\Users\Jane Doe\`), causing PostToolUse hooks to hang indefinitely.
 
 **Severity:** High - Core functionality broken
 
@@ -29,7 +29,7 @@ Two issues in the Windows code path:
 
 1. **`SDKAgent.ts`** - Returns full auto-detected path with spaces:
    ```
-   C:\Users\Anderson Wang\AppData\Roaming\npm\claude.cmd
+   C:\Users\Jane Doe\AppData\Roaming\npm\claude.cmd
    ```
 
 2. **`ProcessRegistry.ts`** - Node.js `spawn()` cannot directly execute `.cmd` files when the path contains spaces
