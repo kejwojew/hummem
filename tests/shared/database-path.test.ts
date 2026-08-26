@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from 'bun:test';
-import { mkdtempSync, rmSync, writeFileSync, existsSync, readFileSync, chmodSync } from 'fs';
+import { mkdtempSync, mkdirSync, rmSync, writeFileSync, existsSync, readFileSync, chmodSync } from 'fs';
 import { join } from 'path';
 import { tmpdir } from 'os';
 import {
@@ -156,5 +156,52 @@ describe('peekDatabasePath', () => {
 
   it('returns the canonical path when neither exists', () => {
     expect(peekDatabasePath(dataDir)).toBe(canonical());
+  });
+});
+
+describe('legacy directory protection', () => {
+  it('reads a legacy database in place instead of renaming it', () => {
+    // Pointing HUMMEM_DATA_DIR at ~/.claude-mem shares one memory between two
+    // installs. Renaming the database there leaves the other install unable to
+    // find its own data, and it silently creates an empty replacement.
+    const home = mkdtempSync(join(tmpdir(), 'hummem-home-'));
+    const legacyDir = join(home, '.claude-mem');
+    mkdirSync(legacyDir, { recursive: true });
+    writeFileSync(join(legacyDir, LEGACY_DATABASE_FILENAME), 'shared-memory');
+
+    const savedHome = process.env.HOME;
+    process.env.HOME = home;
+    try {
+      const result = resolveDatabasePath(legacyDir, { home });
+      expect(result.action).toBe('legacy-retained');
+      expect(result.path).toBe(join(legacyDir, LEGACY_DATABASE_FILENAME));
+      expect(existsSync(join(legacyDir, DATABASE_FILENAME))).toBe(false);
+      expect(readFileSync(join(legacyDir, LEGACY_DATABASE_FILENAME), 'utf8')).toBe(
+        'shared-memory'
+      );
+      expect(result.detail).toContain('hummem migrate');
+    } finally {
+      if (savedHome === undefined) delete process.env.HOME;
+      else process.env.HOME = savedHome;
+      rmSync(home, { recursive: true, force: true });
+    }
+  });
+
+  it('still renames inside an ordinary data directory', () => {
+    const home = mkdtempSync(join(tmpdir(), 'hummem-home-'));
+    const ordinary = join(home, 'somewhere-else');
+    mkdirSync(ordinary, { recursive: true });
+    writeFileSync(join(ordinary, LEGACY_DATABASE_FILENAME), 'memories');
+
+    const savedHome = process.env.HOME;
+    process.env.HOME = home;
+    try {
+      expect(resolveDatabasePath(ordinary, { home }).action).toBe('migrated');
+      expect(readFileSync(join(ordinary, DATABASE_FILENAME), 'utf8')).toBe('memories');
+    } finally {
+      if (savedHome === undefined) delete process.env.HOME;
+      else process.env.HOME = savedHome;
+      rmSync(home, { recursive: true, force: true });
+    }
   });
 });
