@@ -4,6 +4,7 @@ import { existsSync, mkdirSync, readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { SettingsDefaultsManager } from './SettingsDefaultsManager.js';
 import { parseJsonWithBom } from './atomic-json.js';
+import { readEnv } from './legacy-env.js';
 
 function getDirname(): string {
   if (typeof __dirname !== 'undefined') {
@@ -18,13 +19,13 @@ const _dirname = getDirname();
  * Expand a leading `~/` (or a bare `~`) to the user's home directory.
  *
  * Node's `path.join` / `fs` do NOT expand `~` — only the shell does. So a
- * literal `~/.claude-mem` read from `settings.json` or an env var is treated
- * as a *relative* path, creating a directory literally named `~` in the
- * process cwd. claude-mem workers inherit the cwd of whatever spawned them
- * (subagents pinned to a subdirectory, a plugin-install dir, etc.), so a
- * `~`-prefixed DATA_DIR scattered stray `~/.claude-mem/` trees across the
- * workspace. Expanding here keeps every downstream path absolute regardless
- * of how the value was written.
+ * literal `~/.hummem` read from `settings.json` or an env var is treated as a
+ * *relative* path, creating a directory literally named `~` in the process
+ * cwd. Workers inherit the cwd of whatever spawned them (subagents pinned to a
+ * subdirectory, a plugin-install dir, etc.), so a `~`-prefixed DATA_DIR
+ * scattered stray `~/.hummem/` trees across the workspace. Expanding here
+ * keeps every downstream path absolute regardless of how the value was
+ * written.
  */
 export function expandHome(p: string): string {
   if (typeof p !== 'string' || p.length === 0) return p;
@@ -36,19 +37,17 @@ export function expandHome(p: string): string {
 }
 
 export function resolveDataDir(): string {
-  // (a) canonical hummem override
-  if (process.env.HUMMEM_DATA_DIR) {
-    return expandHome(process.env.HUMMEM_DATA_DIR);
+  // (a) env override — canonical HUMMEM_DATA_DIR, else the deprecated
+  // CLAUDE_MEM_DATA_DIR. readEnv owns that precedence and the warning.
+  const fromEnv = readEnv('HUMMEM_DATA_DIR');
+  if (fromEnv) {
+    return expandHome(fromEnv);
   }
 
-  // (b) legacy claude-mem override — kept working for migrated installs
-  if (process.env.CLAUDE_MEM_DATA_DIR) {
-    return expandHome(process.env.CLAUDE_MEM_DATA_DIR);
-  }
-
-  // (c) settings.json key. Check the new default dir first, then the legacy
-  // claude-mem dir, so an existing ~/.claude-mem/settings.json with a
-  // CLAUDE_MEM_DATA_DIR key keeps working after migration to ~/.hummem.
+  // (b) settings.json key. Check the new default dir first, then the legacy
+  // claude-mem dir, so an existing ~/.claude-mem/settings.json keeps working
+  // after migration to ~/.hummem. Within a file the canonical key wins, for
+  // the same reason it wins in the environment.
   const defaultDataDir = join(homedir(), '.hummem');
   const legacyDataDir = join(homedir(), '.claude-mem');
   for (const dir of [defaultDataDir, legacyDataDir]) {
@@ -57,8 +56,9 @@ export function resolveDataDir(): string {
       if (existsSync(settingsPath)) {
         const raw = parseJsonWithBom<Record<string, any>>(readFileSync(settingsPath, 'utf-8'));
         const settings = raw.env ?? raw;
-        if (settings.CLAUDE_MEM_DATA_DIR) {
-          return expandHome(settings.CLAUDE_MEM_DATA_DIR);
+        const configured = settings.HUMMEM_DATA_DIR ?? settings.CLAUDE_MEM_DATA_DIR;
+        if (configured) {
+          return expandHome(configured);
         }
       }
     } catch {
@@ -66,7 +66,7 @@ export function resolveDataDir(): string {
     }
   }
 
-  // (d) hummem default
+  // (c) hummem default
   return defaultDataDir;
 }
 
