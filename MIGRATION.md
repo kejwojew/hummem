@@ -40,16 +40,23 @@ You do **not** need to uninstall claude-mem first. hummem uses a different data
 directory, a different port band, and a different plugin identity, so the two can
 coexist while you verify the move.
 
-### 2. Start it
+### 2. Bring your memory across
+
+```bash
+npx hummem migrate            # preview — nothing is written
+npx hummem migrate --apply    # perform it
+```
+
+Stop any running claude-mem worker first; the command refuses to copy a
+database that is still being written to. Full details below.
+
+### 3. Start it
 
 ```bash
 npx hummem start
 ```
 
-On first start hummem resolves its data directory and database. If it finds a
-legacy database it migrates it — see below.
-
-### 3. Check the result
+### 4. Check the result
 
 ```bash
 npx hummem doctor
@@ -85,25 +92,63 @@ No data is deleted at any point.
 
 ### The data directory
 
-hummem defaults to `~/.hummem`. It does **not** move `~/.claude-mem` for you,
-because that directory may still be in use by a claude-mem install you have not
-retired yet.
+hummem defaults to `~/.hummem` and never touches `~/.claude-mem` on its own —
+that directory may still belong to a claude-mem install you have not retired.
 
-To carry your existing memory across, point hummem at the old directory:
+Use the migrate command to carry your memory across:
+
+```bash
+npx hummem migrate            # show exactly what would happen
+npx hummem migrate --apply    # do it
+```
+
+It is a dry run by default. The preview lists every entry, its size, and any
+special handling, so nothing is a surprise.
+
+**Do not copy the directory by hand.** A plain `cp -a` walks into three traps
+that the command handles for you:
+
+1. **The settings self-reference.** `settings.json` usually pins
+   `CLAUDE_MEM_DATA_DIR` to the old absolute path. Copied verbatim, the migrated
+   install reads that key and keeps writing to `~/.claude-mem` — the migration
+   looks like it worked while changing nothing. The command rewrites the key.
+2. **A running worker.** If anything is still writing to the directory, copying
+   the SQLite database can corrupt it. The command detects live PID files and
+   the Chroma writer lock, and refuses until you stop them.
+3. **Runtime state.** PID files and supervisor registries from the old install
+   are meaningless in the new directory and confuse startup. They are skipped,
+   as are logs, which are regenerated.
+
+The database and its `-wal`/`-shm` sidecars are renamed to `hummem.db` in
+transit, and `.env` keeps its permissions — it holds provider API keys.
+
+#### Options
+
+| Flag | Effect |
+| --- | --- |
+| *(none)* | Dry run: print the plan and exit |
+| `--apply` | Perform the migration |
+| `--move` | Relocate instead of copying, reclaiming the disk space |
+| `--from <dir>` | Source directory (default `~/.claude-mem`) |
+| `--to <dir>` | Target directory (default `~/.hummem`) |
+
+Copy mode is the default, so your old directory stays intact while you verify.
+A memory directory can approach a gigabyte, mostly vector store; if you are
+short on disk, `--move` avoids needing room for a second copy.
+
+The command never overwrites an existing memory. If `~/.hummem` already holds a
+database, it stops and tells you to decide which one you want.
+
+#### If you would rather not move anything
+
+Point hummem at the existing directory instead:
 
 ```bash
 export HUMMEM_DATA_DIR=~/.claude-mem
 ```
 
-or copy it once:
-
-```bash
-cp -a ~/.claude-mem ~/.hummem
-```
-
-Copy rather than move while you are still verifying. Once hummem has run against
-`~/.hummem`, its database is named `hummem.db`, so the two directories will not
-be confused with each other.
+Both projects then share one database, so do not run both workers in this
+configuration.
 
 ### Settings
 
@@ -211,8 +256,19 @@ A variable exported in a shell profile is the usual culprit.
 
 **My memory looks empty after switching.**
 hummem is almost certainly reading a different data directory than claude-mem
-was. Run `npx hummem doctor` to see which one, then either point
-`HUMMEM_DATA_DIR` at the old directory or copy it across. Nothing was deleted.
+was. Run `npx hummem doctor` to see which one, then run `npx hummem migrate` to
+bring your memory across. Nothing was deleted.
+
+**`migrate` says a process is still writing.**
+A worker, an MCP server, or a Chroma process still holds the old directory. Run
+`claude-mem stop`, close any IDE session using memory, and check for stragglers
+with `pgrep -fl 'worker-service|chroma-mcp'`. This refusal is deliberate:
+copying a SQLite database out from under a live writer can corrupt it.
+
+**`migrate` says there is not enough space.**
+Copy mode needs room for a second copy of your memory, which is mostly the
+vector store. Re-run with `--move` to relocate the files instead of duplicating
+them.
 
 **Both `hummem.db` and `claude-mem.db` exist.**
 Deliberate: hummem refuses to overwrite an existing database. It is using

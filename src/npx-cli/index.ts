@@ -41,6 +41,12 @@ ${styleText('bold', 'Runtime Commands')} (requires Bun, delegates to installed p
   ${styleText('cyan', 'npx hummem restart')}              Restart worker service
   ${styleText('cyan', 'npx hummem status')}               Show worker status
   ${styleText('cyan', 'npx hummem doctor')}               Diagnose install/runtime health (bun, uv, worker)
+
+${styleText('bold', 'Migrating from claude-mem')}:
+  ${styleText('cyan', 'npx hummem migrate')}              Preview moving ~/.claude-mem to ~/.hummem (dry run)
+  ${styleText('cyan', 'npx hummem migrate --apply')}      Perform the migration (source left untouched)
+  ${styleText('cyan', 'npx hummem migrate --apply --move')}   Relocate instead of copying (reclaims disk space)
+  ${styleText('cyan', 'npx hummem migrate --from <dir> --to <dir>')}   Migrate between explicit directories
   ${styleText('cyan', 'npx hummem telemetry status|enable|disable')}   Manage anonymous telemetry (on by default, opt-out)
   ${styleText('cyan', 'npx hummem server start')}         Start server service
   ${styleText('cyan', 'npx hummem server stop')}          Stop server service
@@ -171,6 +177,12 @@ async function main(): Promise<void> {
     case 'doctor': {
       const { runDoctorCommand } = await import('./commands/doctor.js');
       await runDoctorCommand();
+      break;
+    }
+
+    case 'migrate': {
+      const { runMigrateCommand, parseMigrateOptions } = await import('./commands/migrate.js');
+      await runMigrateCommand(parseMigrateOptions(args));
       break;
     }
 
