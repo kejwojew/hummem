@@ -259,8 +259,9 @@ export function planDataDirMigration(options: MigrationOptions = {}): MigrationP
       message: `a process is still writing to ${sourceDir}: ${liveWriters.join(', ')}`,
       remediation:
         'Stop it first — copying a SQLite database out from under a live writer ' +
-        'can corrupt it. Run `claude-mem stop` (or `hummem stop`), close any IDE ' +
-        'session using memory, then re-run this command.',
+        'can corrupt it. When migrating, run `claude-mem stop` for the legacy ' +
+        'install (or `hummem stop`), close any IDE session using memory, then ' +
+        're-run this command.',
     });
   }
 
@@ -494,4 +495,42 @@ export function performDataDirMigration(options: MigrationOptions = {}): Migrati
 
   result.performed = true;
   return result;
+}
+
+export interface LegacyMemoryNotice {
+  /** Bytes that would be migrated, excluding skipped entries. */
+  bytes: number;
+  /** Directory holding the un-migrated memory. */
+  sourceDir: string;
+  /** Present when something would stop a migration right now. */
+  blocker?: MigrationBlocker;
+}
+
+/**
+ * Describe un-migrated memory sitting beside the active data directory, or
+ * `null` when there is nothing worth telling the user.
+ *
+ * Extracted from the diagnostics command so the decision — including the
+ * "legacy directory exists but holds only skippable files" case — is testable
+ * without the bundled plugin layout that command requires.
+ */
+export function describeUnmigratedMemory(
+  options: MigrationOptions = {}
+): LegacyMemoryNotice | null {
+  const sourceDir = resolve(options.sourceDir ?? join(homedir(), '.claude-mem'));
+  const targetDir = resolve(options.targetDir ?? join(homedir(), '.hummem'));
+
+  if (sourceDir === targetDir || !existsSync(sourceDir)) return null;
+
+  const plan = planDataDirMigration({ ...options, sourceDir, targetDir });
+
+  // A directory holding only logs and stale PID files is not memory the user
+  // needs to act on; saying so would be noise on every run.
+  if (!plan.entries.some((entry) => !entry.skipped)) return null;
+
+  return {
+    bytes: plan.copiedBytes,
+    sourceDir,
+    blocker: plan.blockers[0],
+  };
 }

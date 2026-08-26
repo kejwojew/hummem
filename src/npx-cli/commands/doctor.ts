@@ -7,12 +7,14 @@
 
 import { existsSync, readFileSync } from 'fs';
 import { join } from 'path';
+import { homedir } from 'os';
 import { styleText } from 'node:util';
 import { isPluginInstalled, marketplaceDirectory, readPluginVersion } from '../utils/paths.js';
 import { getBunVersion, getUvVersion, isInstallCurrent } from '../install/setup-runtime.js';
 import { SettingsDefaultsManager } from '../../shared/SettingsDefaultsManager.js';
 import { resolveDataDir } from '../../shared/paths.js';
 import { detectLegacyEnv } from '../../shared/legacy-env.js';
+import { describeUnmigratedMemory, formatBytes } from '../../shared/data-dir-migration.js';
 import {
   peekDatabasePath,
   DATABASE_FILENAME,
@@ -88,6 +90,27 @@ export async function runDoctorCommand(): Promise<void> {
   }
 
   checks.push({ name: 'Database', status: dbStatus, detail: dbDetail, required: false });
+
+  // 0b. Un-migrated memory sitting beside the active data directory.
+  //
+  // Without this, a user who installed hummem but never migrated sees a clean
+  // report and an empty memory, with nothing connecting the two. The legacy
+  // directory is right there, and the fix is one command.
+  const unmigrated = describeUnmigratedMemory({
+    sourceDir: join(homedir(), '.claude-mem'),
+    targetDir: dataDir,
+  });
+  if (unmigrated) {
+    const size = formatBytes(unmigrated.bytes);
+    checks.push({
+      name: 'Legacy memory',
+      status: 'warn',
+      detail: unmigrated.blocker
+        ? `${size} in ${unmigrated.sourceDir} not migrated — ${unmigrated.blocker.message}`
+        : `${size} in ${unmigrated.sourceDir} not migrated — run \`hummem migrate\` to preview`,
+      required: false,
+    });
+  }
 
   // 1. Bun (required — hooks run on Bun).
   const bunVersion = probeVersion('bun');
