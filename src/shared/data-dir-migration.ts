@@ -88,6 +88,11 @@ export interface MigrationPlan {
   blockers: MigrationBlocker[];
   /** True when there is nothing left to do because migration already ran. */
   alreadyMigrated: boolean;
+  /**
+   * Advisory notes that do not prevent migration but change what a careful
+   * user would do first.
+   */
+  warnings: string[];
 }
 
 export interface MigrationResult {
@@ -96,6 +101,12 @@ export interface MigrationResult {
   migratedEntries: string[];
   rewroteDataDirSetting: boolean;
   errors: Array<{ entry: string; message: string }>;
+  /**
+   * Post-migration verification. `verified` is false when any migrated entry
+   * does not match its source, which is the signal not to delete anything.
+   */
+  verified: boolean;
+  mismatches: string[];
 }
 
 export interface MigrationOptions {
@@ -181,21 +192,65 @@ function detectLiveWriters(
     }
   }
 
-  // Chroma keeps its own writer lock alongside the vector store.
+  // Chroma keeps its own writer lock alongside the vector store. Accept either
+  // a JSON record or a bare PID: the format has varied across versions, and
+  // failing to parse must not read as "nothing is running".
   const chromaLock = join(sourceDir, 'chroma', '.claude-mem-chroma-writer.lock');
   if (existsSync(chromaLock)) {
+    let raw = '';
     try {
-      const record = JSON.parse(readFileSync(chromaLock, 'utf-8'));
-      const pid = Number(record?.pid);
-      if (Number.isFinite(pid) && isAlive(pid)) {
-        holders.push(`chroma writer lock (pid ${pid})`);
-      }
+      raw = readFileSync(chromaLock, 'utf-8').trim();
     } catch {
-      // A lock we cannot parse is not evidence of a live process.
+      raw = '';
+    }
+
+    let pid = Number.NaN;
+    if (raw.startsWith('{')) {
+      try {
+        pid = Number(JSON.parse(raw)?.pid);
+      } catch {
+        pid = Number.NaN;
+      }
+    } else {
+      pid = Number(raw);
+    }
+
+    if (Number.isFinite(pid) && isAlive(pid)) {
+      holders.push(`chroma writer lock (pid ${pid})`);
+    } else if (!Number.isFinite(pid)) {
+      // A lock file exists but names no process we can check. Treat it as
+      // occupied: a false alarm costs the user one `stop`, while a false
+      // all-clear can corrupt the vector store.
+      holders.push('chroma writer lock (unreadable — assuming a live writer)');
     }
   }
 
   return holders;
+}
+
+/**
+ * Whether the SQLite write-ahead log suggests an unclean or active database.
+ *
+ * A `-wal` file containing data means transactions were committed but not yet
+ * checkpointed into the main file. That is normal while a writer is attached
+ * and after an unclean shutdown, and in both cases copying only the main file
+ * would lose those transactions. Sidecars are migrated together, so this is
+ * not a blocker — but it is worth stating, because a user who sees it and
+ * assumes the database is quiescent may skip stopping their worker.
+ */
+function hasPendingWal(sourceDir: string): number {
+  for (const name of [
+    `${LEGACY_DATABASE_FILENAME}-wal`,
+    `${DATABASE_FILENAME}-wal`,
+  ]) {
+    try {
+      const size = statSync(join(sourceDir, name)).size;
+      if (size > 0) return size;
+    } catch {
+      // Absent sidecar means nothing pending for that database.
+    }
+  }
+  return 0;
 }
 
 function freeBytesOn(path: string): number | null {
@@ -234,7 +289,7 @@ export function planDataDirMigration(options: MigrationOptions = {}): MigrationP
     });
     return {
       sourceDir, targetDir, mode, entries, totalBytes: 0, copiedBytes: 0,
-      blockers, alreadyMigrated: false,
+      blockers, alreadyMigrated: false, warnings: [],
     };
   }
 
@@ -248,7 +303,7 @@ export function planDataDirMigration(options: MigrationOptions = {}): MigrationP
     });
     return {
       sourceDir, targetDir, mode, entries, totalBytes: 0, copiedBytes: 0,
-      blockers, alreadyMigrated: false,
+      blockers, alreadyMigrated: false, warnings: [],
     };
   }
 
@@ -341,6 +396,20 @@ export function planDataDirMigration(options: MigrationOptions = {}): MigrationP
     }
   }
 
+  const warnings: string[] = [];
+  const walBytes = hasPendingWal(sourceDir);
+  if (walBytes > 0 && blockers.every((b) => b.kind !== 'worker-running')) {
+    // No live writer was detected, yet the write-ahead log holds committed
+    // transactions. Either a worker exited uncleanly, or one is running that
+    // left no PID file this code can see. Say so rather than let the user
+    // assume the database is quiescent.
+    warnings.push(
+      `the write-ahead log holds ${formatBytes(walBytes)} of committed data — ` +
+        'it will be migrated with the database, but make sure nothing is still ' +
+        'running before you apply'
+    );
+  }
+
   return {
     sourceDir,
     targetDir,
@@ -350,6 +419,7 @@ export function planDataDirMigration(options: MigrationOptions = {}): MigrationP
     copiedBytes,
     blockers,
     alreadyMigrated: false,
+    warnings,
   };
 }
 
@@ -366,12 +436,50 @@ export function formatBytes(bytes: number): string {
   return `${value.toFixed(1)} ${units[unit]}`;
 }
 
+/**
+ * Copy one file so that the destination path never holds a partial result.
+ *
+ * Writing directly to the final path means an interruption — power loss, a
+ * signal, a full disk — leaves a truncated file that looks complete to
+ * `existsSync`. A later resume then skips it and the user silently keeps a
+ * corrupt vector store or database.
+ *
+ * Copying to a sibling temporary name and renaming into place makes the
+ * destination appear atomically: it is either absent or whole. Rename within
+ * one directory is atomic on every filesystem this runs on.
+ */
+function copyFileAtomic(from: string, to: string, mode: number): void {
+  const temp = `${to}.hummem-partial-${process.pid}`;
+  try {
+    copyFileSync(from, temp, fsConstants.COPYFILE_FICLONE);
+    chmodSync(temp, mode & 0o777);
+
+    // Verify before publishing: a short write here is the failure this whole
+    // dance exists to catch, and it is cheap to detect.
+    const copied = statSync(temp).size;
+    const original = statSync(from).size;
+    if (copied !== original) {
+      throw new Error(
+        `short copy: ${copied} of ${original} bytes reached ${to}`
+      );
+    }
+
+    renameSync(temp, to);
+  } catch (error) {
+    try {
+      rmSync(temp, { force: true });
+    } catch {
+      // Best effort: the original error is the one worth reporting.
+    }
+    throw error;
+  }
+}
+
 function copyRecursive(from: string, to: string): void {
   const stat = statSync(from);
   if (!stat.isDirectory()) {
-    copyFileSync(from, to, fsConstants.COPYFILE_FICLONE);
     // Preserve the source mode so a 0600 credentials file cannot become 0644.
-    chmodSync(to, stat.mode & 0o777);
+    copyFileAtomic(from, to, stat.mode);
     return;
   }
   mkdirSync(to, { recursive: true });
@@ -381,17 +489,65 @@ function copyRecursive(from: string, to: string): void {
   }
 }
 
+/**
+ * Whether a destination entry can be trusted as an already-migrated copy.
+ *
+ * `existsSync` alone is not enough: an entry left behind by an interrupted run
+ * exists but may be truncated. Comparing sizes catches exactly that, without
+ * the cost of hashing a multi-hundred-megabyte vector store on every resume.
+ *
+ * Anything that does not match is treated as incomplete and recopied, because
+ * re-copying a good file is cheap and keeping a bad one is not.
+ */
+function isCompleteCopy(from: string, to: string): boolean {
+  let sourceStat;
+  let targetStat;
+  try {
+    sourceStat = statSync(from);
+    targetStat = statSync(to);
+  } catch {
+    return false;
+  }
+
+  if (sourceStat.isDirectory() !== targetStat.isDirectory()) return false;
+
+  if (!sourceStat.isDirectory()) {
+    return sourceStat.size === targetStat.size;
+  }
+
+  // A directory is complete only when every child is.
+  let entries: string[];
+  try {
+    entries = readdirSync(from);
+  } catch {
+    return false;
+  }
+  return entries.every((entry) => isCompleteCopy(join(from, entry), join(to, entry)));
+}
+
 function transfer(from: string, to: string, mode: 'copy' | 'move'): void {
   if (mode === 'move') {
     try {
+      // A rename never has a window where the data exists nowhere.
       renameSync(from, to);
       return;
     } catch {
       // Cross-device rename fails; fall through to copy-then-remove.
     }
   }
+
   copyRecursive(from, to);
+
   if (mode === 'move') {
+    // Deleting the source is the only irreversible step in this module, so it
+    // happens strictly after the copy has been verified complete. A failed
+    // verification keeps both sides: the user still has their memory, and the
+    // partial destination is reported rather than silently trusted.
+    if (!isCompleteCopy(from, to)) {
+      throw new Error(
+        `refusing to remove ${from}: the copy at ${to} is incomplete`
+      );
+    }
     rmSync(from, { recursive: true, force: true });
   }
 }
@@ -452,6 +608,8 @@ export function performDataDirMigration(options: MigrationOptions = {}): Migrati
     migratedEntries: [],
     rewroteDataDirSetting: false,
     errors: [],
+    verified: false,
+    mismatches: [],
   };
 
   if (plan.blockers.length > 0) return result;
@@ -470,8 +628,26 @@ export function performDataDirMigration(options: MigrationOptions = {}): Migrati
     }
     const to = join(plan.targetDir, targetName);
 
-    // Idempotence: a previous partial run may have placed this already.
-    if (existsSync(to)) continue;
+    // Idempotence with verification. A previous run may have been interrupted
+    // mid-copy, leaving a truncated file that exists but is unusable; skipping
+    // it on the strength of existsSync alone is how a resume silently keeps
+    // corrupt data. Recopy anything that does not match the source.
+    if (existsSync(to)) {
+      if (isCompleteCopy(from, to)) continue;
+      try {
+        rmSync(to, { recursive: true, force: true });
+      } catch (error: unknown) {
+        // Cannot clear the stale entry, so the copy below would silently do
+        // nothing. Record it: an unexplained mismatch at the end is worse than
+        // a named failure here.
+        result.errors.push({
+          entry: entry.name,
+          message: `could not replace incomplete ${targetName}: ` +
+            (error instanceof Error ? error.message : String(error)),
+        });
+        continue;
+      }
+    }
 
     try {
       transfer(from, to, plan.mode);
@@ -492,6 +668,32 @@ export function performDataDirMigration(options: MigrationOptions = {}): Migrati
       plan.targetDir
     );
   }
+
+  // Verify what was actually written rather than trusting that the copies
+  // succeeded. In copy mode the source is still there, so a mismatch is
+  // recoverable — but only if the user is told about it.
+  for (const entry of plan.entries) {
+    if (entry.skipped) continue;
+    const from = join(plan.sourceDir, entry.name);
+    let targetName = entry.name;
+    if (entry.name === LEGACY_DATABASE_FILENAME) {
+      targetName = DATABASE_FILENAME;
+    } else if (entry.name.startsWith(`${LEGACY_DATABASE_FILENAME}-`)) {
+      targetName = DATABASE_FILENAME + entry.name.slice(LEGACY_DATABASE_FILENAME.length);
+    }
+    // A moved source is gone by design; nothing left to compare against.
+    if (plan.mode === 'move' && !existsSync(from)) continue;
+
+    // settings.json is rewritten on purpose, so a size difference there is
+    // expected rather than evidence of a bad copy.
+    if (targetName === 'settings.json') continue;
+
+    if (!isCompleteCopy(from, join(plan.targetDir, targetName))) {
+      result.mismatches.push(targetName);
+    }
+  }
+
+  result.verified = result.mismatches.length === 0 && result.errors.length === 0;
 
   result.performed = true;
   return result;
