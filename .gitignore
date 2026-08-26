@@ -38,7 +38,7 @@ src/ui/viewer.html
 
 plugin/.cli-installed
 
-plugin/scripts/claude-mem
+plugin/scripts/hummem
 
 CONTRIB_NOTES.md
 CLAUDE.local.md
