@@ -3,6 +3,7 @@ import path from 'path';
 import { existsSync, writeFileSync, mkdirSync, rmSync, statSync, copyFileSync, statfsSync } from 'fs';
 import { Database } from 'bun:sqlite';
 import { DATA_DIR, OBSERVER_SESSIONS_PROJECT } from '../../shared/paths.js';
+import { peekDatabasePath } from '../../shared/database-path.js';
 import { logger } from '../../utils/logger.js';
 import { openConfiguredSqliteDatabase } from '../sqlite/connection.js';
 
@@ -42,7 +43,7 @@ export function runOneTimeV12_4_3Cleanup(
     return;
   }
 
-  const dbPath = path.join(effectiveDataDir, 'claude-mem.db');
+  const dbPath = peekDatabasePath(effectiveDataDir);
   if (!existsSync(dbPath)) {
     if (dryRun) {
       logger.info('SYSTEM', 'v12.4.3 cleanup --dry-run: no DB present, nothing to scan', { dbPath });
