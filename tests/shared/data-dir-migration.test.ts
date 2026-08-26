@@ -15,6 +15,7 @@ import {
   planDataDirMigration,
   performDataDirMigration,
   formatBytes,
+  describeUnmigratedMemory,
 } from '../../src/shared/data-dir-migration.js';
 
 let root: string;
@@ -297,5 +298,51 @@ describe('formatBytes', () => {
     expect(formatBytes(512)).toBe('512 B');
     expect(formatBytes(1536)).toBe('1.5 KB');
     expect(formatBytes(927 * 1024 * 1024)).toBe('927.0 MB');
+  });
+});
+
+describe('describeUnmigratedMemory', () => {
+  it('says nothing when there is no legacy directory', () => {
+    rmSync(source, { recursive: true, force: true });
+    expect(describeUnmigratedMemory(base())).toBeNull();
+  });
+
+  it('says nothing when source and target are the same directory', () => {
+    seedLegacyDir();
+    expect(describeUnmigratedMemory({ ...base(), targetDir: source })).toBeNull();
+  });
+
+  it('says nothing when the legacy directory holds only skippable files', () => {
+    // Logs and stale runtime state are not memory the user must act on;
+    // reporting them would be noise on every diagnostics run.
+    mkdirSync(join(source, 'logs'), { recursive: true });
+    writeFileSync(join(source, 'logs', 'worker.log'), 'noise');
+    writeFileSync(join(source, 'worker.pid'), '999999');
+    expect(describeUnmigratedMemory(base())).toBeNull();
+  });
+
+  it('reports the size that would actually be migrated', () => {
+    seedLegacyDir();
+    const notice = describeUnmigratedMemory(base());
+    expect(notice).not.toBeNull();
+    expect(notice!.sourceDir).toBe(source);
+    expect(notice!.bytes).toBeGreaterThan(0);
+    expect(notice!.blocker).toBeUndefined();
+  });
+
+  it('surfaces a blocker so the advice is not misleading', () => {
+    // Telling someone to run migrate when it would refuse wastes their time.
+    seedLegacyDir();
+    mkdirSync(target, { recursive: true });
+    writeFileSync(join(target, 'hummem.db'), 'existing');
+    const notice = describeUnmigratedMemory(base());
+    expect(notice!.blocker?.kind).toBe('target-not-empty');
+  });
+
+  it('surfaces a live writer as the blocker', () => {
+    seedLegacyDir();
+    writeFileSync(join(source, 'worker.pid'), String(process.pid));
+    const notice = describeUnmigratedMemory({ ...base(), isProcessAlive: () => true });
+    expect(notice!.blocker?.kind).toBe('worker-running');
   });
 });
