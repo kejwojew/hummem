@@ -106,19 +106,19 @@
 Instal dengan satu perintah:
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 Atau instal untuk OpenCode:
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 Atau instal untuk Antigravity CLI ([panduan pengaturan](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 Atau instal dari plugin marketplace di dalam Claude Code:
@@ -131,7 +131,7 @@ Atau instal dari plugin marketplace di dalam Claude Code:
 
 Restart Claude Code. Konteks dari sesi sebelumnya akan secara otomatis muncul di sesi baru.
 
-> **Catatan:** Claude-Mem juga dipublikasikan di npm, tetapi `npm install -g claude-mem` hanya menginstal **SDK/library saja** — ini tidak mendaftarkan plugin hooks atau menyiapkan layanan worker. Selalu instal melalui `npx claude-mem install` atau perintah `/plugin` di atas.
+> **Catatan:** Claude-Mem juga dipublikasikan di npm, tetapi `npm install -g claude-mem` hanya menginstal **SDK/library saja** — ini tidak mendaftarkan plugin hooks atau menyiapkan layanan worker. Selalu instal melalui `npx hummem install` atau perintah `/plugin` di atas.
 
 ### 🦞 OpenClaw Gateway
 
@@ -384,10 +384,7 @@ open/commercial.
 
 - **Dokumentasi**: [docs/](docs/)
 - **Issues**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
-- **Repositori**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
-- **Akun X Resmi**: [@Claude_Memory](https://x.com/Claude_Memory)
-- **Discord Resmi**: [Gabung Discord](https://discord.com/invite/J4wttp9vDu)
-- **Penulis**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
+- **Repositori**: [github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
 
 ---
 

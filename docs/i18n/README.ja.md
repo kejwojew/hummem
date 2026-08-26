@@ -106,19 +106,19 @@
 単一のコマンドでインストールします:
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 または、OpenCode用にインストールします:
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 または、Antigravity CLI用にインストールします([セットアップガイド](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 または、Claude Code内のプラグインマーケットプレイスからインストールします:
@@ -131,7 +131,7 @@ npx claude-mem install --ide antigravity
 
 Claude Codeを再起動します。以前のセッションからのコンテキストが新しいセッションに自動的に表示されます。
 
-> **注:** Claude-MemはnpmにもPublishされていますが、`npm install -g claude-mem`は**SDK/ライブラリのみ**をインストールします — プラグインフックの登録やワーカーサービスのセットアップは行われません。必ず上記の`npx claude-mem install`または`/plugin`コマンドを使用してインストールしてください。
+> **注:** Claude-MemはnpmにもPublishされていますが、`npm install -g claude-mem`は**SDK/ライブラリのみ**をインストールします — プラグインフックの登録やワーカーサービスのセットアップは行われません。必ず上記の`npx hummem install`または`/plugin`コマンドを使用してインストールしてください。
 
 ### 🦞 OpenClawゲートウェイ
 
@@ -382,10 +382,7 @@ Claude-Memは Apache License 2.0 の下でライセンスされています。
 
 - **ドキュメント**: [docs/](docs/)
 - **Issues**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
-- **リポジトリ**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
-- **公式Xアカウント**: [@Claude_Memory](https://x.com/Claude_Memory)
-- **公式Discord**: [Discordに参加](https://discord.com/invite/J4wttp9vDu)
-- **作者**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
+- **リポジトリ**: [github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
 
 ---
 

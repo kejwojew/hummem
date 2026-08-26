@@ -106,19 +106,19 @@
 Installez avec une seule commande :
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 Ou installez pour OpenCode :
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 Ou installez pour Antigravity CLI ([guide d'installation](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)) :
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 Ou installez depuis la marketplace de plugins à l'intérieur de Claude Code :
@@ -131,7 +131,7 @@ Ou installez depuis la marketplace de plugins à l'intérieur de Claude Code :
 
 Redémarrez Claude Code. Le contexte des sessions précédentes apparaîtra automatiquement dans les nouvelles sessions.
 
-> **Remarque :** Claude-Mem est également publié sur npm, mais `npm install -g claude-mem` installe **uniquement le SDK/la bibliothèque** — cela n'enregistre pas les hooks du plugin et ne configure pas le service worker. Installez toujours via `npx claude-mem install` ou les commandes `/plugin` ci-dessus.
+> **Remarque :** Claude-Mem est également publié sur npm, mais `npm install -g claude-mem` installe **uniquement le SDK/la bibliothèque** — cela n'enregistre pas les hooks du plugin et ne configure pas le service worker. Installez toujours via `npx hummem install` ou les commandes `/plugin` ci-dessus.
 
 ### 🦞 OpenClaw Gateway
 
@@ -384,7 +384,7 @@ entre open source et commercial.
 
 - **Documentation** : [docs/](docs/)
 - **Issues** : [GitHub Issues](https://github.com/kejwojew/hummem/issues)
-- **Dépôt** : [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
+- **Dépôt** : [github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
 - **Compte X officiel** : [@Claude_Memory](https://x.com/Claude_Memory)
 - **Discord officiel** : [Rejoindre Discord](https://discord.com/invite/J4wttp9vDu)
 - **Auteur** : Alex Newman ([@thedotmack](https://github.com/thedotmack))

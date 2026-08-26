@@ -106,19 +106,19 @@
 Встановіть однією командою:
 
 ```bash
-npx claude-mem install
+npx hummem install
 ```
 
 Або встановіть для OpenCode:
 
 ```bash
-npx claude-mem install --ide opencode
+npx hummem install --ide opencode
 ```
 
 Або встановіть для Antigravity CLI ([посібник із налаштування](https://github.com/kejwojew/hummem/blob/main/docs/public/antigravity-cli/setup.mdx)):
 
 ```bash
-npx claude-mem install --ide antigravity
+npx hummem install --ide antigravity
 ```
 
 Або встановіть з маркетплейсу плагінів прямо в Claude Code:
@@ -131,7 +131,7 @@ npx claude-mem install --ide antigravity
 
 Перезапустіть Claude Code. Контекст з попередніх сесій автоматично з'явиться в нових сесіях.
 
-> **Примітка:** Claude-Mem також опубліковано в npm, але `npm install -g claude-mem` встановлює **лише SDK/бібліотеку** — він не реєструє хуки плагіна і не налаштовує службу воркера. Завжди встановлюйте через `npx claude-mem install` або команди `/plugin`, наведені вище.
+> **Примітка:** Claude-Mem також опубліковано в npm, але `npm install -g claude-mem` встановлює **лише SDK/бібліотеку** — він не реєструє хуки плагіна і не налаштовує службу воркера. Завжди встановлюйте через `npx hummem install` або команди `/plugin`, наведені вище.
 
 ### 🦞 OpenClaw Gateway
 
@@ -384,10 +384,7 @@ Claude-Mem ліцензовано за ліцензією Apache License 2.0.
 
 - **Документація**: [docs/](docs/)
 - **Проблеми**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
-- **Репозиторій**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
-- **Офіційний акаунт X**: [@Claude_Memory](https://x.com/Claude_Memory)
-- **Офіційний Discord**: [Приєднатися до Discord](https://discord.com/invite/J4wttp9vDu)
-- **Автор**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
+- **Репозиторій**: [github.com/kejwojew/hummem](https://github.com/kejwojew/hummem)
 
 ---
 

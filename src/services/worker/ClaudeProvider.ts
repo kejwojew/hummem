@@ -379,7 +379,7 @@ export class ClaudeProvider {
           }
 
           if (typeof textContent === 'string' && textContent.includes('Invalid API key')) {
-            throw new Error('Invalid API key: check your API key configuration in ~/.claude-mem/settings.json or ~/.claude-mem/.env');
+            throw new Error(`Invalid API key: check your API key configuration in ${paths.settings()} or ${paths.envFile()}`);
           }
 
           await processAgentResponse(

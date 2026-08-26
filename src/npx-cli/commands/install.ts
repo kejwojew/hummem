@@ -170,7 +170,7 @@ function registerMarketplace(): void {
   knownMarketplaces['thedotmack'] = {
     source: {
       source: 'github',
-      repo: 'thedotmack/claude-mem',
+      repo: 'kejwojew/hummem',
     },
     installLocation: marketplaceDirectory(),
     lastUpdated: new Date().toISOString(),

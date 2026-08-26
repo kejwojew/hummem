@@ -103,7 +103,7 @@ chmod +x .cursor/hooks/*.sh
 
 1. **Start the worker**:
    ```bash
-   claude-mem start
+   hummem start
    ```
 
 2. **Restart Cursor** to load the hooks
@@ -202,7 +202,7 @@ Install on Ubuntu: `apt-get install jq curl`
 
 3. Restart worker:
    ```bash
-   claude-mem restart
+   hummem restart
    ```
 
 ### Observations not being saved
