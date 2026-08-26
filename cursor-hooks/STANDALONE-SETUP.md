@@ -190,7 +190,7 @@ If you hit the 1500 requests/day limit:
 
 - Read [README.md](README.md) for detailed hook documentation
 - Check [CONTEXT-INJECTION.md](CONTEXT-INJECTION.md) for context behavior details
-- Visit https://docs.claude-mem.ai for full documentation
+- Visit https://github.com/kejwojew/hummem#readme for full documentation
 
 ## Quick Reference
 

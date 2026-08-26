@@ -69,7 +69,7 @@ async function postToDiscord(webhookUrl, version, notes) {
           },
           {
             name: '📚 Docs',
-            value: '[docs.claude-mem.ai](https://docs.claude-mem.ai)',
+            value: '[hummem docs](https://github.com/kejwojew/hummem#readme)',
             inline: true,
           },
         ],

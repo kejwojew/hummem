@@ -4,7 +4,7 @@
  * identified by a random install UUID. Turn it off anytime with
  * `telemetry disable`, CLAUDE_MEM_TELEMETRY=0, or DO_NOT_TRACK=1.
  *
- * Full privacy documentation: https://docs.claude-mem.ai/telemetry
+ * Full privacy documentation: https://github.com/kejwojew/hummem/blob/main/docs/public/telemetry.mdx
  */
 
 import * as p from '@clack/prompts';
@@ -18,7 +18,7 @@ import {
   type TelemetryConsentSource,
 } from '../../services/telemetry/consent.js';
 
-const DOCS_URL = 'https://docs.claude-mem.ai/telemetry';
+const DOCS_URL = 'https://github.com/kejwojew/hummem/blob/main/docs/public/telemetry.mdx';
 
 const COLLECTED_FIELDS = [
   'version          hummem version (e.g. 13.4.2)',
