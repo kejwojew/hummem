@@ -13,6 +13,11 @@ import { getBunVersion, getUvVersion, isInstallCurrent } from '../install/setup-
 import { SettingsDefaultsManager } from '../../shared/SettingsDefaultsManager.js';
 import { resolveDataDir } from '../../shared/paths.js';
 import { detectLegacyEnv } from '../../shared/legacy-env.js';
+import {
+  peekDatabasePath,
+  DATABASE_FILENAME,
+  LEGACY_DATABASE_FILENAME,
+} from '../../shared/database-path.js';
 
 type CheckStatus = 'ok' | 'warn' | 'fail';
 
@@ -48,6 +53,41 @@ async function probeWorkerHealth(workerHost: string, workerPort: string): Promis
 export async function runDoctorCommand(): Promise<void> {
   const checks: CheckResult[] = [];
   const dataDir = resolveDataDir();
+
+  // 0. Data directory and database. First because almost every "my memory is
+  // empty" report is really "hummem is reading a different directory than you
+  // think", and that is invisible without printing the resolved path.
+  checks.push({
+    name: 'Data directory',
+    status: 'ok',
+    detail: dataDir,
+    required: false,
+  });
+
+  // Reported with the read-only peek: running diagnostics must never trigger
+  // the legacy-database rename as a side effect of looking.
+  const dbPath = peekDatabasePath(dataDir);
+  const dbExists = existsSync(dbPath);
+  const legacyDbPath = join(dataDir, LEGACY_DATABASE_FILENAME);
+  const legacyDbPresent = existsSync(legacyDbPath);
+  const canonicalDbPresent = existsSync(join(dataDir, DATABASE_FILENAME));
+
+  let dbStatus: CheckStatus = dbExists ? 'ok' : 'warn';
+  let dbDetail = dbExists ? dbPath : `not created yet at ${dbPath} — starts empty on first run`;
+
+  if (canonicalDbPresent && legacyDbPresent) {
+    // Deliberate refusal to overwrite, but the user must be told: one of these
+    // two databases is being ignored.
+    dbStatus = 'warn';
+    dbDetail =
+      `both ${DATABASE_FILENAME} and ${LEGACY_DATABASE_FILENAME} exist; using ${DATABASE_FILENAME}. ` +
+      'Inspect both and remove the one you do not want — see MIGRATION.md';
+  } else if (legacyDbPresent && !canonicalDbPresent) {
+    dbStatus = 'warn';
+    dbDetail = `legacy ${LEGACY_DATABASE_FILENAME} in use — it is renamed automatically on next start`;
+  }
+
+  checks.push({ name: 'Database', status: dbStatus, detail: dbDetail, required: false });
 
   // 1. Bun (required — hooks run on Bun).
   const bunVersion = probeVersion('bun');
