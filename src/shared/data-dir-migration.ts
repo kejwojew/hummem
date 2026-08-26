@@ -634,7 +634,19 @@ export function performDataDirMigration(options: MigrationOptions = {}): Migrati
     // corrupt data. Recopy anything that does not match the source.
     if (existsSync(to)) {
       if (isCompleteCopy(from, to)) continue;
-      rmSync(to, { recursive: true, force: true });
+      try {
+        rmSync(to, { recursive: true, force: true });
+      } catch (error: unknown) {
+        // Cannot clear the stale entry, so the copy below would silently do
+        // nothing. Record it: an unexplained mismatch at the end is worse than
+        // a named failure here.
+        result.errors.push({
+          entry: entry.name,
+          message: `could not replace incomplete ${targetName}: ` +
+            (error instanceof Error ? error.message : String(error)),
+        });
+        continue;
+      }
     }
 
     try {
@@ -671,14 +683,16 @@ export function performDataDirMigration(options: MigrationOptions = {}): Migrati
     }
     // A moved source is gone by design; nothing left to compare against.
     if (plan.mode === 'move' && !existsSync(from)) continue;
+
+    // settings.json is rewritten on purpose, so a size difference there is
+    // expected rather than evidence of a bad copy.
+    if (targetName === 'settings.json') continue;
+
     if (!isCompleteCopy(from, join(plan.targetDir, targetName))) {
       result.mismatches.push(targetName);
     }
   }
 
-  // settings.json is rewritten on purpose, so a size difference there is
-  // expected rather than evidence of a bad copy.
-  result.mismatches = result.mismatches.filter((name) => name !== 'settings.json');
   result.verified = result.mismatches.length === 0 && result.errors.length === 0;
 
   result.performed = true;
