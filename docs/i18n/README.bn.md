@@ -2,7 +2,7 @@
 
 <h1 align="center">
   <br>
-  <a href="https://github.com/thedotmack/claude-mem">
+  <a href="https://github.com/kejwojew/hummem">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-dark-mode.webp">
       <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/hummem-logo-for-light-mode.webp">
@@ -67,51 +67,22 @@
   </a>
 </p>
 
-<p align="center">
-  <a href="https://trendshift.io/repositories/15496" target="_blank">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg">
-      <img src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/trendshift-badge.svg" alt="thedotmack/claude-mem | Trendshift" width="250" height="55"/>
-    </picture>
-  </a>
-</p>
 
 <br>
 
 <table align="center">
   <tr>
     <td align="center">
-      <a href="https://github.com/thedotmack/claude-mem">
+      <a href="https://github.com/kejwojew/hummem">
         <picture>
           <img
             src="https://raw.githubusercontent.com/kejwojew/hummem/main/docs/public/cm-preview.gif"
-            alt="Claude-Mem Preview"
+            alt="hummem preview"
             width="500"
           >
         </picture>
       </a>
-    </td>
-    <td align="center">
-      <a href="https://www.star-history.com/#thedotmack/claude-mem&Date">
-        <picture>
-          <source
-            media="(prefers-color-scheme: dark)"
-            srcset="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&theme=dark&legend=top-left"
-          />
-          <source
-            media="(prefers-color-scheme: light)"
-            srcset="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&legend=top-left"
-          />
-          <img
-            alt="Star History Chart"
-            src="https://api.star-history.com/image?repos=thedotmack/claude-mem&type=date&legend=top-left"
-            width="500"
-          />
-        </picture>
-      </a>
-    </td>
-  </tr>
+    </td>  </tr>
 </table>
 
 <p align="center">
@@ -153,7 +124,7 @@ npx claude-mem install --ide antigravity
 অথবা Claude Code-এর ভিতরে প্লাগইন মার্কেটপ্লেস থেকে ইনস্টল করুন:
 
 ```bash
-/plugin marketplace add thedotmack/claude-mem
+/plugin marketplace add kejwojew/hummem
 
 /plugin install claude-mem
 ```
@@ -411,8 +382,8 @@ MCP সার্ভার, এন্টারপ্রাইজ সিস্ট�
 ## Support
 
 - **ডকুমেন্টেশন**: [docs/](docs/)
-- **ইস্যু**: [GitHub Issues](https://github.com/thedotmack/claude-mem/issues)
-- **রিপোজিটরি**: [github.com/thedotmack/claude-mem](https://github.com/thedotmack/claude-mem)
+- **ইস্যু**: [GitHub Issues](https://github.com/kejwojew/hummem/issues)
+- **রিপোজিটরি**: [github.com/thedotmack/claude-mem](https://github.com/kejwojew/hummem)
 - **অফিসিয়াল X অ্যাকাউন্ট**: [@Claude_Memory](https://x.com/Claude_Memory)
 - **অফিসিয়াল Discord**: [Discord-এ যোগ দিন](https://discord.com/invite/J4wttp9vDu)
 - **লেখক**: Alex Newman ([@thedotmack](https://github.com/thedotmack))
