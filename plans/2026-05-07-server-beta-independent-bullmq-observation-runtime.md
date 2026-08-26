@@ -41,7 +41,7 @@ If any compatibility endpoint still uses `/v1/memories`, it should be treated as
 
 - `plans/2026-05-07-claude-mem-server-apache-bullmq-team-auth.md`
 - `plans/2026-05-07-claude-mem-13-server-beta-full-worker-parity.md`
-- `/Users/alexnewman/Downloads/claude-mem-handoff-docs/claude-mem-server-plan.md`
+- `/Users/<user>/Downloads/claude-mem-handoff-docs/claude-mem-server-plan.md`
 - `src/server/routes/v1/ServerV1Routes.ts`
 - `src/server/queue/BullMqObservationQueueEngine.ts`
 - `src/server/queue/ObservationQueueEngine.ts`

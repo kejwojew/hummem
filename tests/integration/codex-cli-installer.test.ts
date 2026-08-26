@@ -69,7 +69,7 @@ describe('Codex CLI installer config repair', () => {
       '',
       '[mcp_servers.mcp-search]',
       'command = "node"',
-      'args = ["/Users/alexnewman/.codex/plugins/cache/claude-mem-local/claude-mem/12.7.5/scripts/mcp-server.cjs"]',
+      'args = ["/Users/dev/.codex/plugins/cache/claude-mem-local/claude-mem/12.7.5/scripts/mcp-server.cjs"]',
       '',
       '[plugins."hummem@hummem-local"]',
       'enabled = true',

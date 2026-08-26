@@ -4,7 +4,7 @@
 
 ## Repos and locations
 
-- **claude-mem** (plugin + sync hub): worktree `/Users/alexnewman/.superset/worktrees/df8069a7-eb08-4626-9d3d-918d1e12eb9f/freckle-nail`, branch `feat/phase5-two-lane-sync`, remote `thedotmack/claude-mem`. Hub worker in `workers/sync-hub/`.
+- **claude-mem** (plugin + sync hub): worktree `/Users/<user>/.superset/worktrees/<worktree-id>/<worktree-name>`, branch `feat/phase5-two-lane-sync`, remote `thedotmack/claude-mem`. Hub worker in `workers/sync-hub/`.
 - **claude-mem-pro** (cmem.ai): `~/Scripts/claude-mem-pro` (currently checked out on `codex/turbopuffer-only-launch`; `main` auto-deploys to Vercel prod). Remote `thedotmack/claude-mem-pro`.
 - **Cutover plan**: `PLAN-postgres-to-turbopuffer-cutover.md` (in claude-mem-pro worktree `.claude/worktrees/tpuf-content-plan`, branch `docs/tpuf-content-migration-plan`).
 
