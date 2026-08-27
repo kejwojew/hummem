@@ -74,7 +74,19 @@ export function resolveDataDir(): string {
 export const DATA_DIR = resolveDataDir();
 export const CLAUDE_CONFIG_DIR = process.env.CLAUDE_CONFIG_DIR || join(homedir(), '.claude');
 
-export const MARKETPLACE_ROOT = join(CLAUDE_CONFIG_DIR, 'plugins', 'marketplaces', 'thedotmack');
+/**
+ * Marketplace directory, named after marketplace.json's `name` field by the
+ * host. Prefers the canonical name and falls back to the pre-rename one, so an
+ * install performed before the rename keeps resolving.
+ */
+export const MARKETPLACE_ROOT = (() => {
+  const root = join(CLAUDE_CONFIG_DIR, 'plugins', 'marketplaces');
+  const canonical = join(root, 'hummem');
+  if (existsSync(canonical)) return canonical;
+  const legacy = join(root, 'thedotmack');
+  if (existsSync(legacy)) return legacy;
+  return canonical;
+})();
 
 export const LOGS_DIR = join(DATA_DIR, 'logs');
 export const USER_SETTINGS_PATH = join(DATA_DIR, 'settings.json');
