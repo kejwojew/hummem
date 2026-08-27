@@ -13,8 +13,34 @@ export function claudeConfigDirectory(): string {
   return process.env.CLAUDE_CONFIG_DIR || join(homedir(), '.claude');
 }
 
+/**
+ * Marketplace identifier, which is also the on-disk directory name.
+ *
+ * Claude Code names the directory after `marketplace.json`'s `name` field, so
+ * this constant and that manifest must agree. They previously did not: the
+ * manifest was renamed to `hummem` while these paths still said `thedotmack`,
+ * which would have left a fresh install unable to find its own plugin.
+ */
+export const MARKETPLACE_ID = 'hummem';
+
+/** Directory name used before the project became independent. */
+export const LEGACY_MARKETPLACE_ID = 'thedotmack';
+
+/**
+ * Resolve the marketplace directory, preferring the canonical name but falling
+ * back to the legacy one when only that exists.
+ *
+ * An install performed before the rename has its plugin under the old
+ * directory, and the paths baked into IDE hook commands point there. Reporting
+ * the canonical name unconditionally would strand those installs.
+ */
 export function marketplaceDirectory(): string {
-  return join(claudeConfigDirectory(), 'plugins', 'marketplaces', 'thedotmack');
+  const root = join(claudeConfigDirectory(), 'plugins', 'marketplaces');
+  const canonical = join(root, MARKETPLACE_ID);
+  if (existsSync(canonical)) return canonical;
+  const legacy = join(root, LEGACY_MARKETPLACE_ID);
+  if (existsSync(legacy)) return legacy;
+  return canonical;
 }
 
 export function pluginsDirectory(): string {
@@ -34,7 +60,12 @@ export function claudeSettingsPath(): string {
 }
 
 export function pluginCacheDirectory(version: string): string {
-  return join(pluginsDirectory(), 'cache', 'thedotmack', 'hummem', version);
+  const cache = join(pluginsDirectory(), 'cache');
+  const canonical = join(cache, MARKETPLACE_ID, 'hummem', version);
+  if (existsSync(canonical)) return canonical;
+  const legacy = join(cache, LEGACY_MARKETPLACE_ID, 'hummem', version);
+  if (existsSync(legacy)) return legacy;
+  return canonical;
 }
 
 export function npmPackageRootDirectory(): string {
