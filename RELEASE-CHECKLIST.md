@@ -116,23 +116,40 @@ Keep the dated backup for longer than this.
 
 ---
 
-## 6. Publish to npm
+## 6. Publish to npm — DONE
+
+`hummem@1.0.0` is published and verified: downloaded from the registry,
+`.claude-plugin/marketplace.json` present, CLI reports `1.0.0`, and the bundled
+worker creates `hummem.db` in a fresh data directory.
 
 Irreversible: the package name is claimed permanently, and a published version
 cannot be reissued under the same number.
 
-First, a known blocker on this machine — `npm pack` fails with `EPERM` because
-the cache contains root-owned files:
-
-```bash
-sudo chown -R "$(id -u):$(id -g)" ~/.npm
-```
-
-Then:
-
 ```bash
 npm login
 npm publish        # runs prepublishOnly: build + postinstall + privacy + branding guards
+```
+
+**If publishing is rejected for two-factor authentication**, either pass a
+one-time code directly:
+
+```bash
+npm publish --otp=<6-digit code>
+```
+
+or create a granular access token on npmjs.com with "bypass 2FA" enabled, so
+publishing works non-interactively:
+
+```bash
+npm config set //registry.npmjs.org/:_authToken=<token>
+npm publish
+```
+
+**Only if npm reports `EPERM` about root-owned cache files**, take ownership of
+the cache and retry. Do not run this pre-emptively:
+
+```bash
+sudo chown -R "$(id -u):$(id -g)" ~/.npm
 ```
 
 **Verify:** `npm view hummem version` prints `1.0.0`.
