@@ -94,6 +94,16 @@
 
 ## Quick Start
 
+> **Not yet published.** `hummem` is not on npm and the repository is private,
+> so the commands below do not work for anyone else yet. Until then, install
+> from a local clone:
+>
+> ```bash
+> git clone https://github.com/kejwojew/hummem.git
+> cd hummem && npm install && npm run build
+> node dist/npx-cli/index.js install
+> ```
+
 Install with a single command:
 
 ```bash
