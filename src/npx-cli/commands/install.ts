@@ -667,6 +667,10 @@ function copyPluginToMarketplace(): void {
 
   const allowedTopLevelEntries = [
     '.agents',
+    // Claude Code identifies a marketplace by this manifest and names the
+    // directory after its `name` field. Omitting it leaves a directory the
+    // host does not recognise as a marketplace at all.
+    '.claude-plugin',
     '.codex-plugin',
     'plugin',
     'package.json',
