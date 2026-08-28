@@ -138,7 +138,7 @@ npx hummem install --ide antigravity
 只需一条命令,即可在 [OpenClaw](https://openclaw.ai) 网关上将 claude-mem 安装为持久化内存插件:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 该安装程序会处理依赖项、插件设置、AI 提供商配置、worker 启动,以及可选的向 Telegram、Discord、Slack 等平台的实时观察推送。详情请参阅 [OpenClaw 集成指南](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx)。

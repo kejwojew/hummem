@@ -37,7 +37,7 @@ wrong failure mode for an emergency brake (full rationale in
 
 ### 1.2 Token verification (`TOKEN_VERIFY_URL`)
 
-The Pro route exists at `https://cmem.ai/api/pro/sync/verify`. Deployment order
+The Pro route exists at `https://sync.example.com/api/pro/sync/verify`. Deployment order
 is load-bearing: deploy the Pro route first, canary it with a test-account token
 and exact `X-User-Id` binding, then configure this URL and activate SyncHub.
 Never activate the Hub while the route is absent or uncanaried. HARD CONTRACT
@@ -324,11 +324,11 @@ hibernation detector sensitive.
 ```sh
 CANARY_HUB_URL=https://sync-hub.<account>.workers.dev \
 CANARY_USER_ID=canary-user \
-CANARY_TOKEN=<a real cmem.ai token provisioned for the canary user> \
+CANARY_TOKEN=<a real the sync server token provisioned for the canary user> \
 bun workers/sync-hub/canary/canary.ts >> ~/.claude-mem/logs/sync-canary.jsonl
 ```
 
-Note: production auth is real — provision a dedicated cmem.ai account/token
+Note: production auth is real — provision a dedicated the sync server account/token
 for the canary user (the hub binds tokens to canonical user ids, §1.2).
 
 24/7 via launchd (macOS box; `~/Library/LaunchAgents/ai.cmem.sync-canary.plist`):

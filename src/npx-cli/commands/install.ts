@@ -1282,17 +1282,18 @@ async function promptClaudeModel(options: InstallOptions): Promise<void> {
   }
 }
 
-// --- CMEM Online email opt-in ----------------------------------------------
-// Interactive, optional. The CLI POSTs the email + optional note to the live
-// waitlist endpoint (cmem.ai/api/waitlist), which handles persistence, dedup,
-// and the confirmation email server-side. CLAUDE_MEM_SIGNUP_URL overrides the
-// default for testing/staging. No API keys ever ship in the npx package — the
-// endpoint is unauthenticated and the secret (Resend) stays server-side.
-// Anything that goes wrong here is swallowed — a marketing opt-in must never
-// block or fail the install.
+// --- Marketing email opt-in (DISABLED) --------------------------------------
+// This prompted every installing user for an email and POSTed it to a waitlist
+// endpoint operated by the upstream project. Collecting this project's users'
+// addresses into someone else's mailing list is not something an installer
+// should do, so the prompt is no longer part of the install flow.
+//
+// The code is retained rather than deleted: if this project ever runs its own
+// opt-in, the transport, storage and never-block-the-install behaviour are
+// already correct. Set HUMMEM_SIGNUP_URL to a server you control before
+// re-enabling the call in runInstallCommand.
 
-const DEFAULT_SIGNUP_ENDPOINT = 'https://cmem.ai/api/waitlist';
-const SIGNUP_ENDPOINT = process.env.CLAUDE_MEM_SIGNUP_URL?.trim() || DEFAULT_SIGNUP_ENDPOINT;
+const SIGNUP_ENDPOINT = process.env.HUMMEM_SIGNUP_URL?.trim() ?? process.env.CLAUDE_MEM_SIGNUP_URL?.trim() ?? '';
 const SIGNUP_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 interface StoredSignup {
@@ -1537,8 +1538,6 @@ async function runInstallCommandInner(options: InstallOptions, summary: InstallS
     segments.push(styleText('dim', 'reinstall'));
   }
   log.info(segments.join(` ${dot} `));
-
-  await promptCmemOnlineOptIn(version);
 
   if (alreadyInstalled) {
     if (process.stdin.isTTY) {

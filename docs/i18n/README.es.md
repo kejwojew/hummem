@@ -138,7 +138,7 @@ Reinicia Claude Code. El contexto de sesiones anteriores aparecerá automáticam
 Instala claude-mem como plugin de memoria persistente en gateways de [OpenClaw](https://openclaw.ai) con un solo comando:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 El instalador se encarga de las dependencias, la configuración del plugin, la configuración del proveedor de IA, el inicio del worker y, opcionalmente, de los feeds de observación en tiempo real hacia Telegram, Discord, Slack y más. Consulta la [Guía de Integración con OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) para más detalles.

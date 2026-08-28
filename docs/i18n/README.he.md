@@ -138,7 +138,7 @@ npx hummem install --ide antigravity
 התקן את claude-mem כתוסף זיכרון מתמשך על שערי [OpenClaw](https://openclaw.ai) בפקודה בודדת:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 תוכנת ההתקנה מטפלת בתלויות, בהגדרת התוסף, בהגדרת ספק ה-AI, בהפעלת ה-worker, ובאפשרות להזין זרימות תצפיות בזמן אמת ל-Telegram, Discord, Slack ועוד. עיין ב[מדריך שילוב OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) לפרטים.

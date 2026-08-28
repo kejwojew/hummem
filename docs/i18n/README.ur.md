@@ -138,7 +138,7 @@ Claude Code کو دوبارہ شروع کریں۔ سابقہ سیشنز کا ت�
 [OpenClaw](https://openclaw.ai) گیٹ ویز پر ایک ہی کمانڈ کے ساتھ claude-mem کو مستقل میموری پلگ ان کے طور پر انسٹال کریں:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 انسٹالر منحصرات، پلگ ان سیٹ اپ، AI پرووائیڈر کنفیگریشن، ورکر اسٹارٹ اپ، اور Telegram، Discord، Slack وغیرہ کو اختیاری حقیقی وقت مشاہدہ فیڈز کا خیال رکھتا ہے۔ تفصیلات کے لیے [OpenClaw انٹیگریشن گائیڈ](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) دیکھیں۔

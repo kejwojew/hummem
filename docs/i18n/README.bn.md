@@ -138,7 +138,7 @@ Claude Code পুনরায় চালু করুন। পূর্ব�
 একটি মাত্র কমান্ড দিয়ে [OpenClaw](https://openclaw.ai) গেটওয়েতে claude-mem-কে স্থায়ী মেমরি প্লাগইন হিসেবে ইনস্টল করুন:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 ইনস্টলার নির্ভরতা, প্লাগইন সেটআপ, AI প্রোভাইডার কনফিগারেশন, ওয়ার্কার চালু করা এবং Telegram, Discord, Slack ও আরও অনেক জায়গায় ঐচ্ছিক রিয়েল-টাইম পর্যবেক্ষণ ফিড পরিচালনা করে। বিস্তারিত জানতে [OpenClaw ইন্টিগ্রেশন গাইড](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) দেখুন।

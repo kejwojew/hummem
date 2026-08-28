@@ -138,7 +138,7 @@ Restart Claude Code. Konteks dari sesi sebelumnya akan secara otomatis muncul di
 Instal claude-mem sebagai plugin memori persisten pada gateway [OpenClaw](https://openclaw.ai) dengan satu perintah:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 Installer ini menangani dependensi, pengaturan plugin, konfigurasi penyedia AI, startup worker, dan feed observasi real-time opsional ke Telegram, Discord, Slack, dan lainnya. Lihat [Panduan Integrasi OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) untuk detail.

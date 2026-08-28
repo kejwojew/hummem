@@ -19,7 +19,7 @@ describe("cross-repository Miniflare hook", () => {
 	it("refuses non-loopback targets and short shared secrets", () => {
 		expect(() => createSyncHubMiniflareE2EOptions({
 			workerRoot: ".",
-			internalProjectorUrl: "https://cmem.ai/api/internal/sync/project",
+			internalProjectorUrl: "https://sync.example.com/api/internal/sync/project",
 			tokenVerifyUrl: "http://127.0.0.1:3005/api/pro/sync/verify",
 			internalProjectorSecret: "local-e2e-projector-secret-32-chars",
 		})).toThrow(/loopback/);

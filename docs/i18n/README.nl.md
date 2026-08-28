@@ -138,7 +138,7 @@ Herstart Claude Code. Context van eerdere sessies verschijnt automatisch in nieu
 Installeer claude-mem als een persistente geheugenplugin op [OpenClaw](https://openclaw.ai) gateways met één enkel commando:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 Het installatieprogramma regelt afhankelijkheden, plugin-instellingen, AI-providerconfiguratie, worker-opstart en optionele real-time waarnemingsfeeds naar Telegram, Discord, Slack en meer. Zie de [OpenClaw Integratiegids](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) voor details.

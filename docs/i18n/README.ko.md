@@ -138,7 +138,7 @@ Claude Code를 재시작하세요. 이전 세션의 컨텍스트가 자동으로
 한 줄 명령으로 [OpenClaw](https://openclaw.ai) 게이트웨이에 claude-mem을 지속적인 메모리 플러그인으로 설치하세요:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 설치 프로그램은 종속성, 플러그인 설정, AI 제공업체 구성, 워커 시작, 그리고 Telegram, Discord, Slack 등으로의 선택적 실시간 관찰 피드를 처리합니다. 자세한 내용은 [OpenClaw 통합 가이드](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx)를 참조하세요.

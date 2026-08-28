@@ -138,7 +138,7 @@ Khởi động lại Claude Code. Ngữ cảnh từ các phiên trước sẽ t�
 Cài đặt claude-mem như một plugin bộ nhớ liên tục trên các gateway [OpenClaw](https://openclaw.ai) chỉ với một lệnh duy nhất:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 Trình cài đặt xử lý các phần phụ thuộc, thiết lập plugin, cấu hình nhà cung cấp AI, khởi động worker, và tùy chọn gửi luồng quan sát thời gian thực đến Telegram, Discord, Slack, và nhiều hơn nữa. Xem [Hướng Dẫn Tích Hợp OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) để biết chi tiết.

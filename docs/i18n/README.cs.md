@@ -138,7 +138,7 @@ Restartujte Claude Code. Kontext z předchozích sezení se automaticky objeví 
 Nainstalujte claude-mem jako plugin trvalé paměti na gateway [OpenClaw](https://openclaw.ai) jediným příkazem:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 Instalátor se stará o závislosti, nastavení pluginu, konfiguraci AI poskytovatele, spuštění workeru a volitelné feedy pozorování v reálném čase do Telegramu, Discordu, Slacku a dalších. Podrobnosti najdete v [Průvodci integrací OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx).

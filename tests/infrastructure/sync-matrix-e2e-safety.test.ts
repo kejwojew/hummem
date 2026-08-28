@@ -13,7 +13,7 @@ describe('sync matrix E2E safety contract', () => {
     expect(script).toContain("hostname: '127.0.0.1'");
     expect(script).toContain('refused non-loopback URL');
     expect(script).not.toContain('wrangler');
-    expect(script).not.toContain('cmem.ai');
+    expect(script).not.toContain('the sync server');
     expect(script).not.toContain('https://');
   });
 

@@ -135,7 +135,7 @@ Restart Claude Code. Context from previous sessions will automatically appear in
 Install hummem as a persistent memory plugin on [OpenClaw](https://openclaw.ai) gateways with a single command:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 The installer handles dependencies, plugin setup, AI provider configuration, worker startup, and optional real-time observation feeds to Telegram, Discord, Slack, and more. See the [OpenClaw Integration Guide](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) for details.
@@ -163,7 +163,7 @@ The installer handles dependencies, plugin setup, AI provider configuration, wor
 - **[Installation Guide](https://github.com/kejwojew/hummem/blob/main/docs/public/installation.mdx)** - Quick start & advanced installation
 - **[Usage Guide](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/getting-started.mdx)** - How Claude-Mem works automatically
 - **[Search Tools](https://github.com/kejwojew/hummem/blob/main/docs/public/usage/search-tools.mdx)** - Query your project history with natural language
-- **[Cloud Sync](https://github.com/kejwojew/hummem/blob/main/docs/public/cloud-sync.mdx)** - Back up your memories to cmem.ai — no daemon, the worker syncs on write
+- **[Cloud Sync](https://github.com/kejwojew/hummem/blob/main/docs/public/cloud-sync.mdx)** - Back up your memories to a sync server — no daemon, the worker syncs on write
 
 ### Best Practices
 

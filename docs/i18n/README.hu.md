@@ -138,7 +138,7 @@ Indítsa újra a Claude Code-ot. A korábbi munkamenetek kontextusa automatikusa
 Telepítse a claude-mem-et tartós memória pluginként az [OpenClaw](https://openclaw.ai) gateway-eken egyetlen paranccsal:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 A telepítő kezeli a függőségeket, a plugin beállítását, az AI szolgáltató konfigurációját, a worker indítását, valamint az opcionális valós idejű megfigyelési feedeket Telegramra, Discordra, Slackre és másokra. Részletekért lásd az [OpenClaw integrációs útmutatót](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx).
