@@ -5,8 +5,25 @@ const { existsSync, readFileSync } = require('fs');
 const path = require('path');
 const os = require('os');
 
-const INSTALLED_PATH = path.join(os.homedir(), '.claude', 'plugins', 'marketplaces', 'thedotmack');
-const CACHE_BASE_PATH = path.join(os.homedir(), '.claude', 'plugins', 'cache', 'thedotmack', 'hummem');
+// Marketplace directory name. The host names it after marketplace.json's
+// `name` field, so a fresh install lands in `hummem`. An install made before
+// the rename still lives under the old name, and the absolute paths baked into
+// its IDE hook commands point there — so prefer the canonical directory but
+// keep syncing to a legacy one when that is what exists. Mirrors the
+// resolution in src/npx-cli/utils/paths.ts.
+const MARKETPLACE_ID = 'hummem';
+const LEGACY_MARKETPLACE_ID = 'thedotmack';
+
+function resolveMarketplaceId() {
+  const root = path.join(os.homedir(), '.claude', 'plugins', 'marketplaces');
+  if (existsSync(path.join(root, MARKETPLACE_ID))) return MARKETPLACE_ID;
+  if (existsSync(path.join(root, LEGACY_MARKETPLACE_ID))) return LEGACY_MARKETPLACE_ID;
+  return MARKETPLACE_ID;
+}
+
+const MARKETPLACE_DIR_NAME = resolveMarketplaceId();
+const INSTALLED_PATH = path.join(os.homedir(), '.claude', 'plugins', 'marketplaces', MARKETPLACE_DIR_NAME);
+const CACHE_BASE_PATH = path.join(os.homedir(), '.claude', 'plugins', 'cache', MARKETPLACE_DIR_NAME, 'hummem');
 
 function getCurrentBranch() {
   try {
@@ -75,13 +92,13 @@ try {
   const gitignoreExcludes = getGitignoreExcludes(rootDir);
 
   execSync(
-    `rsync -av --delete --exclude=.git --exclude=bun.lock --exclude=package-lock.json --exclude=scripts/package.json --exclude=scripts/node_modules --exclude=/workers ${gitignoreExcludes} ./ ~/.claude/plugins/marketplaces/thedotmack/`,
+    `rsync -av --delete --exclude=.git --exclude=bun.lock --exclude=package-lock.json --exclude=scripts/package.json --exclude=scripts/node_modules --exclude=/workers ${gitignoreExcludes} ./ ${INSTALLED_PATH}/`,
     { stdio: 'inherit' }
   );
 
   console.log('Running bun install in marketplace...');
   execSync(
-    'cd ~/.claude/plugins/marketplaces/thedotmack/ && bun install',
+    `cd ${INSTALLED_PATH} && bun install`,
     { stdio: 'inherit' }
   );
 

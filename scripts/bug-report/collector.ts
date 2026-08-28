@@ -1,4 +1,5 @@
 import * as fs from "fs/promises";
+import { existsSync } from "fs";
 import * as path from "path";
 import { exec } from "child_process";
 import { promisify } from "util";
@@ -213,7 +214,11 @@ export async function collectDiagnostics(
     ".claude",
     "plugins",
     "marketplaces",
-    "thedotmack"
+    // Prefer the canonical marketplace directory; fall back to the pre-rename
+    // one so diagnostics still find an install made before the rename.
+    existsSync(path.join(homeDir, ".claude", "plugins", "marketplaces", "hummem"))
+      ? "hummem"
+      : "thedotmack"
   );
   const cwd = process.cwd();
   const isDevMode = cwd.includes("claude-mem") && !cwd.includes(".claude");
