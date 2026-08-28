@@ -3,7 +3,7 @@
   "name": "hummem (Persistent Memory)",
   "description": "OpenClaw plugin for hummem. Records observations from embedded runner sessions and streams them to messaging channels.",
   "kind": "memory",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "Apache-2.0",
   "author": "hummem contributors",
   "homepage": "https://github.com/kejwojew/hummem",
