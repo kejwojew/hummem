@@ -1,6 +1,6 @@
 {
   "name": "hummem",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Persistent memory for AI coding assistants - durable context across sessions",
   "author": {
     "name": "hummem contributors",
