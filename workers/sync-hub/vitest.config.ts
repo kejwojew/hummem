@@ -9,7 +9,7 @@
  * (a plain handler function, verified in miniflare's typings) intercepts ALL
  * outbound fetches from the Worker under test. The only outbound fetch the
  * front Worker makes is token verification, so the handler below emulates the
- * cmem.ai verify endpoint deterministically, keyed by the presented token:
+ * the sync server verify endpoint deterministically, keyed by the presented token:
  *
  *   valid-for:<id>   → 200 {userId: <id>}
  *   snake-for:<id>   → 200 {user_id: <id>}

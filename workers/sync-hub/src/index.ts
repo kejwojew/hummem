@@ -8,7 +8,7 @@
  *     `X-User-Id`, `X-Device-Id`.
  *   - Token verification. This happens HERE, never in the DO (anti-pattern
  *     #3: no outbound I/O of any kind from the DO). Verdicts are checked
- *     against the cmem.ai verify endpoint (TOKEN_VERIFY_URL) and positive
+ *     against the the sync server verify endpoint (TOKEN_VERIFY_URL) and positive
  *     verdicts are cached in Workers KV (AUTH_CACHE) with a short TTL.
  *   - Route to `env.SYNC_HUB.getByName(userId)` and call RPC methods on the
  *     stub — non-WS data never flows through stub.fetch().
@@ -962,7 +962,7 @@ export default {
 	 *
 	 *   every-5-minutes (CONTROL_PLANE_PROBE_CRON) — control-plane uptime
 	 *     probe (launch Phase 5 task 4, src/control-plane-probe.ts): is
-	 *     cmem.ai's DB-backed verify endpoint still rejecting a bogus token
+	 *     the sync server's DB-backed verify endpoint still rejecting a bogus token
 	 *     with 401/403 + JSON? Pages Discord with anti-flap KV state when it
 	 *     is not.
 	 *   "7 * * * *" (and any unrecognized cron) — hourly watchdog (plan

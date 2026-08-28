@@ -138,7 +138,7 @@ Uruchom ponownie Claude Code. Kontekst z poprzednich sesji automatycznie pojawi 
 Zainstaluj claude-mem jako wtyczkę trwałej pamięci na bramkach [OpenClaw](https://openclaw.ai) za pomocą jednego polecenia:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 Instalator obsługuje zależności, konfigurację wtyczki, konfigurację dostawcy AI, uruchomienie workera oraz opcjonalne strumienie obserwacji w czasie rzeczywistym do Telegram, Discord, Slack i innych. Zobacz [Przewodnik Integracji OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx), aby poznać szczegóły.

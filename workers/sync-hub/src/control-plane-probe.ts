@@ -1,5 +1,5 @@
 /**
- * Control-plane uptime probe — external check that cmem.ai's DB-backed
+ * Control-plane uptime probe — external check that the sync server's DB-backed
  * control plane is alive (launch plan Phase 5 task 4).
  *
  * WHY (the Jul 20–22 lesson): Supabase paused the project silently and
@@ -285,7 +285,7 @@ function buildDownEmbed(
 	];
 	if (observation.kind === "security_2xx") {
 		return {
-			title: "🟥 SECURITY: cmem.ai verify endpoint ACCEPTED a bogus token",
+			title: "🟥 SECURITY: the sync server verify endpoint ACCEPTED a bogus token",
 			description:
 				`GET ${url} answered 2xx to a deliberately invalid bearer token ` +
 				`(${observation.reason}). That is an authentication bypass, not an ` +
@@ -299,8 +299,8 @@ function buildDownEmbed(
 	}
 	return {
 		title: realert
-			? "🚨 cmem.ai control plane STILL DOWN (uptime probe)"
-			: "🚨 cmem.ai control plane DOWN (uptime probe)",
+			? "🚨 the sync server control plane STILL DOWN (uptime probe)"
+			: "🚨 the sync server control plane DOWN (uptime probe)",
 		description:
 			`GET ${url} no longer answers 401/403 + JSON for a bogus token — the Pro ` +
 			"app and/or its Postgres lookup is not responding (the exact failure " +
@@ -315,7 +315,7 @@ function buildDownEmbed(
 
 function buildRecoveredEmbed(url: string, firstFailureAt: string, nowIso: string): DiscordEmbed {
 	return {
-		title: "✅ cmem.ai control plane recovered (uptime probe)",
+		title: "✅ the sync server control plane recovered (uptime probe)",
 		description:
 			`GET ${url} answers 401/403 + JSON again — the Pro app and its Postgres ` +
 			"lookup are back. Failure state cleared.",

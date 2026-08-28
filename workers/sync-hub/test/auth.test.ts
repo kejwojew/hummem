@@ -16,7 +16,7 @@ import {
 	type AuthDependencies,
 } from "../src/index";
 
-const base = "https://sync.cmem.ai";
+const base = "https://sync.example.com";
 
 function headers(token: string, userId: string): Record<string, string> {
 	return {
@@ -122,7 +122,7 @@ describe("token-verdict cache behavior", () => {
 		headers: headers(token, userId),
 	});
 	const authEnv = {
-		TOKEN_VERIFY_URL: "https://cmem.ai/api/pro/sync/verify",
+		TOKEN_VERIFY_URL: "https://sync.example.com/api/pro/sync/verify",
 		AUTH_CACHE_TTL_SECONDS: "300",
 		// Deliberately supplied as a legacy unknown binding. Production auth must
 		// ignore it even in direct tests.

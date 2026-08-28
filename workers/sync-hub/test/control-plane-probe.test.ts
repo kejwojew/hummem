@@ -492,7 +492,7 @@ describe("cron dispatch: two schedules, one scheduled handler", () => {
 			controller(CONTROL_PLANE_PROBE_CRON),
 			probeEnv({
 				// TOKEN_VERIFY_URL: any URL — the outboundService intercepts it.
-				TOKEN_VERIFY_URL: "https://cmem.ai/api/pro/sync/verify",
+				TOKEN_VERIFY_URL: "https://sync.example.com/api/pro/sync/verify",
 				// Were the watchdog to run instead, THIS account would trip the
 				// kill switch — its absence below proves the dispatch.
 				ACCOUNT_ID: "acct-duration-severe",
