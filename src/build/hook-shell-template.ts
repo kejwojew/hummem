@@ -18,7 +18,7 @@
  *   1. ${CLAUDE_PLUGIN_ROOT:-${PLUGIN_ROOT:-}}   (host-injected env)
  *   2. (mcp only) $PWD/plugin, $PWD               (repo/dev checkout)
  *   3. cache directories (highest version first, .orphaned_at dirs skipped)
- *   4. $_C/plugins/marketplaces/thedotmack/plugin (marketplace install)
+ *   4. $_C/plugins/marketplaces/{hummem,thedotmack}/plugin (marketplace install)
  */
 
 export type ShellTemplateHost = 'claude-code' | 'claude-code-setup' | 'codex-cli' | 'mcp';
@@ -119,7 +119,14 @@ function candidateBlock(options: ShellTemplateOptions): string {
   }
 
   const extraCacheRoots = isMcp && options.mcpExtraCacheRoots ? options.mcpExtraCacheRoots : [];
-  const allGlobs = [...extraCacheRoots, '$_C/plugins/cache/thedotmack/hummem']
+  // Canonical marketplace directory first, then the pre-rename one: an
+  // install made before the rename still lives under the old name, and the
+  // baked hook command must keep finding it.
+  const allGlobs = [
+    ...extraCacheRoots,
+    '$_C/plugins/cache/hummem/hummem',
+    '$_C/plugins/cache/thedotmack/hummem',
+  ]
     .map((root) => `"${root}"/[0-9]*/`)
     .join(' ');
   // Cache dirs ranked by VERSION descending (zero-padded major.minor.patch
@@ -143,6 +150,7 @@ function candidateBlock(options: ShellTemplateOptions): string {
     `printf '%08d%08d%08d%d %s\\n' "\${_M1:-0}" "\${_M2:-0}" "\${_M3:-0}" "$_G" "$_V"; ` +
     `done 2>/dev/null | sort -r | sed 's/^[^ ]* //';`
   );
+  lines.push(`printf '%s\\n' "$_C/plugins/marketplaces/hummem/plugin";`);
   lines.push(`printf '%s\\n' "$_C/plugins/marketplaces/thedotmack/plugin";`);
 
   // The MCP loop trims a trailing slash inline; the hook loop trims via _R="${_R%/}".
@@ -200,9 +208,15 @@ function buildMcpNodeLauncher(options: ShellTemplateOptions): string {
   const candidates = (options.mcpExtraCandidates ?? []).map(shTokenToNode);
   const cacheRoots = [
     ...(options.mcpExtraCacheRoots ?? []),
+    '$_C/plugins/cache/hummem/hummem',
     '$_C/plugins/cache/thedotmack/hummem',
   ].map(shTokenToNode);
-  const marketplace = shTokenToNode('$_C/plugins/marketplaces/thedotmack/plugin');
+  // Both marketplace directories: an install predating the rename lives under
+  // the legacy name, and dropping it here would strand that install.
+  const marketplaces = [
+    '$_C/plugins/marketplaces/hummem/plugin',
+    '$_C/plugins/marketplaces/thedotmack/plugin',
+  ].map(shTokenToNode);
   const require = JSON.stringify(options.requireFile);
   const notFound = JSON.stringify(`${options.notFoundMessage}\n`);
 
@@ -210,7 +224,7 @@ function buildMcpNodeLauncher(options: ShellTemplateOptions): string {
     'E',
     ...candidates,
     ...cacheRoots.map((root) => `...L(${root})`),
-    marketplace,
+    ...marketplaces,
   ].join(',');
 
   return (
@@ -263,14 +277,17 @@ export function buildCodexWindowsCommand(
     "const C=process.env.CLAUDE_CONFIG_DIR||p.join(h,'.claude');",
     "const roots=[];",
     "for(const v of [process.env.CLAUDE_PLUGIN_ROOT,process.env.PLUGIN_ROOT])if(v)roots.push(v);",
-    "const cache=p.join(C,'plugins','cache','thedotmack','hummem');",
+    // Canonical marketplace directory first, legacy second, so an install made
+    // before the rename keeps resolving.
+    "const caches=[p.join(C,'plugins','cache','hummem','hummem'),p.join(C,'plugins','cache','thedotmack','hummem')];",
     // S/W mirror compareVersionsDescending in src/shared/worker-utils.ts and
     // the filter skips .orphaned_at-stamped cache dirs, same as
     // cacheWorkerScriptCandidates — every resolver ranking candidates
     // identically (by version, never mtime) is the restart-storm invariant.
     "const S=n=>{const q=n.split('-')[0].split('.');return[parseInt(q[0],10)||0,parseInt(q[1],10)||0,parseInt(q[2],10)||0]};",
     "const W=(a,b)=>{const x=S(a),y=S(b);return(y[0]-x[0])||(y[1]-x[1])||(y[2]-x[2])||((a.indexOf('-')<0?0:1)-(b.indexOf('-')<0?0:1))||(a<b?1:a>b?-1:0)};",
-    "try{roots.push(...fs.readdirSync(cache).filter(n=>{const ch=n.charAt(0);return ch>='0'&&ch<='9'}).map(n=>p.join(cache,n)).filter(r=>{try{return fs.statSync(r).isDirectory()&&!fs.existsSync(p.join(r,'.orphaned_at'))}catch{return false}}).sort((a,b)=>W(p.basename(a),p.basename(b))))}catch{}",
+    "for(const cache of caches)try{roots.push(...fs.readdirSync(cache).filter(n=>{const ch=n.charAt(0);return ch>='0'&&ch<='9'}).map(n=>p.join(cache,n)).filter(r=>{try{return fs.statSync(r).isDirectory()&&!fs.existsSync(p.join(r,'.orphaned_at'))}catch{return false}}).sort((a,b)=>W(p.basename(a),p.basename(b))))}catch{}",
+    "roots.push(p.join(C,'plugins','marketplaces','hummem','plugin'));",
     "roots.push(p.join(C,'plugins','marketplaces','thedotmack','plugin'));",
     "let R=null;",
     "for(const k of roots){const r=fs.existsSync(p.join(k,'plugin','scripts'))?p.join(k,'plugin'):k;if(fs.existsSync(p.join(r,'scripts','bun-runner.js'))&&fs.existsSync(p.join(r,'scripts','worker-service.cjs'))){R=r;break}}",
