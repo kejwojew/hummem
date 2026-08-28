@@ -1,6 +1,6 @@
 {
   "name": "hummem-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Runtime dependencies for hummem bundled hooks",
   "type": "module",
