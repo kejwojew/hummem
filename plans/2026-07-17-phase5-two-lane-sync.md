@@ -96,7 +96,7 @@ Three subagents completed 2026-07-17 (live Cloudflare docs via raw `<url>index.m
    CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, v TEXT);  -- epoch, counters
    ```
 4. RPC methods (not fetch — Phase 0.1 routing row): `pushOps(deviceId, ops[]) → {acked:[{origin_id, rev, seq}], head_seq}` (idempotent via the unique index — duplicate push returns the existing seq; INSERTs chunked ≤100 bound params; per-row body ≤2 MB enforced with the client-side clamp as backstop) and `getChanges(sinceSeq, limit≤500) → {epoch, ops[], head_seq, more}` (cursor `.toArray()` consumed synchronously — Phase 0.1 SQL row).
-5. Stateless Worker in front: parses `Authorization: Bearer` + `X-User-Id` + `X-Device-Id` (same headers as today — CloudSync.ts:448-466), verifies the token, routes `env.SYNC_HUB.getByName(userId)`. **Token verification lives here, never in the DO** (anti-pattern #3): call cmem.ai's verify endpoint and cache the verdict in Workers KV with a short TTL. Routes: `POST /v1/sync/ops`, `GET /v1/sync/changes`, `GET /v1/sync/status`.
+5. Stateless Worker in front: parses `Authorization: Bearer` + `X-User-Id` + `X-Device-Id` (same headers as today — CloudSync.ts:448-466), verifies the token, routes `env.SYNC_HUB.getByName(userId)`. **Token verification lives here, never in the DO** (anti-pattern #3): call the control plane's verify endpoint and cache the verdict in Workers KV with a short TTL. Routes: `POST /v1/sync/ops`, `GET /v1/sync/changes`, `GET /v1/sync/status`.
 6. Mutation ops (Phase 3 writes them; hub must accept them now): `kind='mutation'`, body `{op: 'set_title'|'set_prompt_session'|'remap_project', target|where, fields}`. Predicate sanity cap: refuse `remap_project` ops from a device if the hub can't parse them — validation only; application happens client-side.
 7. Compaction alarm (daily): delete ops superseded by a higher rev of the same entity below `MIN(devices.last_ack_seq)`. Copy the alarm scheduler shape from api/alarms/ "Example"; **`getAlarm()`-check first** (anti-pattern #4); handler idempotent and self-rescheduling.
 
@@ -175,6 +175,6 @@ Three subagents completed 2026-07-17 (live Cloudflare docs via raw `<url>index.m
 
 ## Open decisions for the maintainer
 
-1. **Dead-device history import** (Phase 3.5): accept loss vs. one-time cmem.ai-side import script. Recommendation: import.
+1. **Dead-device history import** (Phase 3.5): accept loss vs. one-time server-side import script. Recommendation: import.
 2. **Old lane during rollout**: hard cutover via `CLAUDE_MEM_CLOUD_SYNC_HUB_URL` (recommended — the re-push migration rebuilds the log) vs. temporary dual-push. Dual-push doubles write cost for no correctness gain.
 3. **Wrangler config flow**: `migrations` (matches all current example pages) vs. `exports` (the declared successor). Recommendation: `exports` on the fresh scaffold; it's the forward path and this project has no legacy namespaces.

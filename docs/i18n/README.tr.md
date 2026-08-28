@@ -138,7 +138,7 @@ Claude Code'u yeniden başlatın. Önceki oturumlardaki bağlam otomatik olarak 
 Claude-mem'i tek bir komutla [OpenClaw](https://openclaw.ai) gateway'lerine kalıcı bellek eklentisi olarak kurun:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 Kurulum programı bağımlılıkları, plugin kurulumunu, AI sağlayıcı yapılandırmasını, worker başlatmayı ve Telegram, Discord, Slack ve daha fazlasına isteğe bağlı gerçek zamanlı gözlem akışlarını yönetir. Detaylar için [OpenClaw Entegrasyon Kılavuzu](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) bölümüne bakın.

@@ -138,7 +138,7 @@ npx hummem install --ide antigravity
 Εγκαταστήστε το claude-mem ως plugin μόνιμης μνήμης σε gateways [OpenClaw](https://openclaw.ai) με μία μόνο εντολή:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 Ο εγκαταστάτης διαχειρίζεται τις εξαρτήσεις, τη ρύθμιση του plugin, τη διαμόρφωση του πάροχου AI, την εκκίνηση του worker, καθώς και προαιρετικές ροές παρατηρήσεων σε πραγματικό χρόνο προς Telegram, Discord, Slack, και άλλα. Δείτε τον [Οδηγό Ενσωμάτωσης OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx) για λεπτομέρειες.

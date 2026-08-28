@@ -2,7 +2,7 @@
 
 ## Overview
 
-Build a beautiful, animated CLI installer for claude-mem using `@clack/prompts` (v1.0.1). Distributable via `npx claude-mem-installer` and `curl -fsSL https://install.cmem.ai | bash`. Replaces the need for users to manually clone, build, configure settings, and start the worker.
+Build a beautiful, animated CLI installer for claude-mem using `@clack/prompts` (v1.0.1). Distributable via `npx claude-mem-installer` and `curl -fsSL https://install.<domain> | bash`. Replaces the need for users to manually clone, build, configure settings, and start the worker.
 
 **Worktree**: `feat/animated-installer` at `.claude/worktrees/animated-installer`
 
@@ -332,7 +332,7 @@ Build a beautiful, animated CLI installer for claude-mem using `@clack/prompts` 
 
 ## Phase 8: curl|bash Bootstrap Script
 
-**Goal**: Create the shell bootstrap script for `curl -fsSL https://install.cmem.ai | bash`.
+**Goal**: Create the shell bootstrap script for `curl -fsSL https://install.<domain> | bash`.
 
 ### Tasks
 
@@ -347,7 +347,7 @@ Build a beautiful, animated CLI installer for claude-mem using `@clack/prompts` 
 2. **Update `install/vercel.json`** to serve `install.sh` alongside `openclaw.sh`
 
 ### Verification
-- [ ] `curl -fsSL https://install.cmem.ai | bash` downloads and runs installer
+- [ ] `curl -fsSL https://install.<domain> | bash` downloads and runs installer
 - [ ] Interactive prompts work after curl download
 - [ ] Temp file cleaned up on success and failure
 - [ ] Flags pass through correctly

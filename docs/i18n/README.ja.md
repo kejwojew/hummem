@@ -138,7 +138,7 @@ Claude Codeを再起動します。以前のセッションからのコンテキ
 [OpenClaw](https://openclaw.ai)ゲートウェイに、単一のコマンドで永続メモリプラグインとしてclaude-memをインストールできます:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 インストーラーは、依存関係、プラグインセットアップ、AIプロバイダー設定、ワーカー起動、そしてTelegram、Discord、Slackなどへのオプションのリアルタイム観察フィードを処理します。詳細は[OpenClaw統合ガイド](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx)を参照してください。

@@ -138,7 +138,7 @@ npx hummem install --ide antigravity
 Установите claude-mem как плагин постоянной памяти на шлюзах [OpenClaw](https://openclaw.ai) одной командой:
 
 ```bash
-curl -fsSL https://install.cmem.ai/openclaw.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kejwojew/hummem/main/openclaw/install.sh | bash
 ```
 
 Установщик берёт на себя зависимости, настройку плагина, конфигурацию AI-провайдера, запуск worker и опциональные потоки наблюдений в реальном времени в Telegram, Discord, Slack и другие сервисы. Подробности см. в [Руководстве по интеграции OpenClaw](https://github.com/kejwojew/hummem/blob/main/docs/public/openclaw-integration.mdx).
