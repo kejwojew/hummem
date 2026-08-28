@@ -385,13 +385,27 @@ async function waitForWorkerReadiness(timeoutMs: number = HOOK_READINESS_TIMEOUT
  * null when the worker is unreachable or the payload is malformed.
  */
 async function fetchWorkerHealthVersion(): Promise<string | null> {
+  return (await fetchWorkerHealth())?.version ?? null;
+}
+
+/**
+ * Read what the worker self-reports on GET /api/health.
+ *
+ * The pid matters as much as the version: when the PID file does not identify
+ * the process holding the port, this is the only way to tell the user which
+ * process to kill. Returns null when unreachable or malformed.
+ */
+async function fetchWorkerHealth(): Promise<{ version: string | null; pid: number | null } | null> {
   try {
     const response = await workerHttpRequest('/api/health', { timeoutMs: HEALTH_CHECK_TIMEOUT_MS });
-    const body = await response.json() as { version?: unknown };
-    return typeof body.version === 'string' ? body.version : null;
+    const body = await response.json() as { version?: unknown; pid?: unknown };
+    return {
+      version: typeof body.version === 'string' ? body.version : null,
+      pid: typeof body.pid === 'number' && Number.isInteger(body.pid) ? body.pid : null,
+    };
   } catch (error: unknown) {
     const err = error instanceof Error ? error : new Error(String(error));
-    logger.debug('SYSTEM', 'Worker health-version fetch failed', {}, err);
+    logger.debug('SYSTEM', 'Worker health fetch failed', {}, err);
     return null;
   }
 }
@@ -503,11 +517,25 @@ export async function ensureWorkerRunning(): Promise<boolean> {
     // resolver, is then the only spawner.
     const stalePidInfo = readOwnedWorkerPidInfo();
     if (stalePidInfo === null || stalePidInfo.port !== getWorkerPort()) {
-      logger.error('SYSTEM', 'Stale worker is serving the port but the PID file does not identify it; kill the hummem worker process manually', {
-        port: getWorkerPort(),
-        pidFilePid: stalePidInfo?.pid ?? null,
-        pidFilePort: stalePidInfo?.port ?? null,
-      });
+      // Cannot kill it: the PID file does not describe the process on the
+      // port. That happens when a worker outlives the install that spawned it
+      // — after an upgrade that relocated the plugin, for instance. The user
+      // has to do it, so name the process instead of making them hunt for it:
+      // the stale worker reports its own pid on /api/health.
+      const stalePid = (await fetchWorkerHealth())?.pid ?? null;
+      const port = getWorkerPort();
+      logger.error(
+        'SYSTEM',
+        stalePid !== null
+          ? `A worker from an older install is holding port ${port} and its PID file does not identify it. Run: kill ${stalePid}`
+          : `A worker from an older install is holding port ${port} and could not be identified. Find it with: lsof -nP -iTCP:${port} -sTCP:LISTEN`,
+        {
+          port,
+          stalePid,
+          pidFilePid: stalePidInfo?.pid ?? null,
+          pidFilePort: stalePidInfo?.port ?? null,
+        }
+      );
       return false;
     }
     try {
