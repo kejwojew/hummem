@@ -183,6 +183,16 @@ export const ALLOWED_PROPERTY_KEYS: Set<string> = new Set([
   'annotation_outcomes_error',
   'annotation_outcomes_unparseable',
   'annotation_outcomes_provider_off',
+  // working_nudge_rollup (buffer.ts) — does the working-memory reminder change
+  // behavior? nudges_shown vs prompts_with_intent over a window is the whole
+  // signal; avg_intent_slots is a small mean, and the nudge_reasons_* family is
+  // a flattened closed enum (no_intent | all_stale). Counters and booleans
+  // only — a slot key, slot value, or project name must never reach this path.
+  'nudges_shown',
+  'prompts_with_intent',
+  'avg_intent_slots',
+  'nudge_reasons_no_intent',
+  'nudge_reasons_all_stale',
 ]);
 
 const MAX_STRING_LENGTH = 200;

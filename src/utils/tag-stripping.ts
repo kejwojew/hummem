@@ -1,7 +1,7 @@
 
 import { logger } from './logger.js';
 
-const TAG_NAMES = [
+export const TAG_NAMES = [
   'private',
   'claude-mem-context',
   'system_instruction',
@@ -10,6 +10,18 @@ const TAG_NAMES = [
   'system-reminder',
 ] as const;
 type TagName = (typeof TAG_NAMES)[number];
+
+/**
+ * Wrapper for injected text that must ACT on the model rather than inform it
+ * (the working-memory nudge). Derived from TAG_NAMES instead of written as a
+ * literal: everything injected must be strippable, or injected memory comes
+ * back as a fresh observation on the next distillation pass. The Extract<>
+ * annotation makes that dependency structural — drop 'system-reminder' from
+ * TAG_NAMES and this fails to typecheck instead of silently self-ingesting.
+ */
+const SYSTEM_REMINDER_TAG: Extract<TagName, 'system-reminder'> = 'system-reminder';
+export const SYSTEM_REMINDER_OPEN = `<${SYSTEM_REMINDER_TAG}>`;
+export const SYSTEM_REMINDER_CLOSE = `</${SYSTEM_REMINDER_TAG}>`;
 
 const STRIP_REGEX = new RegExp(
   `<(${TAG_NAMES.join('|')})\\b[^>]*>[\\s\\S]*?</\\1>`,

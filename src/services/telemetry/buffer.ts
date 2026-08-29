@@ -21,6 +21,7 @@
  *   telemetryBuffer.start();                          // worker startup
  *   telemetryBuffer.record('session_compressed', id, props);  // per-session
  *   telemetryBuffer.record('context_injected', null, props);  // time-window
+ *   telemetryBuffer.record('working_nudge', null, props);     // time-window
  *   telemetryBuffer.flushSession(id, 'session_end');  // at session teardown
  *   telemetryBuffer.drainAllSessions('worker_shutdown'); // before client.shutdown()
  *   telemetryBuffer.flush();                          // time-window buckets only
@@ -80,6 +81,36 @@ interface ContextInjectedRecord {
   [key: string]: unknown;
 }
 
+/**
+ * One per-prompt working-memory injection decision. Hook-level (no sessionDbId
+ * in scope), so it is a TIME-WINDOW rollup — same class as context_injected,
+ * NOT the per-session class.
+ *
+ * This channel exists because the nudge has been reworked three times
+ * (91db47839 trigger, c911ecfbe salience, and the 2026-08-29 channel split)
+ * with zero instrumentation: each round was judged by hand-reading sqlite
+ * rows, which is how the salience counter got reverted as an unnoticed side
+ * effect of an unrelated rendering change. Comparing nudged vs had_intent
+ * across a window is the only thing that answers whether the reminder
+ * actually changes behavior.
+ *
+ * Booleans, small integers, and one closed enum only — never a slot key, slot
+ * value, or project name.
+ */
+interface WorkingNudgeRecord {
+  /** A nudge was injected on this prompt. */
+  nudged?: boolean;
+  /** Closed enum: 'no_intent' | 'all_stale' | 'none'. */
+  nudge_reason?: string;
+  /** At least one live intent slot existed at injection time. */
+  had_intent?: boolean;
+  /** Live intent slot count. */
+  intent_count?: number;
+  /** Live journal row count — the number the nudge shows the agent. */
+  journal_count?: number;
+  [key: string]: unknown;
+}
+
 interface SessionCompressedBucket {
   records: SessionCompressedRecord[];
   windowStartTs: number;
@@ -94,6 +125,11 @@ interface SessionCompressedBucket {
 
 interface ContextInjectedBucket {
   records: ContextInjectedRecord[];
+  windowStartTs: number;
+}
+
+interface WorkingNudgeBucket {
+  records: WorkingNudgeRecord[];
   windowStartTs: number;
 }
 
@@ -112,6 +148,9 @@ const sessionCompressedBuckets: Map<number, SessionCompressedBucket> = new Map()
 // Time-window bucket for context_injected (hook-level, no sessionDbId). See
 // the file header for why this path stays a wall-clock rollup.
 let contextInjectedBucket: ContextInjectedBucket | null = null;
+// Time-window bucket for working_nudge — hook-level like context_injected,
+// drained by the same 5-minute flush().
+let workingNudgeBucket: WorkingNudgeBucket | null = null;
 let intervalHandle: ReturnType<typeof setInterval> | null = null;
 let safetyHandle: ReturnType<typeof setInterval> | null = null;
 
@@ -332,6 +371,51 @@ function computeContextInjectedRollup(
   };
 }
 
+/**
+ * Fold one window of working-memory injection decisions into a single rollup.
+ *
+ * The load-bearing ratio is nudges_shown vs prompts_with_intent over
+ * consecutive windows: a nudge that works should drive prompts_with_intent up
+ * and nudges_shown down. A window where nudges_shown stays pinned at `count`
+ * is the "reminder is invisible" signature that went undetected for months.
+ */
+function computeWorkingNudgeRollup(
+  bucket: WorkingNudgeBucket
+): Record<string, unknown> {
+  const { records, windowStartTs } = bucket;
+  const count = records.length;
+
+  let nudgesShown = 0;
+  let promptsWithIntent = 0;
+  let totalIntentSlots = 0;
+  let intentSlotSamples = 0;
+  let reasonNoIntent = 0;
+  let reasonAllStale = 0;
+
+  for (const r of records) {
+    if (r.nudged === true) nudgesShown++;
+    if (r.had_intent === true) promptsWithIntent++;
+    if (typeof r.intent_count === 'number' && Number.isFinite(r.intent_count)) {
+      totalIntentSlots += r.intent_count;
+      intentSlotSamples++;
+    }
+    if (r.nudge_reason === 'no_intent') reasonNoIntent++;
+    else if (r.nudge_reason === 'all_stale') reasonAllStale++;
+  }
+
+  return {
+    count,
+    nudges_shown: nudgesShown,
+    prompts_with_intent: promptsWithIntent,
+    avg_intent_slots: intentSlotSamples > 0 ? totalIntentSlots / intentSlotSamples : 0,
+    // Flattened, like the annotation outcomes above — a nested histogram would
+    // not survive the primitive-only whitelist in scrub.ts.
+    nudge_reasons_no_intent: reasonNoIntent,
+    nudge_reasons_all_stale: reasonAllStale,
+    window_start_ts: windowStartTs,
+  };
+}
+
 // ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
@@ -341,20 +425,26 @@ export const telemetryBuffer = {
    * Record a single high-volume event into the in-memory bucket.
    * Thread-safe in the Node/Bun single-threaded sense.
    *
-   * @param event  'session_compressed' (per-session) | 'context_injected' (time-window)
+   * @param event  'session_compressed' (per-session) | 'context_injected' |
+   *   'working_nudge' (both time-window)
    * @param sessionDbId  REQUIRED for 'session_compressed' — the per-session
-   *   accumulator key. MUST be null for 'context_injected' (no session in
+   *   accumulator key. MUST be null for the time-window events (no session in
    *   scope). A session_compressed record with a null/non-numeric id is dropped
    *   rather than misrouted — telemetry never throws, so we swallow silently.
    * @param props  the (already-scrubbed) property bag for this occurrence.
    */
   record(
-    event: 'session_compressed' | 'context_injected',
+    event: 'session_compressed' | 'context_injected' | 'working_nudge',
     sessionDbId: number | null,
     props: Record<string, unknown>
   ): void {
     const now = Date.now();
-    if (event === 'session_compressed') {
+    if (event === 'working_nudge') {
+      if (!workingNudgeBucket) {
+        workingNudgeBucket = { records: [], windowStartTs: now };
+      }
+      workingNudgeBucket.records.push(props as WorkingNudgeRecord);
+    } else if (event === 'session_compressed') {
       if (typeof sessionDbId !== 'number') {
         // No session key ⇒ we can't accumulate per-session. Drop rather than
         // crash or misroute. Telemetry is fire-and-forget.
@@ -446,6 +536,12 @@ export const telemetryBuffer = {
       const rollup = computeContextInjectedRollup(contextInjectedBucket);
       contextInjectedBucket = null;
       captureEvent('context_injected_rollup', rollup);
+    }
+    // working_nudge shares this drain: same hook-level, wall-clock class.
+    if (workingNudgeBucket && workingNudgeBucket.records.length > 0) {
+      const rollup = computeWorkingNudgeRollup(workingNudgeBucket);
+      workingNudgeBucket = null;
+      captureEvent('working_nudge_rollup', rollup);
     }
   },
 

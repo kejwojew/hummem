@@ -401,6 +401,67 @@ describe('flush() — context_injected_rollup', () => {
 });
 
 // ---------------------------------------------------------------------------
+// working_nudge — hook-level, shares the time-window drain
+// ---------------------------------------------------------------------------
+
+describe('flush() — working_nudge_rollup', () => {
+  it('counts nudges against prompts that already had intent', () => {
+    telemetryBuffer.record('working_nudge', null, {
+      nudged: true, nudge_reason: 'no_intent', had_intent: false, intent_count: 0, journal_count: 7,
+    });
+    telemetryBuffer.record('working_nudge', null, {
+      nudged: true, nudge_reason: 'all_stale', had_intent: true, intent_count: 2, journal_count: 5,
+    });
+    telemetryBuffer.record('working_nudge', null, {
+      nudged: false, nudge_reason: 'none', had_intent: true, intent_count: 4, journal_count: 5,
+    });
+
+    telemetryBuffer.flush();
+
+    const call = postHogCaptureCalls.find(
+      (c): c is { event: string; properties: Record<string, unknown> } =>
+        (c as { event: string }).event === 'working_nudge_rollup'
+    )!;
+    expect(call).toBeDefined();
+
+    const p = call.properties;
+    expect(p.count).toBe(3);
+    expect(p.nudges_shown).toBe(2);
+    expect(p.prompts_with_intent).toBe(2);
+    expect(p.avg_intent_slots).toBe(2);
+    expect(p.nudge_reasons_no_intent).toBe(1);
+    expect(p.nudge_reasons_all_stale).toBe(1);
+  });
+
+  // The rollup is worthless if the scrub whitelist drops its fields — the
+  // failure mode would be a silently empty event.
+  it('survives the property whitelist', () => {
+    telemetryBuffer.record('working_nudge', null, {
+      nudged: true, nudge_reason: 'no_intent', had_intent: false, intent_count: 0, journal_count: 3,
+    });
+    telemetryBuffer.flush();
+
+    const p = (postHogCaptureCalls.find(
+      (c): c is { event: string; properties: Record<string, unknown> } =>
+        (c as { event: string }).event === 'working_nudge_rollup'
+    )!).properties;
+    expect(p.nudges_shown).toBe(1);
+    expect(p.prompts_with_intent).toBe(0);
+    expect(p.nudge_reasons_no_intent).toBe(1);
+  });
+
+  it('does not disturb the context_injected bucket', () => {
+    telemetryBuffer.record('working_nudge', null, { nudged: true, nudge_reason: 'no_intent' });
+    telemetryBuffer.record('context_injected', null, { outcome: 'ok', tokens_injected: 100 });
+
+    telemetryBuffer.flush();
+
+    const events = postHogCaptureCalls.map(c => (c as { event: string }).event).sort();
+    expect(events).toEqual(['context_injected_rollup', 'working_nudge_rollup']);
+  });
+});
+
+// ---------------------------------------------------------------------------
 // Empty buckets — no captureEvent call
 // ---------------------------------------------------------------------------
 

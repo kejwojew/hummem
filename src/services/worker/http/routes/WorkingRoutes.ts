@@ -21,7 +21,10 @@ import {
   WorkingNotFoundError,
   workingLimitsFromSettings,
   type WorkingLimits,
+  type WorkingEntry,
 } from '../../../working/store.js';
+import { renderWorkingMemory } from '../../../working/render.js';
+import { telemetryBuffer } from '../../../telemetry/buffer.js';
 
 const putSchema = z.object({
   project: z.string().trim().min(1),
@@ -91,6 +94,39 @@ export class WorkingRoutes extends BaseRouteHandler {
     res.status(409).json({ error: error.code, message: error.message, keys: error.keys });
   }
 
+  /**
+   * Buffer one working_nudge record for the injection that is about to happen.
+   *
+   * The reason is derived by calling the SAME renderWorkingMemory the hook
+   * will call, rather than re-deriving "is there intent / is it stale" here:
+   * two independent copies of that rule would drift, and the telemetry would
+   * then describe a nudge policy that no longer exists.
+   *
+   * Fail-open and side-effect-free for the caller: telemetry must never break
+   * an injection read.
+   */
+  private recordNudgeTelemetry(entries: WorkingEntry[]): void {
+    try {
+      const { nudge } = renderWorkingMemory({ entries });
+      const intentCount = entries.filter(entry => entry.kind === 'intent').length;
+      const journalCount = entries.filter(entry => entry.kind === 'journal').length;
+      const reason = nudge === null
+        ? 'none'
+        : (intentCount === 0 ? 'no_intent' : 'all_stale');
+      telemetryBuffer.record('working_nudge', null, {
+        nudged: nudge !== null,
+        nudge_reason: reason,
+        had_intent: intentCount > 0,
+        intent_count: intentCount,
+        journal_count: journalCount,
+      });
+    } catch (error) {
+      logger.debug('HTTP', 'working nudge telemetry skipped', {
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  }
+
   private handleList = this.wrapHandler(async (req: Request, res: Response): Promise<void> => {
     const limits = this.limitsOrDisabled(res);
     if (!limits) return;
@@ -111,6 +147,16 @@ export class WorkingRoutes extends BaseRouteHandler {
     if (taskKey === undefined) {
       entries = capTasksForRender(entries, limits);
     }
+
+    // Nudge telemetry rides the READ, because the hook runs in its own
+    // short-lived process with no PostHog client — the worker is the only
+    // place that can buffer. Gated on ?reason=inject so a human's working_list
+    // (MCP) is never counted as a prompt the agent was nudged on; without the
+    // gate the denominator would be meaningless.
+    if (this.toStringParam(req.query.reason as string | string[] | undefined) === 'inject') {
+      this.recordNudgeTelemetry(entries);
+    }
+
     res.json({
       project,
       task_key: taskKey ?? null,
