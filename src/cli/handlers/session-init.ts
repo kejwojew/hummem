@@ -13,12 +13,13 @@ import { HOOK_EXIT_CODES } from '../../shared/hook-constants.js';
 import { shouldTrackProject as defaultShouldTrackProject } from '../../shared/should-track-project.js';
 import { loadFromFileOnce as defaultLoadFromFileOnce } from '../../shared/hook-settings.js';
 import { normalizePlatformSource } from '../../shared/platform-source.js';
-import { isInternalProtocolPayload } from '../../utils/tag-stripping.js';
-import { CONTEXT_TAG_OPEN, CONTEXT_TAG_CLOSE } from '../../utils/context-injection.js';
 import {
-  renderWorkingMemoryBlock,
-  WORKING_MEMORY_EMPTY_REMINDER,
-} from '../../services/working/render.js';
+  isInternalProtocolPayload,
+  SYSTEM_REMINDER_OPEN,
+  SYSTEM_REMINDER_CLOSE,
+} from '../../utils/tag-stripping.js';
+import { CONTEXT_TAG_OPEN, CONTEXT_TAG_CLOSE } from '../../utils/context-injection.js';
+import { renderWorkingMemory } from '../../services/working/render.js';
 import type { WorkingEntry, WorkingLimits } from '../../services/working/store.js';
 import {
   resolveRuntimeContext as defaultResolveRuntimeContext,
@@ -166,6 +167,9 @@ export const sessionInitHandler: EventHandler = {
     }
 
     let additionalContext = '';
+    // Kept out of additionalContext on purpose — emitted in its own
+    // <system-reminder> wrapper at the end (see the working-memory block).
+    let workingNudge = '';
 
     // Kimi Code DISCARDS SessionStart hook results (verified in the installed
     // CLI source, 0.29.1: triggerSessionStart() awaits the trigger and never
@@ -232,28 +236,52 @@ export const sessionInitHandler: EventHandler = {
 
     // Working memory rides EVERY prompt (unlike the semantic block, no length
     // gate): stale state must stay visible to the agent's eyes — that
-    // visibility is the structural defense against "forgot to write". When the
-    // set is empty and the prompt is substantial, a one-line reminder nudges
-    // the agent to record its hypothesis/plan. Fail-open: a worker hiccup
-    // must never break the hook.
+    // visibility is the structural defense against "forgot to write".
+    //
+    // The state block and the nudge travel on DIFFERENT channels (2026-08-29).
+    // The block is reference material and joins additionalContext inside
+    // <claude-mem-context>; the nudge asks the agent to act NOW and is emitted
+    // in its own <system-reminder> wrapper. Reason: a context block is, by the
+    // agent's own operating rules, background reference — a reminder buried in
+    // it was ignored ~20 consecutive times in one live session while every
+    // hard rule delivered through an instruction channel was obeyed. Both tags
+    // are stripped by tag-stripping.ts, so neither is re-ingested.
+    //
+    // Fail-open: a worker hiccup must never break the hook.
     const workingEnabled = String(settings.CLAUDE_MEM_WORKING_ENABLED ?? 'true').toLowerCase() === 'true';
     if (workingEnabled) {
       try {
+        // The substantial-prompt gate applies to the NUDGE only: a one-word
+        // follow-up does not warrant an instruction to go write state, but it
+        // must never suppress the block, which is just current state.
+        //
+        // Decided BEFORE the request and sent along, because the worker owns
+        // the telemetry counter and would otherwise record "nudge shown" for
+        // prompts this hook then silently drops — inflating the exact metric
+        // (nudges_shown vs prompts_with_intent) that exists to reveal an
+        // unnoticed regression. A counter that reads high for the wrong reason
+        // is worse than no counter: it fires the "reminder is invisible"
+        // signature falsely.
+        const promptIsSubstantial =
+          prompt.length >= 20 && prompt !== '[media prompt]';
         const workingResult = await dependencies.executeWithWorkerFallback<WorkingMemoryResponse>(
-          `/api/working?project=${encodeURIComponent(project)}`,
+          // reason=inject marks this read as the per-prompt injection, so the
+          // worker counts it for nudge telemetry (an MCP working_list must not
+          // land in the same denominator). substantial reports whether a nudge
+          // would actually be delivered on this prompt.
+          `/api/working?project=${encodeURIComponent(project)}&reason=inject`
+          + `&substantial=${promptIsSubstantial ? '1' : '0'}`,
           'GET',
         );
         if (!dependencies.isWorkerFallback(workingResult) && workingResult) {
-          const block = renderWorkingMemoryBlock({ entries: workingResult.entries ?? [] });
-          const workingText = block ?? (
-            prompt && prompt.length >= 20 && prompt !== '[media prompt]'
-              ? WORKING_MEMORY_EMPTY_REMINDER
-              : ''
-          );
-          if (workingText) {
+          const { block, nudge } = renderWorkingMemory({ entries: workingResult.entries ?? [] });
+          if (block) {
             additionalContext = additionalContext
-              ? `${additionalContext}\n\n${workingText}`
-              : workingText;
+              ? `${additionalContext}\n\n${block}`
+              : block;
+          }
+          if (nudge && promptIsSubstantial) {
+            workingNudge = nudge;
           }
         }
       } catch (error: unknown) {
@@ -267,16 +295,25 @@ export const sessionInitHandler: EventHandler = {
       sessionId: sessionDbId
     });
 
-    if (additionalContext) {
+    if (additionalContext || workingNudge) {
+      // Both wrappers are strip-tags targets (tag-stripping.ts), so injected
+      // memory never comes back as an observation. They stay SEPARATE
+      // top-level blocks: nesting the reminder inside the context block would
+      // re-file the instruction as background reference — the delivery-channel
+      // bug this split fixes.
+      const parts: string[] = [];
+      if (additionalContext) {
+        parts.push(`${CONTEXT_TAG_OPEN}\n${additionalContext}\n${CONTEXT_TAG_CLOSE}`);
+      }
+      if (workingNudge) {
+        parts.push(`${SYSTEM_REMINDER_OPEN}\n${workingNudge}\n${SYSTEM_REMINDER_CLOSE}`);
+      }
       return {
         continue: true,
         suppressOutput: true,
         hookSpecificOutput: {
           hookEventName: 'UserPromptSubmit',
-          // Wrapped so the strip-tags pass (tag-stripping.ts) removes injected
-          // memory from transcripts before distillation — otherwise an
-          // unverified working-memory hypothesis comes back as an observation.
-          additionalContext: `${CONTEXT_TAG_OPEN}\n${additionalContext}\n${CONTEXT_TAG_CLOSE}`
+          additionalContext: parts.join('\n\n')
         }
       };
     }

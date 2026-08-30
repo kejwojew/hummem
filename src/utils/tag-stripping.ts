@@ -1,7 +1,7 @@
 
 import { logger } from './logger.js';
 
-const TAG_NAMES = [
+export const TAG_NAMES = [
   'private',
   'claude-mem-context',
   'system_instruction',
@@ -11,12 +11,44 @@ const TAG_NAMES = [
 ] as const;
 type TagName = (typeof TAG_NAMES)[number];
 
+/**
+ * Wrapper for injected text that must ACT on the model rather than inform it
+ * (the working-memory nudge). Derived from TAG_NAMES instead of written as a
+ * literal: everything injected must be strippable, or injected memory comes
+ * back as a fresh observation on the next distillation pass. The Extract<>
+ * annotation makes that dependency structural — drop 'system-reminder' from
+ * TAG_NAMES and this fails to typecheck instead of silently self-ingesting.
+ */
+const SYSTEM_REMINDER_TAG: Extract<TagName, 'system-reminder'> = 'system-reminder';
+export const SYSTEM_REMINDER_OPEN = `<${SYSTEM_REMINDER_TAG}>`;
+export const SYSTEM_REMINDER_CLOSE = `</${SYSTEM_REMINDER_TAG}>`;
+
 const STRIP_REGEX = new RegExp(
   `<(${TAG_NAMES.join('|')})\\b[^>]*>[\\s\\S]*?</\\1>`,
   'g'
 );
 
-export const SYSTEM_REMINDER_REGEX = /<system-reminder>[\s\S]*?<\/system-reminder>/g;
+/**
+ * Standalone matcher for the reminder tag, used by the transcript readers that
+ * scrub one tag rather than all of them (transcript-parser.ts,
+ * ObservationCompiler.ts).
+ *
+ * Built from SYSTEM_REMINDER_TAG rather than written as a literal, for the
+ * same reason as the OPEN/CLOSE constants above: a literal here is a third
+ * copy of the tag name that the Extract<> guard does not cover, so a rename
+ * would update the two guarded constants, leave this one on the old spelling,
+ * and compile cleanly while silently letting reminders through into
+ * distillation.
+ *
+ * `\b[^>]*>` mirrors STRIP_REGEX so both paths accept a tag carrying
+ * attributes. Previously this one required a bare `<system-reminder>`, so a
+ * host that ever emitted attributes would be scrubbed by one path and not the
+ * other.
+ */
+export const SYSTEM_REMINDER_REGEX = new RegExp(
+  `<${SYSTEM_REMINDER_TAG}\\b[^>]*>[\\s\\S]*?</${SYSTEM_REMINDER_TAG}>`,
+  'g',
+);
 
 const MAX_TAG_COUNT = 100;
 
