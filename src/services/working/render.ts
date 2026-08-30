@@ -13,7 +13,7 @@
 // TWO OUTPUTS, TWO CHANNELS (2026-08-29). renderWorkingMemory returns the
 // state block and the nudge separately because they are different kinds of
 // text and the caller routes them to different tags:
-//   - `block` is reference material → <claude-mem-context> (background).
+//   - `block` is reference material → <hummem-context> (background).
 //   - `nudge` is an instruction to act now → <system-reminder>.
 // Both tags are in tag-stripping.ts TAG_NAMES, so neither is fed back into
 // distillation. Merging them again would put the instruction back inside the
@@ -33,7 +33,7 @@ export interface WorkingRenderPayload {
 }
 
 export interface WorkingRenderResult {
-  /** Reference block for <claude-mem-context>, or null when no live intent. */
+  /** Reference block for <hummem-context>, or null when no live intent. */
   block: string | null;
   /** Instruction for <system-reminder>, or null when nothing needs saying. */
   nudge: string | null;

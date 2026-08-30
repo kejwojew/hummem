@@ -3,6 +3,12 @@ import { logger } from './logger.js';
 
 export const TAG_NAMES = [
   'private',
+  // Context block, canonical spelling. Injected memory MUST be stripped from
+  // transcripts before distillation or it returns as fresh observations.
+  'hummem-context',
+  // Pre-rename spelling (see context-injection.ts). Never written any more,
+  // but stripped forever: transcripts recorded before the rename still carry
+  // it, as does any file that has not been rewritten yet.
   'claude-mem-context',
   'system_instruction',
   'system-instruction',
@@ -10,6 +16,17 @@ export const TAG_NAMES = [
   'system-reminder',
 ] as const;
 type TagName = (typeof TAG_NAMES)[number];
+
+/**
+ * Context-block tag names, tied to the strip list by construction.
+ *
+ * context-injection.ts owns the spellings; this annotation is what guarantees
+ * both are actually stripped. Rename the tag there without updating this list
+ * and the build fails, instead of silently feeding every injected context
+ * block back into the observation pipeline.
+ */
+export const CONTEXT_TAG_NAMES: ReadonlyArray<Extract<TagName, 'hummem-context' | 'claude-mem-context'>> =
+  ['hummem-context', 'claude-mem-context'];
 
 /**
  * Wrapper for injected text that must ACT on the model rather than inform it

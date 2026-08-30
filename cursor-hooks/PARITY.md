@@ -40,7 +40,7 @@ This document compares claude-mem's Claude Code hooks with the Cursor hooks impl
 **Status**: ✅ Complete parity via auto-updated rules file
 
 **How it works**:
-- Hook writes context to `.cursor/rules/claude-mem-context.mdc`
+- Hook writes context to `.cursor/rules/hummem-context.mdc`
 - File has `alwaysApply: true` frontmatter
 - Cursor auto-includes this rule in all chat sessions
 - Context refreshes on every prompt submission
@@ -115,14 +115,14 @@ This document compares claude-mem's Claude Code hooks with the Cursor hooks impl
 - **Status**: ✅ Match
 
 ### Tag Stripping
-- **Claude Code**: Worker handles `<private>` and `<claude-mem-context>` tags
+- **Claude Code**: Worker handles `<private>` and `<hummem-context>` tags
 - **Cursor**: Worker handles tags (hooks don't need to strip)
 - **Status**: ✅ Match
 
 ## Missing Features (Cursor Limitations)
 
 1. ~~**Direct Context Injection**~~: **SOLVED** via auto-updated rules file
-   - Hook writes context to `.cursor/rules/claude-mem-context.mdc`
+   - Hook writes context to `.cursor/rules/hummem-context.mdc`
    - Cursor auto-includes rules with `alwaysApply: true`
    - Context refreshes on every prompt
 

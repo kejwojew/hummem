@@ -19,6 +19,11 @@ import {
   getWorkerServiceAbsolutePath,
   getBunAbsolutePath,
 } from './install-paths.js';
+import {
+  writeRulesFile,
+  rulesFileCandidates,
+  CONTEXT_RULES_BASENAME,
+} from '../../utils/context-injection.js';
 
 const CURSOR_REGISTRY_FILE = path.join(DATA_DIR, 'cursor-projects.json');
 
@@ -208,7 +213,7 @@ Next steps:
   3. Check Cursor Settings → Hooks tab to verify
 
 Context Injection:
-  Context from past sessions is stored in .cursor/rules/claude-mem-context.mdc
+  Context from past sessions is stored in .cursor/rules/${CONTEXT_RULES_BASENAME}.mdc
   and automatically included in every chat. It updates after each session ends.
 `);
 }
@@ -233,10 +238,9 @@ async function setupProjectContext(targetDir: string, workspaceRoot: string): Pr
   }
 
   if (!contextGenerated) {
-    const rulesFile = path.join(rulesDir, 'claude-mem-context.mdc');
     const placeholderContent = `---
 alwaysApply: true
-description: "Claude-mem context from past sessions (auto-updated)"
+description: "hummem context from past sessions (auto-updated)"
 ---
 
 # Memory Context from Past Sessions
@@ -245,7 +249,7 @@ description: "Claude-mem context from past sessions (auto-updated)"
 
 Use hummem's MCP search tools for manual memory queries.
 `;
-    writeFileSync(rulesFile, placeholderContent);
+    writeRulesFile(rulesDir, '.mdc', placeholderContent);
     console.log(`  Created placeholder context file (will populate after first session)`);
   }
 
@@ -324,10 +328,13 @@ function removeCursorHooksFiles(
   }
 
   if (target === 'project') {
-    const contextFile = path.join(targetDir, 'rules', 'claude-mem-context.mdc');
-    if (existsSync(contextFile)) {
-      unlinkSync(contextFile);
-      console.log(`  Removed context file`);
+    // Both spellings: an install predating the tag rename still has the
+    // legacy file, and leaving it would keep applying context after uninstall.
+    for (const contextFile of rulesFileCandidates(path.join(targetDir, 'rules'), '.mdc')) {
+      if (existsSync(contextFile)) {
+        unlinkSync(contextFile);
+        console.log(`  Removed context file: ${path.basename(contextFile)}`);
+      }
     }
 
     const projectName = path.basename(process.cwd());
@@ -404,8 +411,9 @@ export function checkCursorHooksStatus(): number {
       }
 
       if (loc.name === 'Project') {
-        const contextFile = path.join(loc.dir, 'rules', 'claude-mem-context.mdc');
-        if (existsSync(contextFile)) {
+        const contextFile = rulesFileCandidates(path.join(loc.dir, 'rules'), '.mdc')
+          .find(candidate => existsSync(candidate));
+        if (contextFile) {
           console.log(`   Context: Active`);
         } else {
           console.log(`   Context: Not yet generated (will be created on first prompt)`);

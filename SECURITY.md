@@ -65,7 +65,7 @@ All user-controlled inputs are validated using whitelists and strict patterns:
 Claude-mem includes dual-tag system for content privacy:
 
 - `<private>content</private>` - User-level privacy (prevents storage)
-- `<claude-mem-context>content</claude-mem-context>` - System-level tag (prevents recursive storage)
+- `<hummem-context>content</hummem-context>` - System-level tag (prevents recursive storage)
 
 Tags are stripped at the hook layer before data reaches worker/database.
 

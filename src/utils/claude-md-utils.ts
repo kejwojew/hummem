@@ -8,6 +8,7 @@ import { workerHttpRequest } from '../shared/worker-utils.js';
 import { paths } from '../shared/paths.js';
 import { matchesAnyGlob } from './project-filter.js';
 import { toBmpSafe } from './bmp-safe.js';
+import { replaceTaggedBlock } from './context-injection.js';
 
 const SETTINGS_PATH = paths.settings();
 
@@ -54,24 +55,12 @@ function isValidPathForClaudeMd(filePath: string, projectRoot?: string): boolean
   return true;
 }
 
+/**
+ * Thin wrapper over the shared replacement so folder-level CLAUDE.md files
+ * migrate from the pre-rename tag exactly like every other writer.
+ */
 export function replaceTaggedContent(existingContent: string, newContent: string): string {
-  const startTag = '<claude-mem-context>';
-  const endTag = '</claude-mem-context>';
-
-  if (!existingContent) {
-    return `${startTag}\n${newContent}\n${endTag}`;
-  }
-
-  const startIdx = existingContent.indexOf(startTag);
-  const endIdx = existingContent.indexOf(endTag);
-
-  if (startIdx !== -1 && endIdx !== -1) {
-    return existingContent.substring(0, startIdx) +
-      `${startTag}\n${newContent}\n${endTag}` +
-      existingContent.substring(endIdx + endTag.length);
-  }
-
-  return existingContent + `\n\n${startTag}\n${newContent}\n${endTag}`;
+  return replaceTaggedBlock(existingContent, newContent);
 }
 
 export function writeClaudeMdToFolder(folderPath: string, newContent: string, targetFilename?: string): void {

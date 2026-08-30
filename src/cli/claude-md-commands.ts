@@ -15,6 +15,11 @@ import { formatTime, groupByDate } from '../shared/timeline-formatting.js';
 import { isDirectChild } from '../shared/path-utils.js';
 import { logger } from '../utils/logger.js';
 import { paths } from '../shared/paths.js';
+import {
+  replaceTaggedBlock,
+  stripTaggedBlock,
+  hasTaggedBlock,
+} from '../utils/context-injection.js';
 
 const DB_PATH = paths.database();
 const SETTINGS_PATH = paths.settings();
@@ -253,24 +258,7 @@ function writeClaudeMdToFolder(folderPath: string, newContent: string): void {
     existingContent = readFileSync(claudeMdPath, 'utf-8');
   }
 
-  const startTag = '<claude-mem-context>';
-  const endTag = '</claude-mem-context>';
-
-  let finalContent: string;
-  if (!existingContent) {
-    finalContent = `${startTag}\n${newContent}\n${endTag}`;
-  } else {
-    const startIdx = existingContent.indexOf(startTag);
-    const endIdx = existingContent.indexOf(endTag);
-
-    if (startIdx !== -1 && endIdx !== -1) {
-      finalContent = existingContent.substring(0, startIdx) +
-        `${startTag}\n${newContent}\n${endTag}` +
-        existingContent.substring(endIdx + endTag.length);
-    } else {
-      finalContent = existingContent + `\n\n${startTag}\n${newContent}\n${endTag}`;
-    }
-  }
+  const finalContent = replaceTaggedBlock(existingContent, newContent);
 
   writeFileSync(tempFile, finalContent);
   renameSync(tempFile, claudeMdPath);
@@ -444,7 +432,9 @@ function processFilesForCleanup(
 
 function cleanSingleFile(file: string, relativePath: string, dryRun: boolean): 'deleted' | 'cleaned' {
   const content = readFileSync(file, 'utf-8');
-  const stripped = content.replace(/<claude-mem-context>[\s\S]*?<\/claude-mem-context>/g, '').trim();
+  // Strips either spelling — a file written before the rename must still be
+  // cleanable after it.
+  const stripped = stripTaggedBlock(content).trim();
 
   if (stripped === '') {
     if (!dryRun) {
@@ -490,7 +480,8 @@ export async function cleanClaudeMd(dryRun: boolean): Promise<number> {
         } else if (entry.name === 'CLAUDE.md') {
           try {
             const content = readFileSync(fullPath, 'utf-8');
-            if (content.includes('<claude-mem-context>')) {
+            // Either spelling counts as "written by us".
+            if (hasTaggedBlock(content)) {
               filesToProcess.push(fullPath);
             }
           } catch {

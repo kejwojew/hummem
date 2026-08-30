@@ -6,6 +6,11 @@ import { logger } from '../../utils/logger.js';
 import { getWorkerHost, getWorkerPort } from '../../shared/worker-utils.js';
 import { DATA_DIR } from '../../shared/paths.js';
 import { getBunAbsolutePath as findBunPath, getWorkerServiceAbsolutePath as findWorkerServicePath } from './install-paths.js';
+import {
+  writeRulesFile,
+  rulesFileCandidates,
+  CONTEXT_RULES_BASENAME,
+} from '../../utils/context-injection.js';
 
 interface WindsurfHookEntry {
   command: string;
@@ -80,10 +85,6 @@ export function unregisterWindsurfProject(workspacePath: string): void {
 
 export function writeWindsurfContextFile(workspacePath: string, context: string): void {
   const rulesDir = path.join(workspacePath, '.windsurf', 'rules');
-  const rulesFile = path.join(rulesDir, 'claude-mem-context.md');
-  const tempFile = `${rulesFile}.tmp`;
-
-  mkdirSync(rulesDir, { recursive: true });
 
   let content = `# Memory Context from Past Sessions
 
@@ -100,8 +101,9 @@ ${context}
       '\n\n*[Truncated — use MCP search for full history]*\n';
   }
 
-  writeFileSync(tempFile, content);
-  renameSync(tempFile, rulesFile);
+  // Canonical basename + removal of the pre-rename file: Windsurf applies
+  // every rules file, so two would duplicate the injected context.
+  writeRulesFile(rulesDir, '.md', content);
 }
 
 function buildHookCommand(bunPath: string, workerServicePath: string, eventName: string): string {
@@ -223,7 +225,7 @@ Events registered:
 Next steps:
   1. Start hummem worker: hummem start
   2. Restart Windsurf to load the hooks
-  3. Context is injected via .windsurf/rules/claude-mem-context.md (workspace-level)
+  3. Context is injected via .windsurf/rules/${CONTEXT_RULES_BASENAME}.md (workspace-level)
 `);
 }
 
@@ -246,15 +248,13 @@ async function setupWindsurfProjectContext(workspaceRoot: string): Promise<void>
 
   if (!contextGenerated) {
     const rulesDir = path.join(workspaceRoot, '.windsurf', 'rules');
-    mkdirSync(rulesDir, { recursive: true });
-    const rulesFile = path.join(rulesDir, 'claude-mem-context.md');
     const placeholderContent = `# Memory Context from Past Sessions
 
 *No context yet. Complete your first session and context will appear here.*
 
 Use hummem's MCP search tools for manual memory queries.
 `;
-    writeFileSync(rulesFile, placeholderContent);
+    writeRulesFile(rulesDir, '.md', placeholderContent);
     console.log(`  Created placeholder context file (will populate after first session)`);
   }
 
@@ -341,10 +341,15 @@ function removeClaudeMemHookEntries(): void {
 }
 
 function removeWindsurfContextAndUnregister(workspaceRoot: string): void {
-  const contextFile = path.join(workspaceRoot, '.windsurf', 'rules', 'claude-mem-context.md');
-  if (existsSync(contextFile)) {
-    unlinkSync(contextFile);
-    console.log(`  Removed context file`);
+  // Both spellings — a pre-rename install still has the legacy filename.
+  for (const contextFile of rulesFileCandidates(
+    path.join(workspaceRoot, '.windsurf', 'rules'),
+    '.md',
+  )) {
+    if (existsSync(contextFile)) {
+      unlinkSync(contextFile);
+      console.log(`  Removed context file: ${path.basename(contextFile)}`);
+    }
   }
 
   unregisterWindsurfProject(workspaceRoot);
@@ -382,8 +387,11 @@ export function checkWindsurfHooksStatus(): number {
       }
     }
 
-    const contextFile = path.join(process.cwd(), '.windsurf', 'rules', 'claude-mem-context.md');
-    if (existsSync(contextFile)) {
+    const contextFile = rulesFileCandidates(
+      path.join(process.cwd(), '.windsurf', 'rules'),
+      '.md',
+    ).find(candidate => existsSync(candidate));
+    if (contextFile) {
       console.log(`   Context: Active (current workspace)`);
     } else {
       console.log(`   Context: Not yet generated for this workspace`);

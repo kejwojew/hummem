@@ -191,7 +191,7 @@ describe('summarizeHandler — privacy tag stripping', () => {
 
   const taggedPayloads: Array<[string, string]> = [
     ['<private>', '<private>SECRET-PRIVATE</private>'],
-    ['<claude-mem-context>', '<claude-mem-context>SECRET-CTX</claude-mem-context>'],
+    ['<hummem-context>', '<hummem-context>SECRET-CTX</hummem-context>'],
     ['<system-instruction>', '<system-instruction>SECRET-SI-DASH</system-instruction>'],
     ['<system_instruction>', '<system_instruction>SECRET-SI-UNDER</system_instruction>'],
     ['<persisted-output>', '<persisted-output>SECRET-PO</persisted-output>'],

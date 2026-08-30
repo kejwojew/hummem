@@ -5,7 +5,11 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { logger } from '../../utils/logger.js';
 import { getMcpServerAbsolutePath, getNodeAbsolutePath } from './install-paths.js';
 import { readJsonSafe } from '../../utils/json-utils.js';
-import { injectContextIntoMarkdownFile } from '../../utils/context-injection.js';
+import {
+  injectContextIntoMarkdownFile,
+  removeLegacyRulesFile,
+  CONTEXT_RULES_BASENAME,
+} from '../../utils/context-injection.js';
 
 export const PLACEHOLDER_CONTEXT = `# hummem: Cross-Session Memory
 
@@ -97,6 +101,12 @@ function writeMcpConfigAndContext(
   if (contextPath) {
     injectContextIntoMarkdownFile(contextPath, PLACEHOLDER_CONTEXT);
     console.log(`  Context placeholder written to: ${contextPath}`);
+    // Rules-directory integrations (Roo) auto-apply every file in the folder,
+    // so the pre-rename file has to go or context arrives twice. Written
+    // first, removed second — never the other way round.
+    if (path.basename(path.dirname(contextPath)) === 'rules') {
+      removeLegacyRulesFile(path.dirname(contextPath), path.extname(contextPath));
+    }
   }
 
   const summaryLines = [`\nInstallation complete!\n`];
@@ -131,7 +141,7 @@ const ROO_CODE_CONFIG: McpInstallerConfig = {
   ideLabel: 'Roo Code',
   configPath: path.join(process.cwd(), '.roo', 'mcp.json'),
   configKey: 'mcpServers',
-  contextPath: path.join(process.cwd(), '.roo', 'rules', 'claude-mem-context.md'),
+  contextPath: path.join(process.cwd(), '.roo', 'rules', `${CONTEXT_RULES_BASENAME}.md`),
 };
 
 const WARP_CONFIG: McpInstallerConfig = {

@@ -72,6 +72,41 @@ than refusing to start.
 This support is permanent for practical purposes: the code path is small, and
 removing it would strand any archive restored from a pre-rename backup.
 
+### Context block tag — migrated on write, read forever
+
+The block hummem writes into agent-visible markdown (`CLAUDE.md`, `AGENTS.md`,
+`WARP.md`, IDE rules files) is tagged `<hummem-context>`. The former
+`<claude-mem-context>` is still **read**, and always will be.
+
+| Property | Behaviour |
+| --- | --- |
+| Written | `<hummem-context>` only |
+| Read | both spellings |
+| Migration | on first write: the old block is replaced in place by the new one |
+| Removal | not scheduled — see below |
+
+The block is replaced in place rather than appended, so a file written before
+the rename heals itself the first time context is injected into it. Read
+support cannot be dropped, for two independent reasons: a file not yet
+rewritten would gain a *second* block instead of an updated one, and
+transcripts recorded before the rename still contain the old tag — which must
+keep being stripped, or injected memory is re-ingested as new observations.
+
+Tolerating the old spelling costs one entry in a list. It is not scheduled for
+removal in any release.
+
+### IDE rules filenames — renamed, old file removed
+
+Cursor, Windsurf, Roo Code, and Antigravity receive context through a rules
+file, now named `hummem-context.{md,mdc}` rather than `claude-mem-context.*`.
+
+A filename does not heal itself the way the tag does: these editors apply
+*every* file in the rules directory, so a new file written beside the old one
+would inject the context twice on every prompt. The pre-rename file is
+therefore deleted after the new one is written — in that order, so an
+interruption can duplicate context but can never leave the user with none.
+Uninstall removes both spellings.
+
 ### Legacy plugin and MCP identities — cleanup only
 
 Older installs registered themselves as `claude-mem@thedotmack` and an MCP

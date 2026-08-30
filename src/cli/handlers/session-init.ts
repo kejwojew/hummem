@@ -240,7 +240,7 @@ export const sessionInitHandler: EventHandler = {
     //
     // The state block and the nudge travel on DIFFERENT channels (2026-08-29).
     // The block is reference material and joins additionalContext inside
-    // <claude-mem-context>; the nudge asks the agent to act NOW and is emitted
+    // <hummem-context>; the nudge asks the agent to act NOW and is emitted
     // in its own <system-reminder> wrapper. Reason: a context block is, by the
     // agent's own operating rules, background reference — a reminder buried in
     // it was ignored ~20 consecutive times in one live session while every

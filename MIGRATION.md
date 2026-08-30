@@ -21,6 +21,8 @@ variables keep working.
 | Environment prefix | `CLAUDE_MEM_*` | `HUMMEM_*` (old names still work) |
 | Worker port band | `377xx` | `378xx` |
 | MCP server name | `claude-mem` | `hummem` |
+| Context block tag | `<claude-mem-context>` | `<hummem-context>` (old one still read) |
+| IDE rules filename | `claude-mem-context.*` | `hummem-context.*` |
 | Version line | `13.x` | starts again at `1.0.0` |
 
 The version reset is not a downgrade. hummem starts its own release line
@@ -89,6 +91,29 @@ The migration is deliberately conservative:
   start is not.
 
 No data is deleted at any point.
+
+### The context block in your markdown files
+
+hummem keeps a block of recent context inside agent-visible files (`CLAUDE.md`,
+`AGENTS.md`, `WARP.md`, and the IDE rules files). It used to be tagged
+`<claude-mem-context>`; it is now `<hummem-context>`.
+
+You do not have to do anything. The block is replaced in place, so the first
+time context is injected into a file the old block becomes the new one — same
+position, same surrounding text, nothing duplicated. Files that are never
+written again keep the old tag, which hummem still reads and still strips.
+
+### The IDE rules file
+
+For Cursor, Windsurf, Roo Code, and Antigravity the context lives in a rules
+file that was named `claude-mem-context.md` / `.mdc` and is now
+`hummem-context.*`.
+
+Here the old file **is** deleted, because these editors apply every file in the
+rules directory and two of them would inject your context twice on every
+prompt. The new file is written first and the old one removed second, so an
+interrupted upgrade can leave you with duplicate context — fixed by the next
+write — but never with none.
 
 ### The data directory
 

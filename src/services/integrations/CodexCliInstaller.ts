@@ -9,6 +9,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { logger } from '../../utils/logger.js';
 import { paths } from '../../shared/paths.js';
+import { stripTaggedBlock } from '../../utils/context-injection.js';
 import { buildSpawnSyncInvocation, type SpawnSyncInvocation } from '../../shared/spawn.js';
 
 const CODEX_DIR = path.join(homedir(), '.codex');
@@ -330,11 +331,8 @@ function assertCodexMarketplaceSupported(): void {
 function removeCodexAgentsMdContext(): boolean {
   if (!existsSync(CODEX_AGENTS_MD_PATH)) return true;
 
-  const startTag = '<claude-mem-context>';
-  const endTag = '</claude-mem-context>';
-
   try {
-    readAndStripContextTags(startTag, endTag);
+    readAndStripContextTags();
     return true;
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
@@ -343,23 +341,16 @@ function removeCodexAgentsMdContext(): boolean {
   }
 }
 
-function readAndStripContextTags(startTag: string, endTag: string): void {
+function readAndStripContextTags(): void {
   const content = readFileSync(CODEX_AGENTS_MD_PATH, 'utf-8');
 
-  const startIdx = content.indexOf(startTag);
-  const endIdx = content.indexOf(endTag);
+  // Strips either spelling — this cleanup also runs against files written
+  // before the tag rename.
+  const stripped = stripTaggedBlock(content);
+  if (stripped === content) return;
 
-  if (startIdx === -1 || endIdx === -1) return;
-
-  const before = content.substring(0, startIdx).replace(/\n+$/, '');
-  const after = content.substring(endIdx + endTag.length).replace(/^\n+/, '');
-  const finalContent = (before + (after ? '\n\n' + after : '')).trim();
-
-  if (finalContent) {
-    writeFileSync(CODEX_AGENTS_MD_PATH, finalContent + '\n');
-  } else {
-    writeFileSync(CODEX_AGENTS_MD_PATH, '');
-  }
+  const finalContent = stripped.trim();
+  writeFileSync(CODEX_AGENTS_MD_PATH, finalContent ? finalContent + '\n' : '');
 
   console.log(`  Removed legacy global context from ${CODEX_AGENTS_MD_PATH}`);
 }

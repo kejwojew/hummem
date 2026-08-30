@@ -10,7 +10,15 @@ import {
 } from './install-paths.js';
 import { writeMcpJsonConfig, PLACEHOLDER_CONTEXT } from './McpIntegrations.js';
 import { readJsonSafe } from '../../utils/json-utils.js';
-import { injectContextIntoMarkdownFile } from '../../utils/context-injection.js';
+import {
+  injectContextIntoMarkdownFile,
+  hasTaggedBlock,
+  replaceTaggedBlock,
+  stripTaggedBlock,
+  removeLegacyRulesFile,
+  CONTEXT_RULES_BASENAME,
+  LEGACY_CONTEXT_RULES_BASENAME,
+} from '../../utils/context-injection.js';
 
 interface AntigravityHookEntry {
   name: string;
@@ -55,7 +63,13 @@ const ANTIGRAVITY_MCP_CONFIG_PATHS = [
 // instead, which a live install test (Phase C) proved wrong: it writes into
 // whatever directory the installer happens to run from rather than the
 // user's actual global rules directory.
-const RULES_CONTEXT_PATH = path.join(homedir(), '.agents', 'rules', 'claude-mem-context.md');
+const RULES_CONTEXT_DIR = path.join(homedir(), '.agents', 'rules');
+const RULES_CONTEXT_PATH = path.join(RULES_CONTEXT_DIR, `${CONTEXT_RULES_BASENAME}.md`);
+/** Pre-rename path, removed on install/uninstall so context is not applied twice. */
+const LEGACY_RULES_CONTEXT_PATH = path.join(
+  RULES_CONTEXT_DIR,
+  `${LEGACY_CONTEXT_RULES_BASENAME}.md`,
+);
 
 const HOOK_NAME = 'hummem';
 const HOOK_TIMEOUT_MS = 10000;
@@ -163,28 +177,33 @@ function mergeHooksIntoSettings(
 }
 
 function setupGeminiMdContextSection(): void {
-  const contextTag = '<claude-mem-context>';
-  const contextEndTag = '</claude-mem-context>';
-  const placeholder = `${contextTag}
-# Memory Context from Past Sessions
+  const placeholderBody = `# Memory Context from Past Sessions
 
-*No context yet. Complete your first session and context will appear here.*
-${contextEndTag}`;
+*No context yet. Complete your first session and context will appear here.*`;
 
   let content = '';
   if (existsSync(GEMINI_MD_PATH)) {
     content = readFileSync(GEMINI_MD_PATH, 'utf-8');
   }
 
-  if (content.includes(contextTag)) {
+  // A block in EITHER spelling means the section is already set up. Checking
+  // only the canonical tag would append a second block next to a pre-rename
+  // one, and GEMINI.md is auto-loaded — the user would get their context
+  // twice on every prompt.
+  if (hasTaggedBlock(content)) {
+    // Still rewrite it so a pre-rename block migrates to the canonical tag.
+    const migrated = replaceTaggedBlock(content, placeholderBody);
+    if (migrated !== content) {
+      mkdirSync(GEMINI_CONFIG_DIR, { recursive: true });
+      writeFileSync(GEMINI_MD_PATH, migrated);
+    }
     return;
   }
 
-  const separator = content.length > 0 && !content.endsWith('\n') ? '\n\n' : content.length > 0 ? '\n' : '';
-  const newContent = content + separator + placeholder + '\n';
+  const newContent = replaceTaggedBlock(content, placeholderBody);
 
   mkdirSync(GEMINI_CONFIG_DIR, { recursive: true });
-  writeFileSync(GEMINI_MD_PATH, newContent);
+  writeFileSync(GEMINI_MD_PATH, newContent.endsWith('\n') ? newContent : `${newContent}\n`);
 }
 
 // B0 found `~/.gemini/config/mcp_config.json` existing but genuinely empty (0
@@ -218,6 +237,11 @@ function registerAntigravityMcp(): void {
 function setupRulesContextFile(): void {
   injectContextIntoMarkdownFile(RULES_CONTEXT_PATH, PLACEHOLDER_CONTEXT);
   console.log(`  Context placeholder written to: ${RULES_CONTEXT_PATH}`);
+  // Written first, deleted second: every rules file in this directory is
+  // auto-applied, so leaving the pre-rename one would duplicate context.
+  if (removeLegacyRulesFile(RULES_CONTEXT_DIR, '.md')) {
+    console.log(`  Removed pre-rename rules file: ${LEGACY_RULES_CONTEXT_PATH}`);
+  }
 }
 
 export async function installAntigravityCliHooks(): Promise<number> {
@@ -315,12 +339,13 @@ function removeClaudeMemFromMcpConfig(mcpConfigPath: string): boolean {
 function removeContextTagBlock(filePath: string): boolean {
   if (!existsSync(filePath)) return false;
 
-  let content = readFileSync(filePath, 'utf-8');
-  const contextRegex = /\n?<claude-mem-context>[\s\S]*?<\/claude-mem-context>\n?/;
-  if (!contextRegex.test(content)) return false;
+  const content = readFileSync(filePath, 'utf-8');
+  // Uninstall must clear blocks in either spelling, or a pre-rename install
+  // keeps injecting context after the user asked for removal.
+  const stripped = stripTaggedBlock(content);
+  if (stripped === content) return false;
 
-  content = content.replace(contextRegex, '');
-  writeFileSync(filePath, content);
+  writeFileSync(filePath, stripped);
   return true;
 }
 
@@ -341,6 +366,9 @@ export function uninstallAntigravityCliHooks(): number {
       }
     }
 
+    // Both spellings: an install made before the rename still has the legacy
+    // file on disk.
+    removeContextTagBlock(LEGACY_RULES_CONTEXT_PATH);
     if (removeContextTagBlock(RULES_CONTEXT_PATH)) {
       console.log(`  Removed context section from ${RULES_CONTEXT_PATH}`);
     }
@@ -443,7 +471,7 @@ export function checkAntigravityCliHooksStatus(): number {
 
   if (existsSync(GEMINI_MD_PATH)) {
     const mdContent = readFileSync(GEMINI_MD_PATH, 'utf-8');
-    if (mdContent.includes('<claude-mem-context>')) {
+    if (hasTaggedBlock(mdContent)) {
       console.log(`Context (GEMINI.md): Active (${GEMINI_MD_PATH})`);
     } else {
       console.log('Context (GEMINI.md): exists but missing hummem section');
