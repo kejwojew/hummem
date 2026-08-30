@@ -28,7 +28,27 @@ const STRIP_REGEX = new RegExp(
   'g'
 );
 
-export const SYSTEM_REMINDER_REGEX = /<system-reminder>[\s\S]*?<\/system-reminder>/g;
+/**
+ * Standalone matcher for the reminder tag, used by the transcript readers that
+ * scrub one tag rather than all of them (transcript-parser.ts,
+ * ObservationCompiler.ts).
+ *
+ * Built from SYSTEM_REMINDER_TAG rather than written as a literal, for the
+ * same reason as the OPEN/CLOSE constants above: a literal here is a third
+ * copy of the tag name that the Extract<> guard does not cover, so a rename
+ * would update the two guarded constants, leave this one on the old spelling,
+ * and compile cleanly while silently letting reminders through into
+ * distillation.
+ *
+ * `\b[^>]*>` mirrors STRIP_REGEX so both paths accept a tag carrying
+ * attributes. Previously this one required a bare `<system-reminder>`, so a
+ * host that ever emitted attributes would be scrubbed by one path and not the
+ * other.
+ */
+export const SYSTEM_REMINDER_REGEX = new RegExp(
+  `<${SYSTEM_REMINDER_TAG}\\b[^>]*>[\\s\\S]*?</${SYSTEM_REMINDER_TAG}>`,
+  'g',
+);
 
 const MAX_TAG_COUNT = 100;
 

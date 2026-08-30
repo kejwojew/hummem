@@ -251,11 +251,26 @@ export const sessionInitHandler: EventHandler = {
     const workingEnabled = String(settings.CLAUDE_MEM_WORKING_ENABLED ?? 'true').toLowerCase() === 'true';
     if (workingEnabled) {
       try {
+        // The substantial-prompt gate applies to the NUDGE only: a one-word
+        // follow-up does not warrant an instruction to go write state, but it
+        // must never suppress the block, which is just current state.
+        //
+        // Decided BEFORE the request and sent along, because the worker owns
+        // the telemetry counter and would otherwise record "nudge shown" for
+        // prompts this hook then silently drops — inflating the exact metric
+        // (nudges_shown vs prompts_with_intent) that exists to reveal an
+        // unnoticed regression. A counter that reads high for the wrong reason
+        // is worse than no counter: it fires the "reminder is invisible"
+        // signature falsely.
+        const promptIsSubstantial =
+          prompt.length >= 20 && prompt !== '[media prompt]';
         const workingResult = await dependencies.executeWithWorkerFallback<WorkingMemoryResponse>(
           // reason=inject marks this read as the per-prompt injection, so the
           // worker counts it for nudge telemetry (an MCP working_list must not
-          // land in the same denominator).
-          `/api/working?project=${encodeURIComponent(project)}&reason=inject`,
+          // land in the same denominator). substantial reports whether a nudge
+          // would actually be delivered on this prompt.
+          `/api/working?project=${encodeURIComponent(project)}&reason=inject`
+          + `&substantial=${promptIsSubstantial ? '1' : '0'}`,
           'GET',
         );
         if (!dependencies.isWorkerFallback(workingResult) && workingResult) {
@@ -265,11 +280,6 @@ export const sessionInitHandler: EventHandler = {
               ? `${additionalContext}\n\n${block}`
               : block;
           }
-          // The substantial-prompt gate stays on the NUDGE only: a one-word
-          // follow-up does not warrant an instruction to go write state, but
-          // it must never suppress the block, which is just current state.
-          const promptIsSubstantial =
-            prompt.length >= 20 && prompt !== '[media prompt]';
           if (nudge && promptIsSubstantial) {
             workingNudge = nudge;
           }

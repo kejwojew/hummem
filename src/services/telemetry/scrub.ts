@@ -189,6 +189,10 @@ export const ALLOWED_PROPERTY_KEYS: Set<string> = new Set([
   // a flattened closed enum (no_intent | all_stale). Counters and booleans
   // only — a slot key, slot value, or project name must never reach this path.
   'nudges_shown',
+  // Warranted nudges the hook dropped on its short-prompt gate. Separate from
+  // nudges_shown so the delivered count stays honest and the dropped ones stay
+  // visible.
+  'nudges_suppressed_short',
   'prompts_with_intent',
   'avg_intent_slots',
   'nudge_reasons_no_intent',

@@ -168,11 +168,45 @@ describe('stale intent handling', () => {
     expect(block).not.toContain('today _[stale');
   });
 
-  it('one fresh slot among stale ones suppresses the nudge', () => {
+  // Previously a single fresh slot silenced the warning for its stale
+  // neighbours — the original bug (one live slot muting the reminder for a
+  // week) in miniature: one FRESH slot muting it for the dead ones, which were
+  // then visible only on the background channel.
+  it('a fresh slot does NOT silence the warning about its stale neighbours', () => {
     const { nudge } = renderWorkingMemory({
       entries: [
         fresh({ id: 1, key: 'old', value: 'x', updated_at_epoch: staleAt }),
         fresh({ id: 2, key: 'new', value: 'y' }),
+      ],
+    }, NOW);
+    expect(nudge).not.toBeNull();
+    // Named, not counted: an unaddressed "some slots are stale" is exactly the
+    // kind of nagging an agent learns to filter out.
+    expect(nudge).toContain('old');
+    expect(nudge).not.toContain('new');
+  });
+
+  it('names the stale keys oldest-first and summarises the overflow', () => {
+    const { nudge } = renderWorkingMemory({
+      entries: [
+        fresh({ id: 1, key: 'k1', value: 'a', updated_at_epoch: staleAt }),
+        fresh({ id: 2, key: 'k2', value: 'b', updated_at_epoch: staleAt - 1000 }),
+        fresh({ id: 3, key: 'k3', value: 'c', updated_at_epoch: staleAt - 2000 }),
+        fresh({ id: 4, key: 'k4', value: 'd', updated_at_epoch: staleAt - 3000 }),
+        fresh({ id: 5, key: 'still-warm', value: 'e' }),
+      ],
+    }, NOW);
+    // Oldest first, so a truncated list names the slots most likely to be wrong.
+    expect(nudge).toContain('k4, k3, k2');
+    expect(nudge).toContain('+1 more');
+    expect(nudge).not.toContain('still-warm');
+  });
+
+  it('stays silent when every slot is fresh', () => {
+    const { nudge } = renderWorkingMemory({
+      entries: [
+        fresh({ id: 1, key: 'a', value: 'x' }),
+        fresh({ id: 2, key: 'b', value: 'y' }),
       ],
     }, NOW);
     expect(nudge).toBeNull();
@@ -193,6 +227,15 @@ describe('stale intent handling', () => {
     }, NOW);
     expect(block).toContain('updated 10:00');
     expect(block).toContain('2h ago');
+  });
+
+  // The clock is rendered from toISOString(); unlabelled, a slot written at
+  // 09:13 local showing as 06:13 reads as a wrong time rather than a zone.
+  it('labels the clock as UTC', () => {
+    const { block } = renderWorkingMemory({
+      entries: [fresh({ key: 'a', value: '1', updated_at_epoch: NOW - 2 * 3_600_000 })],
+    }, NOW);
+    expect(block).toContain('10:00 UTC');
   });
 
   it('the stale nudge names the age and the recovery calls', () => {

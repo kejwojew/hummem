@@ -102,19 +102,32 @@ export class WorkingRoutes extends BaseRouteHandler {
    * two independent copies of that rule would drift, and the telemetry would
    * then describe a nudge policy that no longer exists.
    *
+   * `substantial` is the hook's delivery decision, passed in rather than
+   * re-derived: the hook drops the nudge on short prompts ("ok", "go", media),
+   * and a counter that recorded those as shown would inflate nudges_shown by
+   * exactly the prompts nobody was nudged on. That is the metric meant to
+   * reveal an unnoticed regression, so a false high reading is worse than no
+   * reading — it fires the "reminder is invisible" signature spuriously.
+   * Suppressions are counted separately instead of being erased.
+   *
    * Fail-open and side-effect-free for the caller: telemetry must never break
    * an injection read.
    */
-  private recordNudgeTelemetry(entries: WorkingEntry[]): void {
+  private recordNudgeTelemetry(entries: WorkingEntry[], substantial: boolean): void {
     try {
       const { nudge } = renderWorkingMemory({ entries });
       const intentCount = entries.filter(entry => entry.kind === 'intent').length;
       const journalCount = entries.filter(entry => entry.kind === 'journal').length;
+      // The reason describes the STATE of working memory (why a nudge was
+      // warranted), independent of whether this prompt was eligible to show
+      // it. Collapsing it to 'none' on suppression would erase the difference
+      // between "nothing to say" and "had something, prompt was too short".
       const reason = nudge === null
         ? 'none'
         : (intentCount === 0 ? 'no_intent' : 'all_stale');
       telemetryBuffer.record('working_nudge', null, {
-        nudged: nudge !== null,
+        nudged: nudge !== null && substantial,
+        nudge_suppressed_short: nudge !== null && !substantial,
         nudge_reason: reason,
         had_intent: intentCount > 0,
         intent_count: intentCount,
@@ -154,7 +167,13 @@ export class WorkingRoutes extends BaseRouteHandler {
     // (MCP) is never counted as a prompt the agent was nudged on; without the
     // gate the denominator would be meaningless.
     if (this.toStringParam(req.query.reason as string | string[] | undefined) === 'inject') {
-      this.recordNudgeTelemetry(entries);
+      // Absent substantial= (an older hook against a newer worker) is treated
+      // as "would be delivered": the pre-existing behaviour, and it keeps the
+      // counter from silently reading zero during a partial upgrade.
+      const substantialParam = this.toStringParam(
+        req.query.substantial as string | string[] | undefined,
+      );
+      this.recordNudgeTelemetry(entries, substantialParam !== '0');
     }
 
     res.json({

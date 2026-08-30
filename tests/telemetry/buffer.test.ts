@@ -433,11 +433,46 @@ describe('flush() — working_nudge_rollup', () => {
     expect(p.nudge_reasons_all_stale).toBe(1);
   });
 
+  // nudges_shown is the metric this channel exists for, and the hook drops the
+  // nudge on short prompts AFTER the worker records it. Counting warranted-
+  // but-dropped as shown would inflate it by every "ok" / "go" / media prompt,
+  // firing the "reminder is invisible" signature falsely.
+  it('separates delivered nudges from ones suppressed on short prompts', () => {
+    telemetryBuffer.record('working_nudge', null, {
+      nudged: true, nudge_suppressed_short: false, nudge_reason: 'no_intent', had_intent: false,
+    });
+    telemetryBuffer.record('working_nudge', null, {
+      nudged: false, nudge_suppressed_short: true, nudge_reason: 'no_intent', had_intent: false,
+    });
+    telemetryBuffer.record('working_nudge', null, {
+      nudged: false, nudge_suppressed_short: true, nudge_reason: 'all_stale', had_intent: true,
+    });
+
+    telemetryBuffer.flush();
+
+    const p = (postHogCaptureCalls.find(
+      (c): c is { event: string; properties: Record<string, unknown> } =>
+        (c as { event: string }).event === 'working_nudge_rollup'
+    )!).properties;
+    expect(p.count).toBe(3);
+    expect(p.nudges_shown).toBe(1);
+    expect(p.nudges_suppressed_short).toBe(2);
+    // The reason survives suppression, so "had something to say, prompt was
+    // too short" stays distinguishable from "nothing to say".
+    expect(p.nudge_reasons_no_intent).toBe(2);
+    expect(p.nudge_reasons_all_stale).toBe(1);
+  });
+
   // The rollup is worthless if the scrub whitelist drops its fields — the
   // failure mode would be a silently empty event.
   it('survives the property whitelist', () => {
     telemetryBuffer.record('working_nudge', null, {
-      nudged: true, nudge_reason: 'no_intent', had_intent: false, intent_count: 0, journal_count: 3,
+      nudged: true, nudge_suppressed_short: false, nudge_reason: 'no_intent',
+      had_intent: false, intent_count: 0, journal_count: 3,
+    });
+    telemetryBuffer.record('working_nudge', null, {
+      nudged: false, nudge_suppressed_short: true, nudge_reason: 'no_intent',
+      had_intent: false, intent_count: 0, journal_count: 3,
     });
     telemetryBuffer.flush();
 
@@ -446,8 +481,9 @@ describe('flush() — working_nudge_rollup', () => {
         (c as { event: string }).event === 'working_nudge_rollup'
     )!).properties;
     expect(p.nudges_shown).toBe(1);
+    expect(p.nudges_suppressed_short).toBe(1);
     expect(p.prompts_with_intent).toBe(0);
-    expect(p.nudge_reasons_no_intent).toBe(1);
+    expect(p.nudge_reasons_no_intent).toBe(2);
   });
 
   it('does not disturb the context_injected bucket', () => {

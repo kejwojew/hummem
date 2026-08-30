@@ -98,9 +98,20 @@ interface ContextInjectedRecord {
  * value, or project name.
  */
 interface WorkingNudgeRecord {
-  /** A nudge was injected on this prompt. */
+  /**
+   * A nudge was actually DELIVERED on this prompt — warranted by the state of
+   * working memory AND past the hook's short-prompt gate. Not "a nudge was
+   * warranted": counting warranted-but-dropped here would inflate the one
+   * metric this channel exists to keep honest.
+   */
   nudged?: boolean;
-  /** Closed enum: 'no_intent' | 'all_stale' | 'none'. */
+  /** Warranted, but dropped because the prompt was too short to nudge on. */
+  nudge_suppressed_short?: boolean;
+  /**
+   * Closed enum: 'no_intent' | 'all_stale' | 'none'. Describes the STATE of
+   * working memory, independent of delivery — so a suppressed nudge still
+   * reports why it was warranted.
+   */
   nudge_reason?: string;
   /** At least one live intent slot existed at injection time. */
   had_intent?: boolean;
@@ -392,8 +403,11 @@ function computeWorkingNudgeRollup(
   let reasonNoIntent = 0;
   let reasonAllStale = 0;
 
+  let nudgesSuppressedShort = 0;
+
   for (const r of records) {
     if (r.nudged === true) nudgesShown++;
+    if (r.nudge_suppressed_short === true) nudgesSuppressedShort++;
     if (r.had_intent === true) promptsWithIntent++;
     if (typeof r.intent_count === 'number' && Number.isFinite(r.intent_count)) {
       totalIntentSlots += r.intent_count;
@@ -406,6 +420,11 @@ function computeWorkingNudgeRollup(
   return {
     count,
     nudges_shown: nudgesShown,
+    // Warranted but dropped on the short-prompt gate. Kept apart from
+    // nudges_shown so the delivered count stays honest, and kept at all so the
+    // suppressed ones are not simply invisible: nudges_shown +
+    // nudges_suppressed_short is the number of prompts a nudge was warranted on.
+    nudges_suppressed_short: nudgesSuppressedShort,
     prompts_with_intent: promptsWithIntent,
     avg_intent_slots: intentSlotSamples > 0 ? totalIntentSlots / intentSlotSamples : 0,
     // Flattened, like the annotation outcomes above — a nested histogram would

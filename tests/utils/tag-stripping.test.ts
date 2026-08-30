@@ -1,6 +1,12 @@
 
 import { describe, it, expect, beforeEach, afterEach, spyOn, mock } from 'bun:test';
-import { stripMemoryTags, isInternalProtocolPayload } from '../../src/utils/tag-stripping.js';
+import {
+  stripMemoryTags,
+  isInternalProtocolPayload,
+  SYSTEM_REMINDER_REGEX,
+  SYSTEM_REMINDER_OPEN,
+  TAG_NAMES,
+} from '../../src/utils/tag-stripping.js';
 import { logger } from '../../src/utils/logger.js';
 
 let loggerSpies: ReturnType<typeof spyOn>[] = [];
@@ -445,6 +451,47 @@ after`;
     it('returns false for two adjacent protocol blocks (deliberate: deny-list per single block, not concatenations)', () => {
       const text = '<task-notification>a</task-notification><task-notification>b</task-notification>';
       expect(isInternalProtocolPayload(text)).toBe(false);
+    });
+  });
+
+  // SYSTEM_REMINDER_REGEX is the single-tag scrubber used by the transcript
+  // readers (transcript-parser.ts, ObservationCompiler.ts). It used to be a
+  // hand-written literal sitting outside the Extract<> guard that covers the
+  // OPEN/CLOSE constants — a third copy of the tag name that a rename would
+  // have left behind, compiling cleanly while letting reminders through into
+  // distillation.
+  describe('SYSTEM_REMINDER_REGEX', () => {
+    function strip(input: string): string {
+      SYSTEM_REMINDER_REGEX.lastIndex = 0;
+      return input.replace(SYSTEM_REMINDER_REGEX, '');
+    }
+
+    it('is derived from the same tag name as the wrapper constants', () => {
+      expect(SYSTEM_REMINDER_OPEN).toBe('<system-reminder>');
+      expect(TAG_NAMES).toContain('system-reminder');
+      expect(SYSTEM_REMINDER_REGEX.source).toContain('system-reminder');
+      expect(SYSTEM_REMINDER_REGEX.flags).toContain('g');
+    });
+
+    it('strips a plain reminder block', () => {
+      expect(strip('a <system-reminder>hint</system-reminder> b')).toBe('a  b');
+    });
+
+    // Matches STRIP_REGEX's `\b[^>]*>`. Previously this path required a bare
+    // tag, so a host emitting attributes would be scrubbed by one path and
+    // not the other.
+    it('strips a reminder block carrying attributes', () => {
+      expect(strip('a <system-reminder priority="high">hint</system-reminder> b')).toBe('a  b');
+    });
+
+    it('strips every occurrence, not just the first', () => {
+      expect(strip('<system-reminder>x</system-reminder>mid<system-reminder>y</system-reminder>'))
+        .toBe('mid');
+    });
+
+    it('leaves unrelated tags alone', () => {
+      const input = '<other-tag>keep</other-tag>';
+      expect(strip(input)).toBe(input);
     });
   });
 });

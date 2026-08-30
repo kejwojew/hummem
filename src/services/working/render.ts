@@ -86,11 +86,17 @@ function formatAge(ageMs: number): string {
  */
 function formatStamp(epochMs: number, now: number): string {
   const ageMs = Math.max(0, now - epochMs);
+  // Marked UTC explicitly: the clock is rendered from toISOString(), so a slot
+  // written at 09:13 local shows as 06:13 here. Unlabelled, that reads as a
+  // wrong time rather than a different zone — the exact "is this current?"
+  // confusion this stamp exists to remove. Local time would be friendlier but
+  // makes the rendered output depend on the host zone, which would leave these
+  // strings untestable in CI.
   if (ageMs < DAY_MS) {
-    return `updated ${formatTimeHHMM(epochMs)} (${formatAge(ageMs)})`;
+    return `updated ${formatTimeHHMM(epochMs)} UTC (${formatAge(ageMs)})`;
   }
   const date = new Date(epochMs).toISOString().slice(0, 10);
-  return `updated ${date} ${formatTimeHHMM(epochMs)} (${formatAge(ageMs)})`;
+  return `updated ${date} ${formatTimeHHMM(epochMs)} UTC (${formatAge(ageMs)})`;
 }
 
 /**
@@ -124,6 +130,34 @@ export function staleIntentNudge(oldestAgeMs: number, staleCount: number): strin
   ].join(' ');
 }
 
+/**
+ * Nudge for "some slots are stale while others are fresh".
+ *
+ * Without this, refreshing ONE slot silenced the warning for its stale
+ * neighbours — the same defect as the original bug (one live slot muting the
+ * reminder for a week) in a weaker form: one FRESH slot muting it for the
+ * dead ones. The stale entries would still be visible, but only inside the
+ * block, i.e. on the channel this whole design declares to be background.
+ *
+ * Named keys, not a count: "bottleneck-now and known-gaps describe the state
+ * two days ago" is actionable, while "some slots are stale" is the kind of
+ * unaddressed nagging an agent learns to filter out — the failure mode that
+ * made the original reminder invisible.
+ */
+export function partialStaleNudge(staleKeys: string[], oldestAgeMs: number): string {
+  const named = staleKeys.slice(0, MAX_NAMED_STALE_KEYS);
+  const overflow = staleKeys.length - named.length;
+  const list = named.join(', ') + (overflow > 0 ? ` (+${overflow} more)` : '');
+  const verb = staleKeys.length === 1 ? 'describes' : 'describe';
+  return [
+    `Working memory is part stale: ${list} ${verb} an earlier state (oldest ${formatAge(oldestAgeMs)}), while other slots are current.`,
+    'Refresh what still matters with working_set(key, value) and drop what does not with working_drop(key), so the block can be read as one consistent picture.',
+  ].join(' ');
+}
+
+/** Keep the line short enough to stay readable; the rest is summarised. */
+const MAX_NAMED_STALE_KEYS = 3;
+
 function renderTaskSection(taskKey: string, intents: WorkingEntry[], now: number): string {
   const lastUpdated = Math.max(...intents.map(entry => entry.updated_at_epoch));
   const lines = [`## Working Memory — task: ${taskKey} (${formatStamp(lastUpdated, now)})`];
@@ -144,9 +178,14 @@ function renderTaskSection(taskKey: string, intents: WorkingEntry[], now: number
  * but ARE counted for the nudge.
  *
  * Nudge policy:
- *   - no intent at all      → noIntentNudge (with the live journal counter)
- *   - every intent is stale → staleIntentNudge
- *   - at least one fresh    → no nudge; the block speaks for itself
+ *   - no intent at all       → noIntentNudge (with the live journal counter)
+ *   - every intent is stale  → staleIntentNudge
+ *   - some stale, some fresh → partialStaleNudge, naming the stale keys
+ *   - nothing stale          → no nudge; the block speaks for itself
+ *
+ * The third case exists because "at least one fresh slot ⇒ silence" repeated
+ * the original bug in miniature: refreshing one slot muted the warning for its
+ * dead neighbours, leaving them visible only on the background channel.
  */
 export function renderWorkingMemory(
   payload: WorkingRenderPayload,
@@ -179,13 +218,24 @@ export function renderWorkingMemory(
   const staleEntries = intents.filter(
     entry => now - entry.updated_at_epoch >= STALE_INTENT_AFTER_MS,
   );
-  const allStale = staleEntries.length === intents.length;
-  const oldestAgeMs = allStale
-    ? Math.max(...staleEntries.map(entry => now - entry.updated_at_epoch))
-    : 0;
 
-  return {
-    block,
-    nudge: allStale ? staleIntentNudge(oldestAgeMs, staleEntries.length) : null,
-  };
+  if (staleEntries.length === 0) {
+    return { block, nudge: null };
+  }
+
+  const oldestAgeMs = Math.max(
+    ...staleEntries.map(entry => now - entry.updated_at_epoch),
+  );
+
+  if (staleEntries.length === intents.length) {
+    return { block, nudge: staleIntentNudge(oldestAgeMs, staleEntries.length) };
+  }
+
+  // Oldest first: when the list is truncated, the slots most likely to be
+  // wrong are the ones that get named.
+  const staleKeys = [...staleEntries]
+    .sort((a, b) => a.updated_at_epoch - b.updated_at_epoch)
+    .map(entry => entry.key);
+
+  return { block, nudge: partialStaleNudge(staleKeys, oldestAgeMs) };
 }
