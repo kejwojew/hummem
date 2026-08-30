@@ -1,6 +1,6 @@
 // BMP-safe context sanitization (issue #2787).
 //
-// claude-mem injects a <claude-mem-context> block into auto-loaded CLAUDE.md /
+// hummem injects a <hummem-context> block into auto-loaded CLAUDE.md /
 // AGENTS.md / *.mdc files. Claude Code has a known bug class where it truncates
 // the auto-loaded context at a UTF-16 code-unit boundary; if the cut lands
 // inside an astral (non-BMP) character's surrogate pair, a LONE surrogate is

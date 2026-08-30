@@ -3,6 +3,7 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync, renameSync } from '
 import { join } from 'path';
 import { logger } from './logger.js';
 import { toBmpSafe } from './bmp-safe.js';
+import { writeRulesFile } from './context-injection.js';
 
 export interface CursorProjectRegistry {
   [projectName: string]: {
@@ -63,14 +64,10 @@ export function unregisterCursorProject(registryFile: string, projectName: strin
 
 export function writeContextFile(workspacePath: string, context: string): void {
   const rulesDir = join(workspacePath, '.cursor', 'rules');
-  const rulesFile = join(rulesDir, 'claude-mem-context.mdc');
-  const tempFile = `${rulesFile}.tmp`;
-
-  mkdirSync(rulesDir, { recursive: true });
 
   const content = `---
 alwaysApply: true
-description: "Claude-mem context from past sessions (auto-updated)"
+description: "hummem context from past sessions (auto-updated)"
 ---
 
 # Memory Context from Past Sessions
@@ -83,8 +80,9 @@ ${toBmpSafe(context)}
 *Updated after last session. Use hummem's MCP search tools for more detailed queries.*
 `;
 
-  writeFileSync(tempFile, content);
-  renameSync(tempFile, rulesFile);
+  // Writes the canonical basename and removes the pre-rename file. Cursor
+  // applies every rules file, so leaving both would inject context twice.
+  writeRulesFile(rulesDir, '.mdc', content);
 }
 
 export function configureCursorMcp(mcpJsonPath: string, mcpServerScriptPath: string): void {

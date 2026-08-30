@@ -6,7 +6,21 @@ import {
   injectContextIntoMarkdownFile,
   CONTEXT_TAG_OPEN,
   CONTEXT_TAG_CLOSE,
+  CONTEXT_TAG_NAME,
+  LEGACY_CONTEXT_TAG_NAME,
+  CONTEXT_RULES_BASENAME,
+  LEGACY_CONTEXT_RULES_BASENAME,
+  findTaggedBlock,
+  hasTaggedBlock,
+  replaceTaggedBlock,
+  stripTaggedBlock,
+  writeRulesFile,
+  rulesFileCandidates,
 } from '../src/utils/context-injection';
+import { TAG_NAMES } from '../src/utils/tag-stripping';
+
+const LEGACY_OPEN = `<${LEGACY_CONTEXT_TAG_NAME}>`;
+const LEGACY_CLOSE = `</${LEGACY_CONTEXT_TAG_NAME}>`;
 
 describe('Context Injection', () => {
   let tempDir: string;
@@ -26,8 +40,15 @@ describe('Context Injection', () => {
 
   describe('tag constants', () => {
     it('exports correct open and close tags', () => {
-      expect(CONTEXT_TAG_OPEN).toBe('<claude-mem-context>');
-      expect(CONTEXT_TAG_CLOSE).toBe('</claude-mem-context>');
+      expect(CONTEXT_TAG_OPEN).toBe('<hummem-context>');
+      expect(CONTEXT_TAG_CLOSE).toBe('</hummem-context>');
+    });
+
+    // Injected memory that is not stripped comes back as a fresh observation
+    // on the next distillation pass. Both spellings must stay strippable.
+    it('both spellings are in the strip list', () => {
+      expect(TAG_NAMES).toContain(CONTEXT_TAG_NAME);
+      expect(TAG_NAMES).toContain(LEGACY_CONTEXT_TAG_NAME);
     });
   });
 
@@ -175,6 +196,125 @@ describe('Context Injection', () => {
 
       const content = readFileSync(filePath, 'utf-8');
       expect(content).toContain(`# Header\n\n${CONTEXT_TAG_OPEN}`);
+    });
+  });
+
+  // The rename is only safe because the block is REPLACED in place: the first
+  // write after an upgrade finds the pre-rename block and overwrites it. If
+  // legacy READ support were dropped, the old block would not be found, a
+  // second block would be appended, and the user would carry two context
+  // blocks forever.
+  describe('legacy tag migration', () => {
+    it('finds a legacy block', () => {
+      const found = findTaggedBlock(`a\n${LEGACY_OPEN}\nold\n${LEGACY_CLOSE}\nb`);
+      expect(found).not.toBeNull();
+      expect(found!.tagName).toBe(LEGACY_CONTEXT_TAG_NAME);
+    });
+
+    it('prefers the canonical block when both are present', () => {
+      const found = findTaggedBlock(
+        `${CONTEXT_TAG_OPEN}\nnew\n${CONTEXT_TAG_CLOSE}\n${LEGACY_OPEN}\nold\n${LEGACY_CLOSE}`,
+      );
+      expect(found!.tagName).toBe(CONTEXT_TAG_NAME);
+    });
+
+    it('rewrites a legacy block into the canonical tag — the whole point', () => {
+      const result = replaceTaggedBlock(
+        `# Header\n\n${LEGACY_OPEN}\nold context\n${LEGACY_CLOSE}\n\n## Footer`,
+        'fresh context',
+      );
+      expect(result).toContain(CONTEXT_TAG_OPEN);
+      expect(result).toContain('fresh context');
+      expect(result).not.toContain(LEGACY_OPEN);
+      expect(result).not.toContain('old context');
+      expect(result).toContain('# Header');
+      expect(result).toContain('## Footer');
+    });
+
+    it('leaves exactly ONE block after migrating — no duplication', () => {
+      const filePath = join(tempDir, 'CLAUDE.md');
+      writeFileSync(filePath, `# P\n\n${LEGACY_OPEN}\nold\n${LEGACY_CLOSE}\n`);
+
+      injectContextIntoMarkdownFile(filePath, 'migrated');
+      const content = readFileSync(filePath, 'utf-8');
+
+      expect(content.split(CONTEXT_TAG_OPEN).length - 1).toBe(1);
+      expect(content).not.toContain(LEGACY_OPEN);
+      expect(content).not.toContain(LEGACY_CLOSE);
+    });
+
+    it('is stable across repeated writes after migrating', () => {
+      const filePath = join(tempDir, 'CLAUDE.md');
+      writeFileSync(filePath, `${LEGACY_OPEN}\nold\n${LEGACY_CLOSE}\n`);
+
+      injectContextIntoMarkdownFile(filePath, 'v1');
+      injectContextIntoMarkdownFile(filePath, 'v1');
+      const content = readFileSync(filePath, 'utf-8');
+
+      expect(content.split(CONTEXT_TAG_OPEN).length - 1).toBe(1);
+    });
+
+    // Pairing indexOf(open) of one spelling with indexOf(close) of another
+    // would compute a bogus range and corrupt the file on write.
+    it('ignores a mismatched tag pair rather than computing a bogus range', () => {
+      expect(findTaggedBlock(`${CONTEXT_TAG_OPEN}\nbody\n${LEGACY_CLOSE}`)).toBeNull();
+    });
+
+    it('ignores a closing tag that precedes its opening tag', () => {
+      expect(findTaggedBlock(`${CONTEXT_TAG_CLOSE}\nbody\n${CONTEXT_TAG_OPEN}`)).toBeNull();
+    });
+
+    it('strips either spelling', () => {
+      expect(stripTaggedBlock(`x\n${LEGACY_OPEN}\nc\n${LEGACY_CLOSE}\ny`)).toBe('x\n\ny');
+      expect(stripTaggedBlock(`x\n${CONTEXT_TAG_OPEN}\nc\n${CONTEXT_TAG_CLOSE}\ny`)).toBe('x\n\ny');
+      expect(stripTaggedBlock('no block here')).toBe('no block here');
+    });
+
+    it('detects either spelling', () => {
+      expect(hasTaggedBlock(`${LEGACY_OPEN}\nc\n${LEGACY_CLOSE}`)).toBe(true);
+      expect(hasTaggedBlock(`${CONTEXT_TAG_OPEN}\nc\n${CONTEXT_TAG_CLOSE}`)).toBe(true);
+      expect(hasTaggedBlock('plain file')).toBe(false);
+    });
+  });
+
+  // A filename does NOT heal itself: writing the canonical basename next to a
+  // legacy one leaves both on disk, and Cursor/Windsurf apply every rules
+  // file — the user would get their context twice on every prompt.
+  describe('rules file migration', () => {
+    it('writes the canonical basename and deletes the legacy file', () => {
+      const rulesDir = join(tempDir, '.cursor', 'rules');
+      mkdirSync(rulesDir, { recursive: true });
+      const legacyFile = join(rulesDir, `${LEGACY_CONTEXT_RULES_BASENAME}.mdc`);
+      writeFileSync(legacyFile, 'stale rules content');
+
+      const written = writeRulesFile(rulesDir, '.mdc', 'fresh rules content');
+
+      expect(written).toBe(join(rulesDir, `${CONTEXT_RULES_BASENAME}.mdc`));
+      expect(existsSync(written)).toBe(true);
+      expect(readFileSync(written, 'utf-8')).toBe('fresh rules content');
+      expect(existsSync(legacyFile)).toBe(false);
+    });
+
+    it('works when no legacy file exists', () => {
+      const rulesDir = join(tempDir, '.windsurf', 'rules');
+      const written = writeRulesFile(rulesDir, '.md', 'content');
+
+      expect(existsSync(written)).toBe(true);
+      expect(existsSync(join(rulesDir, `${LEGACY_CONTEXT_RULES_BASENAME}.md`))).toBe(false);
+    });
+
+    it('leaves no temp file behind', () => {
+      const rulesDir = join(tempDir, '.cursor', 'rules');
+      const written = writeRulesFile(rulesDir, '.mdc', 'content');
+      expect(existsSync(`${written}.tmp`)).toBe(false);
+    });
+
+    // Uninstall has to clean both, or a pre-rename install keeps injecting
+    // context after the user asked for removal.
+    it('offers both spellings for cleanup, canonical first', () => {
+      const candidates = rulesFileCandidates('/tmp/rules', '.mdc');
+      expect(candidates[0]).toContain(`${CONTEXT_RULES_BASENAME}.mdc`);
+      expect(candidates[1]).toContain(`${LEGACY_CONTEXT_RULES_BASENAME}.mdc`);
     });
   });
 

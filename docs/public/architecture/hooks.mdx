@@ -394,7 +394,7 @@ promptNumber = db.incrementPromptCounter(sessionDbId)
 
 // 4. Strip privacy tags
 cleanedPrompt = stripMemoryTags(prompt)
-// Removes <private>...</private> and <claude-mem-context>...</claude-mem-context>
+// Removes <private>...</private> and <hummem-context>...</hummem-context>
 
 // 5. Skip if fully private
 if (!cleanedPrompt || cleanedPrompt.trim() === '') {
@@ -830,7 +830,7 @@ Never generate your own session IDs. Always use the `session_id` provided by the
 <private>sensitive data</private>
 
 // System-Level Recursion Prevention (auto-injected)
-<claude-mem-context>...</claude-mem-context>
+<hummem-context>...</hummem-context>
 ```
 
 ### Processing Pipeline

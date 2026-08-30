@@ -3,10 +3,22 @@ import { mkdirSync, writeFileSync, readFileSync, existsSync, rmSync } from 'fs';
 import { join } from 'path';
 import { tmpdir } from 'os';
 import { writeContextFile } from '../src/utils/cursor-utils';
+import {
+  CONTEXT_RULES_BASENAME,
+  LEGACY_CONTEXT_RULES_BASENAME,
+} from '../src/utils/context-injection';
+
+function contextFilePath(workspacePath: string): string {
+  return join(workspacePath, '.cursor', 'rules', `${CONTEXT_RULES_BASENAME}.mdc`);
+}
+
+function legacyContextFilePath(workspacePath: string): string {
+  return join(workspacePath, '.cursor', 'rules', `${LEGACY_CONTEXT_RULES_BASENAME}.mdc`);
+}
 
 // Read-back helper for verifying writeContextFile output.
 function readContextFile(workspacePath: string): string | null {
-  const rulesFile = join(workspacePath, '.cursor', 'rules', 'claude-mem-context.mdc');
+  const rulesFile = contextFilePath(workspacePath);
   if (!existsSync(rulesFile)) return null;
   return readFileSync(rulesFile, 'utf-8');
 }
@@ -37,11 +49,24 @@ describe('Cursor Context Update', () => {
       expect(existsSync(rulesDir)).toBe(true);
     });
 
-    it('creates claude-mem-context.mdc file', () => {
+    it(`creates ${CONTEXT_RULES_BASENAME}.mdc file`, () => {
       writeContextFile(workspacePath, 'test context');
 
-      const rulesFile = join(workspacePath, '.cursor', 'rules', 'claude-mem-context.mdc');
-      expect(existsSync(rulesFile)).toBe(true);
+      expect(existsSync(contextFilePath(workspacePath))).toBe(true);
+    });
+
+    // Cursor applies every file in .cursor/rules, so an upgrade that leaves
+    // the pre-rename file behind would inject the context twice per prompt.
+    it('removes the pre-rename rules file it replaces', () => {
+      const legacyFile = legacyContextFilePath(workspacePath);
+      mkdirSync(join(workspacePath, '.cursor', 'rules'), { recursive: true });
+      writeFileSync(legacyFile, 'stale context from before the rename');
+
+      writeContextFile(workspacePath, 'fresh context');
+
+      expect(existsSync(contextFilePath(workspacePath))).toBe(true);
+      expect(existsSync(legacyFile)).toBe(false);
+      expect(readContextFile(workspacePath)).toContain('fresh context');
     });
 
     it('includes alwaysApply: true in frontmatter', () => {
@@ -55,7 +80,7 @@ describe('Cursor Context Update', () => {
       writeContextFile(workspacePath, 'test context');
 
       const content = readContextFile(workspacePath);
-      expect(content).toContain('description: "Claude-mem context from past sessions (auto-updated)"');
+      expect(content).toContain('description: "hummem context from past sessions (auto-updated)"');
     });
 
     it('includes the provided context in the file body', () => {
@@ -88,8 +113,7 @@ describe('Cursor Context Update', () => {
     it('uses atomic write (no temp file left behind)', () => {
       writeContextFile(workspacePath, 'test context');
 
-      const tempFile = join(workspacePath, '.cursor', 'rules', 'claude-mem-context.mdc.tmp');
-      expect(existsSync(tempFile)).toBe(false);
+      expect(existsSync(`${contextFilePath(workspacePath)}.tmp`)).toBe(false);
     });
 
     it('overwrites existing context file', () => {

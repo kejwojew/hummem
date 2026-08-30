@@ -51,7 +51,16 @@ describe('AntigravityCliHooksInstaller - event mapping (B0-confirmed 7-event map
   });
 
   it('writes the rules/context placeholder to the plural, home-relative .agents/rules path', () => {
-    expect(src).toContain("path.join(homedir(), '.agents', 'rules', 'claude-mem-context.md')");
+    // The basename moved into a shared constant during the tag rename; the
+    // load-bearing part of this assertion is the plural, home-relative dir.
+    expect(src).toContain("path.join(homedir(), '.agents', 'rules')");
+    expect(src).toContain('`${CONTEXT_RULES_BASENAME}.md`');
+  });
+
+  // The pre-rename file is auto-applied like any other rules file, so an
+  // upgrade that leaves it behind injects the context twice.
+  it('removes the pre-rename rules file on install', () => {
+    expect(src).toContain('removeLegacyRulesFile');
   });
 });
 

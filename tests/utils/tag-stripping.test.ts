@@ -39,6 +39,21 @@ describe('Tag Stripping Utilities', () => {
         expect(result).toBe('public content  more public');
       });
 
+      // Canonical spelling since the 2026-08-29 rename. Not stripping this one
+      // would feed every injected context block back into distillation as a
+      // fresh observation.
+      it('should strip single <hummem-context> tag', () => {
+        const input = 'public content <hummem-context>injected context</hummem-context> more public';
+        const result = stripMemoryTags(input);
+        expect(result).toBe('public content  more public');
+      });
+
+      it('should strip both context spellings in one pass', () => {
+        const input = 'a <hummem-context>new</hummem-context> b <claude-mem-context>old</claude-mem-context> c';
+        const result = stripMemoryTags(input);
+        expect(result).toBe('a  b  c');
+      });
+
       it('should strip both tag types in mixed content', () => {
         const input = '<private>secret</private> public <claude-mem-context>context</claude-mem-context> end';
         const result = stripMemoryTags(input);

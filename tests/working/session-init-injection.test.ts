@@ -7,6 +7,7 @@
 import { afterAll, beforeEach, describe, expect, it, spyOn } from 'bun:test';
 
 import { logger } from '../../src/utils/logger.js';
+import { CONTEXT_TAG_OPEN, CONTEXT_TAG_CLOSE } from '../../src/utils/context-injection.js';
 
 let loggerSpies: ReturnType<typeof spyOn>[] = [];
 
@@ -122,13 +123,13 @@ describe('sessionInitHandler working-memory injection', () => {
     const ctx = result.hookSpecificOutput.additionalContext as string;
     expect(ctx).toContain('working_set');
     // The nudge is an instruction: it must ride <system-reminder>, NOT the
-    // background <claude-mem-context> block the agent treats as reference.
+    // background context block the agent treats as reference.
     expect(ctx).toContain('<system-reminder>');
     expect(ctx).toContain('</system-reminder>');
     const reminderStart = ctx.indexOf('<system-reminder>');
     expect(ctx.indexOf('working_set')).toBeGreaterThan(reminderStart);
     // With no memory to show there is no context block at all.
-    expect(ctx).not.toContain('<claude-mem-context>');
+    expect(ctx).not.toContain(CONTEXT_TAG_OPEN);
   });
 
   it('keeps block and nudge in separate top-level tags when state is stale', () => {
@@ -150,8 +151,8 @@ describe('sessionInitHandler working-memory injection', () => {
     expect(ctx).toContain('_[stale,');
     // Nesting the reminder inside the context block would re-file the
     // instruction as background reference — the exact bug being fixed.
-    expect(ctx).toContain('</claude-mem-context>');
-    expect(ctx.indexOf('</claude-mem-context>')).toBeLessThan(ctx.indexOf('<system-reminder>'));
+    expect(ctx).toContain(CONTEXT_TAG_CLOSE);
+    expect(ctx.indexOf(CONTEXT_TAG_CLOSE)).toBeLessThan(ctx.indexOf('<system-reminder>'));
   });
 
   it('is fail-open: a worker error leaves the hook result intact', () => {
