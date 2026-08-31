@@ -1,6 +1,6 @@
 ---
 name: version-bump
-description: Automated semantic versioning and release workflow for Claude Code plugins. Handles version increments across package.json, marketplace.json, plugin.json manifests, build verification, git tagging, GitHub releases, and changelog generation. NPM publishing (so `npx hummem@X.Y.Z` resolves) is handed off to the human maintainer, who raised npm security.
+description: Automated semantic versioning and release workflow for Claude Code plugins. Handles version increments across package.json, marketplace.json, plugin.json manifests, build verification, git tagging, GitHub releases, and changelog generation. NPM publishing (so `npx hummem@X.Y.Z` resolves) happens automatically in CI when the version tag is pushed — never publish by hand.
 ---
 
 # Version Bump & Release Workflow
@@ -33,20 +33,25 @@ description: Automated semantic versioning and release workflow for Claude Code 
 4.  **Commit**: `git add -A && git commit -m "chore: bump version to X.Y.Z"`.
 5.  **Tag**: `git tag -a vX.Y.Z -m "Version X.Y.Z"`.
 6.  **Push**: `git push origin main && git push origin vX.Y.Z`.
-7.  **Publish to npm — HAND OFF TO HUMAN.** The human maintainer raised npm
-    security, so publishing now requires credentials/2FA only they can provide.
-    The agent MUST NOT run `npm publish` (or `np` / `npm run release:*`, which
-    also publish) itself. **Hand off NPM publishing to the human now:** stop and
-    tell them the version is committed, tagged, and pushed, and that they must
-    publish to npm to make `npx hummem@X.Y.Z` resolve. Give them the command:
+7.  **Publish to npm — AUTOMATIC, triggered by the tag push in step 6.**
+    `.github/workflows/npm-publish.yml` fires on any `v*` tag and runs build →
+    `smoke:clean-room` → `npm publish`, authenticating with the `NPM_TOKEN`
+    repository secret (configured 2026-08-31; `gh secret list` to confirm it is
+    still present).
+
+    **Do NOT run `npm publish` locally**, and do not run `np` / `npm run
+    release:*` — those publish too, and doing so races the workflow for the
+    same version number. Publishing is a consequence of the tag, nothing else.
+
+    Watch the run and confirm it landed:
     ```bash
-    npm publish   # run by the HUMAN — the prepublishOnly script rebuilds the package
+    gh run list --workflow npm-publish.yml --limit 1
+    gh run watch <run-id>            # optional, follow it live
+    npm view hummem@X.Y.Z version    # should print X.Y.Z
     ```
-    Wait for the human to confirm they published, then verify it landed:
-    ```bash
-    npm view claude-mem@X.Y.Z version   # should print X.Y.Z
-    ```
-    If the publish build touched local artifacts, run `npm run build-and-sync` again afterward.
+    If the workflow fails, read the failing step before retrying: a version
+    already on the registry cannot be republished, so a partial failure after
+    `npm publish` succeeded needs a version bump rather than a re-run.
 8.  **GitHub release**: `gh release create vX.Y.Z --title "vX.Y.Z" --notes "RELEASE_NOTES"`.
 9.  **Changelog**: Regenerate via the project's changelog script:
     ```bash
@@ -67,7 +72,7 @@ description: Automated semantic versioning and release workflow for Claude Code 
 - [ ] `git grep` for old version returns zero hits
 - [ ] `npm run build-and-sync` succeeded
 - [ ] Git tag created and pushed
-- [ ] **NPM publishing handed off to the human** (agent does NOT run `npm publish` — human raised security); once they publish, `npm view claude-mem@X.Y.Z version` confirms it (so `npx hummem@X.Y.Z` resolves)
+- [ ] **npm publish ran in CI off the tag** — never by hand (`gh run list --workflow npm-publish.yml --limit 1`), and `npm view hummem@X.Y.Z version` confirms it (so `npx hummem@X.Y.Z` resolves)
 - [ ] GitHub release created with notes
 - [ ] `CHANGELOG.md` updated and pushed
 - [ ] Discord notification run from `~/Scripts/claude-mem/`
