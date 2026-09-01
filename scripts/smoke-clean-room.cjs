@@ -41,6 +41,17 @@ const path = require('path');
 const REPO_ROOT = path.join(__dirname, '..');
 const PLUGIN_DIR = path.join(REPO_ROOT, 'plugin');
 
+// Read the published identity from the manifest instead of hardcoding it. These
+// used to be the literal 'claude-mem', which silently stopped matching when the
+// package was renamed: the tarball installed fine but this smoke test looked for
+// node_modules/claude-mem, reported "installed package not found" and failed CI
+// on every PR. Deriving both from package.json keeps a future rename honest.
+const ROOT_PKG = JSON.parse(
+  fs.readFileSync(path.join(REPO_ROOT, 'package.json'), 'utf8')
+);
+const PKG_NAME = ROOT_PKG.name;
+const BIN_NAME = ROOT_PKG.name;
+
 // zod v4 subpath exports that @modelcontextprotocol/sdk (and friends) require at
 // runtime. These are the exact specifiers behind the #2730 incident.
 const ZOD_SPECIFIERS = ['zod', 'zod/v3', 'zod/v4', 'zod/v4-mini'];
@@ -221,7 +232,7 @@ function checkPackageCompleteness(failures) {
     return;
   }
 
-  const pkgRoot = path.join(tmpPkg, 'node_modules', 'claude-mem');
+  const pkgRoot = path.join(tmpPkg, 'node_modules', PKG_NAME);
   if (!fs.existsSync(pkgRoot)) {
     failures.push(`installed package not found at ${pkgRoot}`);
     return;
@@ -247,7 +258,7 @@ function checkPackageCompleteness(failures) {
   const binPath =
     typeof binField === 'string'
       ? binField
-      : binField && binField['claude-mem'];
+      : binField && binField[BIN_NAME];
   if (binPath) {
     const abs = path.join(pkgRoot, binPath);
     if (fs.existsSync(abs)) entries.push({ label: `bin (${binPath})`, abs, kind: 'bin' });
