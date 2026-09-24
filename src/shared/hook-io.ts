@@ -12,6 +12,8 @@
  *  - MODEL_CONTEXT     content the assistant consumes. stdout JSON only.
  *  - USER_HINT         short advisory shown to the human, via HookResult.systemMessage.
  *  - BLOCKING_FEEDBACK error message the model must see (stderr + exit 2).
+ *  - NONBLOCKING_WARNING operator-visible problem that must not stop the user's
+ *                    turn (stderr + exit 1: Claude Code shows it and carries on).
  *  - EXIT_SIGNAL       pure status, no payload (exit 0).
  *
  * Lives in src/shared/ (not src/cli/) so that src/shared/worker-utils.ts and
@@ -145,6 +147,25 @@ export function emitBlockingError(msg: string, options: ExitOptions = {}): void 
   bypassWrite(msg.endsWith('\n') ? msg : `${msg}\n`);
   if (!options.skipExit) {
     process.exit(2);
+  }
+}
+
+/**
+ * NONBLOCKING_WARNING: surface `msg` (plus buffered stderr) to the human
+ * without blocking anything, then exit 1. Exit 2 means "block" to Claude Code:
+ * it rejects a UserPromptSubmit prompt outright and keeps a Stop turn going,
+ * so a memory-plugin problem must never use it. Exit 1 is Claude Code's
+ * non-blocking error: stderr is shown and the prompt, tool call or stop
+ * proceeds.
+ */
+export function emitNonBlockingWarning(msg: string, options: ExitOptions = {}): void {
+  if (bufferedChunks && bufferedChunks.length > 0) {
+    bypassWrite(bufferedChunks.join(''));
+    bufferedChunks = [];
+  }
+  bypassWrite(msg.endsWith('\n') ? msg : `${msg}\n`);
+  if (!options.skipExit) {
+    process.exit(1);
   }
 }
 
