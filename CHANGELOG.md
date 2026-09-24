@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.0.5] - 2026-09-24
+
+## Fixes
+
+- **Hooks no longer go silent when the legacy claude-mem plugin is disabled** (#28). The hook and daemon entry points checked `enabledPlugins["claude-mem@thedotmack"]` and exited silently when it was `false`. A setup that disabled legacy claude-mem to run hummem alongside it lost all capture this way, with no error. hummem now checks only its own keys (`hummem@hummem`, `hummem@thedotmack`). A stale `false` on one of them cannot override the other when that one is enabled.
+- **Headless `claude -p` sessions now get summaries** (#29). `claude -p` kills async hooks as soon as it exits, so the async Stop hook never reached the worker. Bots, SDK callers and CI recorded the prompt and nothing else. The Stop hook now runs synchronously, adding about 0.25s per turn, and its timeout drops from 120s to 15s.
+
+## CI
+
+- Restored module mocks in tests so stubs stop leaking into later test files (#27, #30). The same leak also broke the clean-room smoke test, which looked for a hard-coded package name (#27).
+
 ## [13.13.1] - 2026-08-03
 
 ## What’s new
