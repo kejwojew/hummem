@@ -263,3 +263,28 @@ describe('bun-runner.js spawn: no cmd.exe for .exe targets (#3196)', () => {
     expect(source).not.toMatch(/if \(IS_WINDOWS\) \{\s*const quote/);
   });
 });
+
+describe('bun-runner.js plugin-disabled gate', () => {
+  const runWithSettings = (enabledPlugins: Record<string, boolean>) => {
+    const configDir = mkdtempSync(join(tmpdir(), 'bun-runner-disabled-'));
+    try {
+      writeFileSync(join(configDir, 'settings.json'), JSON.stringify({ enabledPlugins }));
+      // With no script argument the runner exits 1 on usage, so exit 0 means
+      // the disabled gate returned before argument handling.
+      return spawnSync(process.execPath, [BUN_RUNNER_PATH], {
+        env: { ...process.env, CLAUDE_CONFIG_DIR: configDir },
+        encoding: 'utf-8',
+      }).status;
+    } finally {
+      rmSync(configDir, { recursive: true, force: true });
+    }
+  };
+
+  it('exits early when hummem is disabled', () => {
+    expect(runWithSettings({ 'hummem@hummem': false })).toBe(0);
+  });
+
+  it('keeps running when only the legacy claude-mem plugin is disabled', () => {
+    expect(runWithSettings({ 'claude-mem@thedotmack': false, 'hummem@hummem': true })).not.toBe(0);
+  });
+});
