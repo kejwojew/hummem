@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.0.6] - 2026-09-24
+
+## Fixes
+
+- **A worker outage no longer blocks your prompt** (#31). When the worker was unreachable for several hooks in a row, the fail-loud counter exited with status 2. Claude Code reads that as "block": it rejected the user's prompt (`UserPromptSubmit operation blocked by hook: … hummem worker unreachable for N consecutive hooks`) and kept a Stop turn running. The counter now exits with status 1, which Claude Code shows as a warning while letting the prompt through.
+- **A checkout in the current directory no longer overrides the installed plugin** (#31). In a session opened inside a hummem checkout, a version bump in `package.json` made every hook treat the installed worker as stale and try to recycle it into the unreleased build. That is what tripped the counter above. The checkout is now used only when no plugin is installed. The resolver also reads the marketplace cache (`cache/hummem/hummem`), which it previously skipped.
+
 ## [1.0.5] - 2026-09-24
 
 ## Fixes
