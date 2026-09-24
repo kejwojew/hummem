@@ -304,7 +304,7 @@ describe('Plugin Distribution - Setup Hook (#1547)', () => {
 });
 
 describe('Plugin Distribution - Non-blocking bookkeeping hooks (#3206)', () => {
-  it('runs observation, file context, and summarization asynchronously', () => {
+  it('runs observation and file context asynchronously, summarization synchronously', () => {
     const hooksPath = path.join(projectRoot, 'plugin/hooks/hooks.json');
     const parsed = JSON.parse(readFileSync(hooksPath, 'utf-8'));
 
@@ -317,7 +317,11 @@ describe('Plugin Distribution - Non-blocking bookkeeping hooks (#3206)', () => {
     expect(preToolUse.command).toContain('file-context');
     expect(preToolUse.async).toBe(true);
     expect(stop.command).toContain('summarize');
-    expect(stop.async).toBe(true);
+    // Headless `claude -p` kills async hooks the moment it exits, so an async
+    // Stop never reaches the worker there and the session gets no summary.
+    // The hook only enqueues (~0.25s); the short timeout caps a hung worker.
+    expect(stop.async).toBeUndefined();
+    expect(stop.timeout).toBeLessThanOrEqual(15);
   });
 });
 
