@@ -91,11 +91,11 @@ function isPluginDisabledInClaudeSettings() {
     // Node that any host might invoke it with. Some Claude Code installs run
     // hooks under a bundled pre-ES2020 Node whose ESM loader throws
     // "SyntaxError: Unexpected token '.'" on `?.` (issue #2791).
-    return Boolean(
-      settings &&
-      settings.enabledPlugins &&
-      settings.enabledPlugins['hummem@thedotmack'] === false
-    );
+    // Keys must match PLUGIN_SETTINGS_KEYS in src/shared/plugin-state.ts; the
+    // legacy claude-mem@thedotmack key never disables hummem.
+    const enabled = (settings && settings.enabledPlugins) || {};
+    const states = [enabled['hummem@hummem'], enabled['hummem@thedotmack']];
+    return states.indexOf(false) !== -1 && states.indexOf(true) === -1;
   } catch {
     return false;
   }

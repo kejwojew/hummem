@@ -35,7 +35,7 @@ describe('isPluginDisabledInClaudeSettings (#781)', () => {
   it('should return false when plugin is explicitly enabled', () => {
     const settings = {
       enabledPlugins: {
-        'claude-mem@thedotmack': true
+        'hummem@hummem': true
       }
     };
     writeFileSync(join(tempDir, 'settings.json'), JSON.stringify(settings));
@@ -45,11 +45,43 @@ describe('isPluginDisabledInClaudeSettings (#781)', () => {
   it('should return true when plugin is explicitly disabled', () => {
     const settings = {
       enabledPlugins: {
-        'claude-mem@thedotmack': false
+        'hummem@hummem': false
       }
     };
     writeFileSync(join(tempDir, 'settings.json'), JSON.stringify(settings));
     expect(isPluginDisabledInClaudeSettings()).toBe(true);
+  });
+
+  it('should return true when the npx-installed plugin is disabled', () => {
+    const settings = {
+      enabledPlugins: {
+        'hummem@thedotmack': false
+      }
+    };
+    writeFileSync(join(tempDir, 'settings.json'), JSON.stringify(settings));
+    expect(isPluginDisabledInClaudeSettings()).toBe(true);
+  });
+
+  it('should return false when only the legacy claude-mem plugin is disabled', () => {
+    const settings = {
+      enabledPlugins: {
+        'claude-mem@thedotmack': false,
+        'hummem@hummem': true
+      }
+    };
+    writeFileSync(join(tempDir, 'settings.json'), JSON.stringify(settings));
+    expect(isPluginDisabledInClaudeSettings()).toBe(false);
+  });
+
+  it('should return false when a stale disabled key sits beside an enabled install', () => {
+    const settings = {
+      enabledPlugins: {
+        'hummem@thedotmack': false,
+        'hummem@hummem': true
+      }
+    };
+    writeFileSync(join(tempDir, 'settings.json'), JSON.stringify(settings));
+    expect(isPluginDisabledInClaudeSettings()).toBe(false);
   });
 
   it('should return false when enabledPlugins key is missing', () => {
