@@ -1,5 +1,5 @@
 
-import { describe, it, expect, mock } from 'bun:test';
+import { describe, it, expect, mock, afterAll } from 'bun:test';
 import { HOOK_TIMEOUTS } from '../../src/shared/hook-constants.js';
 
 const processManager = {
@@ -19,6 +19,20 @@ const spawnGate = {
   acquireSpawnLock: mock(() => true),
   releaseSpawnLock: mock(() => {}),
 };
+
+// bun's mock.module is process-global and mock.restore() does not undo it, so
+// snapshot the real namespaces first and re-register them in afterAll; otherwise
+// these stubs leak into later files (tests/infrastructure/health-monitor.test.ts
+// then gets the stubbed isPortInUse/waitForHealth whenever it runs after this one).
+const realProcessManagerSnapshot = { ...(await import('../../src/services/infrastructure/ProcessManager.js')) };
+const realHealthMonitorSnapshot = { ...(await import('../../src/services/infrastructure/HealthMonitor.js')) };
+const realSpawnGateSnapshot = { ...(await import('../../src/shared/worker-spawn-gate.js')) };
+
+afterAll(() => {
+  mock.module('../../src/services/infrastructure/ProcessManager.js', () => realProcessManagerSnapshot);
+  mock.module('../../src/services/infrastructure/HealthMonitor.js', () => realHealthMonitorSnapshot);
+  mock.module('../../src/shared/worker-spawn-gate.js', () => realSpawnGateSnapshot);
+});
 
 mock.module('../../src/services/infrastructure/ProcessManager.js', () => processManager);
 mock.module('../../src/services/infrastructure/HealthMonitor.js', () => healthMonitor);
