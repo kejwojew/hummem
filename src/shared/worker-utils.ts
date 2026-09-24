@@ -7,7 +7,7 @@ import { SettingsDefaultsManager, type SettingsDefaults } from "./SettingsDefaul
 import { MARKETPLACE_ROOT, DATA_DIR } from "./paths.js";
 import { loadFromFileOnce } from "./hook-settings.js";
 import { validateWorkerPidFile, readOwnedWorkerPidInfo } from "../supervisor/index.js";
-import { emitBlockingError } from "./hook-io.js";
+import { emitNonBlockingWarning } from "./hook-io.js";
 import { captureCliEvent } from "../services/telemetry/cli-telemetry.js";
 import { checkVersionMatch } from "../services/infrastructure/index.js";
 // Imported from ProcessManager.js directly (not the infrastructure barrel):
@@ -294,9 +294,10 @@ function readPackageVersion(packageJsonPath: string): string | null {
  * dying-worker restart handoff — launches. Detection and respawn consulting
  * different oracles is what made the 2026-07-22 restart storm possible.
  *
- * Highest version wins. Array.prototype.sort is stable, so equal versions
- * preserve the cache → marketplace → cwd precedence, and versionless
- * candidates rank behind every versioned one. The opt-in override exists for
+ * Highest installed version wins. Array.prototype.sort is stable, so equal
+ * versions preserve the cache → marketplace precedence, and versionless
+ * candidates rank behind every versioned one. A checkout in the cwd is
+ * consulted only when nothing is installed. The opt-in override exists for
  * local testing.
  */
 export function resolveWorkerScript(): WorkerScriptCandidate | null {
@@ -306,19 +307,29 @@ export function resolveWorkerScript(): WorkerScriptCandidate | null {
     logger.debug('SYSTEM', 'Ignoring missing CLAUDE_MEM_WORKER_SCRIPT_PATH override', { override });
   }
 
-  const candidates: WorkerScriptCandidate[] = [
-    ...cacheWorkerScriptCandidates(),
+  const cacheBase = path.join(path.dirname(path.dirname(MARKETPLACE_ROOT)), 'cache');
+  const installed = selectWorkerScript([
+    // Marketplace installs cache under cache/hummem/hummem, the npx installer
+    // under cache/thedotmack/hummem; either may be the live install.
+    ...cacheWorkerScriptCandidates(path.join(cacheBase, 'hummem', 'hummem')),
+    ...cacheWorkerScriptCandidates(path.join(cacheBase, 'thedotmack', 'hummem')),
     {
       scriptPath: candidateWorkerScriptPath(path.join(MARKETPLACE_ROOT, 'plugin')),
       version: readPackageVersion(path.join(MARKETPLACE_ROOT, 'package.json')),
     },
+  ]);
+  if (installed) return installed;
+
+  // A checkout in the cwd is only a fallback for running without any install.
+  // It must never outrank an installed plugin: a version bump in the repo would
+  // make every hook in a session opened there treat the installed worker as
+  // stale and try to recycle it into the unreleased build.
+  return selectWorkerScript([
     {
       scriptPath: path.join(process.cwd(), 'plugin', 'scripts', 'worker-service.cjs'),
       version: readPackageVersion(path.join(process.cwd(), 'package.json')),
     },
-  ];
-
-  return selectWorkerScript(candidates);
+  ]);
 }
 
 export function selectWorkerScript(candidates: WorkerScriptCandidate[]): WorkerScriptCandidate | null {
@@ -757,8 +768,8 @@ export async function recordWorkerUnreachable(): Promise<number> {
     // hook_failed distress signal. Gated to the failure that JUST reached the
     // threshold (`===`, not `>=`): the stderr warning below repeats on every
     // failure past the threshold, but telemetry emits once per failure streak
-    // to bound volume. MUST be awaited BEFORE emitBlockingError — it calls
-    // process.exit(2) immediately, which would kill a fire-and-forget POST
+    // to bound volume. MUST be awaited BEFORE emitNonBlockingWarning — it calls
+    // process.exit(1) immediately, which would kill a fire-and-forget POST
     // mid-flight. captureCliEvent never throws and is hard-capped at 2s, so
     // this cannot hang the fail-loud path. Closed-enum/count props only —
     // never error text. Transport is the direct CLI POST, never the worker
@@ -771,12 +782,13 @@ export async function recordWorkerUnreachable(): Promise<number> {
         threshold_tripped: true,
       });
     }
-    // #2292 fix: BLOCKING_FEEDBACK. emitBlockingError flushes the Phase 2
-    // stderr buffer (so preceding logger.warn lines also surface) and writes
-    // via the bypass channel + exits 2. Previously this raw process.stderr.write
-    // was swallowed by hookCommand's blanket no-op, so the user/model never saw it.
-    emitBlockingError(
-      `hummem worker unreachable for ${next.consecutiveFailures} consecutive hooks.`
+    // #2292: surface it rather than swallowing it, but NEVER as exit 2. Exit 2
+    // rejects the user's prompt on UserPromptSubmit and forces the model to keep
+    // going on Stop, so a memory outage would block the user's own work.
+    // emitNonBlockingWarning flushes the buffered stderr (preceding logger.warn
+    // lines surface too) and exits 1, which Claude Code shows without blocking.
+    emitNonBlockingWarning(
+      `hummem worker unreachable for ${next.consecutiveFailures} consecutive hooks (memory capture paused; your prompt was not blocked).`
     );
   }
   return next.consecutiveFailures;

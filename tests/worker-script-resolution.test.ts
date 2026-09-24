@@ -1,6 +1,7 @@
 import { afterAll, describe, expect, test } from 'bun:test';
 import { mkdirSync, mkdtempSync, rmSync, utimesSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
+import { spawnSync } from 'child_process';
 import { join } from 'path';
 import {
   cacheWorkerScriptCandidates,
@@ -160,5 +161,48 @@ describe('inline bootstrap resolvers stay in lockstep', () => {
     expect(command).not.toContain('mtimeMs');
     expect(command).toContain('.orphaned_at');
     expect(command).toContain('W(p.basename(a),p.basename(b))');
+  });
+});
+
+describe('resolveWorkerScript precedence', () => {
+  // MARKETPLACE_ROOT is resolved at import time, so run the resolver in a child
+  // process with its own CLAUDE_CONFIG_DIR and cwd.
+  const resolveIn = (configDir: string, cwd: string) => {
+    const modulePath = join(import.meta.dir, '..', 'src', 'shared', 'worker-utils.ts');
+    const result = spawnSync(
+      process.execPath,
+      ['-e', `const m = await import(${JSON.stringify(modulePath)}); console.log(JSON.stringify(m.resolveWorkerScript()));`],
+      { cwd, env: { ...process.env, CLAUDE_CONFIG_DIR: configDir, CLAUDE_MEM_WORKER_SCRIPT_PATH: '' }, encoding: 'utf-8' }
+    );
+    const line = result.stdout.trim().split('\n').pop() ?? 'null';
+    return JSON.parse(line) as { scriptPath: string; version: string | null } | null;
+  };
+
+  const makeCheckout = (version: string): string => {
+    const repo = makeCacheRoot();
+    mkdirSync(join(repo, 'plugin', 'scripts'), { recursive: true });
+    writeFileSync(join(repo, 'plugin', 'scripts', 'worker-service.cjs'), '// dev build\n');
+    writeFileSync(join(repo, 'package.json'), JSON.stringify({ version }));
+    return repo;
+  };
+
+  test('an installed marketplace cache outranks a newer checkout in the cwd', () => {
+    const configDir = makeCacheRoot();
+    mkdirSync(join(configDir, 'plugins', 'marketplaces', 'hummem'), { recursive: true });
+    const installedScript = makeVersionDir(join(configDir, 'plugins', 'cache', 'hummem', 'hummem'), '1.0.4');
+    const repo = makeCheckout('1.0.5');
+
+    const resolved = resolveIn(configDir, repo);
+    expect(resolved?.scriptPath).toBe(installedScript);
+    expect(resolved?.version).toBe('1.0.4');
+  });
+
+  test('falls back to the checkout in the cwd when nothing is installed', () => {
+    const configDir = makeCacheRoot();
+    const repo = makeCheckout('1.0.5');
+
+    const resolved = resolveIn(configDir, repo);
+    expect(resolved?.version).toBe('1.0.5');
+    expect(resolved?.scriptPath.endsWith(join('plugin', 'scripts', 'worker-service.cjs'))).toBe(true);
   });
 });

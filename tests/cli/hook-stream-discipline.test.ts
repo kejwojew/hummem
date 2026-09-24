@@ -4,6 +4,7 @@ import { join } from 'path';
 import {
   installHookStderrBuffer,
   emitBlockingError,
+  emitNonBlockingWarning,
   exitGraceful,
   emitModelContext,
   resetHookIoState,
@@ -58,11 +59,36 @@ describe('#2292 — fail-loud diagnostic is no longer swallowed', () => {
     }
   });
 
-  it('worker-utils recordWorkerUnreachable routes through emitBlockingError (source contract)', () => {
+  it('worker-utils recordWorkerUnreachable routes through emitNonBlockingWarning, never exit 2 (source contract)', () => {
     const src = readFileSync(join(REPO_ROOT, 'src', 'shared', 'worker-utils.ts'), 'utf-8');
+    // Exit 2 would reject the user's prompt (UserPromptSubmit) or force the
+    // model to continue (Stop) whenever the memory worker is down.
+    expect(src).toContain('emitNonBlockingWarning(');
+    expect(src).not.toContain('emitBlockingError(');
     // The fail-loud branch must NOT call process.stderr.write / process.exit directly.
-    expect(src).toContain('emitBlockingError(');
     expect(src).not.toMatch(/process\.stderr\.write\(\s*\n\s*`hummem worker unreachable/);
+  });
+});
+
+describe('emitNonBlockingWarning', () => {
+  it('surfaces the message and buffered stderr, then exits 1 (non-blocking), never 2', () => {
+    const real = captureRealStderr();
+    const buffer = installHookStderrBuffer();
+    const originalExit = process.exit;
+    let exitCode: number | undefined;
+    process.exit = ((code?: number) => { exitCode = code; }) as typeof process.exit;
+    try {
+      process.stderr.write('preceding diagnostic\n');
+      emitNonBlockingWarning('hummem worker unreachable for 3 consecutive hooks.');
+      const surfaced = real.chunks.join('');
+      expect(surfaced).toContain('hummem worker unreachable for 3 consecutive hooks.');
+      expect(surfaced).toContain('preceding diagnostic');
+      expect(exitCode).toBe(1);
+    } finally {
+      process.exit = originalExit;
+      buffer.restore();
+      real.restore();
+    }
   });
 });
 
