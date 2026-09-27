@@ -2,7 +2,8 @@
 import { existsSync, readFileSync, writeFileSync, mkdirSync, chmodSync } from 'fs';
 import { parseEnv } from 'util';
 import { logger } from '../utils/logger.js';
-import { paths } from './paths.js';
+import { paths, USER_SETTINGS_PATH } from './paths.js';
+import { SettingsDefaultsManager } from './SettingsDefaultsManager.js';
 import {
   readClaudeOAuthToken,
   writeStaleMarker,
@@ -201,6 +202,34 @@ export function buildIsolatedEnv(includeCredentials: boolean = true): Record<str
 }
 
 /**
+ * The Claude auth method the user selected (CLAUDE_MEM_CLAUDE_AUTH_METHOD).
+ * Read at spawn time so a settings change applies without a worker restart.
+ */
+function configuredClaudeAuthMethod(): string {
+  try {
+    return SettingsDefaultsManager.loadFromFile(USER_SETTINGS_PATH).CLAUDE_MEM_CLAUDE_AUTH_METHOD;
+  } catch (error) {
+    // [ANTI-PATTERN IGNORED]: loadFromFile already falls back to defaults on a
+    // bad file; this only guards an unexpected throw so a spawn never fails on it.
+    logger.warn('ENV', 'Failed to read CLAUDE_MEM_CLAUDE_AUTH_METHOD; using default', {}, error instanceof Error ? error : new Error(String(error)));
+    return SettingsDefaultsManager.get('CLAUDE_MEM_CLAUDE_AUTH_METHOD');
+  }
+}
+
+// One warning per process for the subscription-vs-.env conflict; the check
+// runs on every SDK spawn and would otherwise flood the log.
+let warnedSubscriptionOverridesEnvKey = false;
+let warnedSubscriptionFallbackToEnvKey = false;
+let warnedApiKeyMethodWithoutKey = false;
+
+export interface FreshOAuthOptions {
+  /** Override CLAUDE_MEM_CLAUDE_AUTH_METHOD (tests). */
+  authMethod?: string;
+  /** Override the credential-store reader (tests). */
+  readOAuthToken?: () => Promise<OAuthTokenResult>;
+}
+
+/**
  * Async variant of buildIsolatedEnv() that reads the OAuth token from the
  * platform-native credential store at the moment of spawn. Use this at SDK
  * spawn-time so the worker subprocess always gets a fresh token.
@@ -212,11 +241,21 @@ export function buildIsolatedEnv(includeCredentials: boolean = true): Record<str
  *   - absent: proceed without the token. Worker may fall back to
  *     ANTHROPIC_API_KEY or other auth.
  *
+ * CLAUDE_MEM_CLAUDE_AUTH_METHOD decides between an ANTHROPIC_API_KEY /
+ * ANTHROPIC_AUTH_TOKEN from ~/.hummem/.env and the subscription OAuth token.
+ * With 'subscription', OAuth wins and the .env credential is dropped from the
+ * subprocess env; if no usable OAuth token exists, the .env credential is kept
+ * (with a warning) rather than leaving the worker with no auth at all. That
+ * fallback matters because a fresh settings.json is seeded with every default,
+ * including 'subscription', so key-only installs carry it without choosing it.
+ * Any other method keeps the .env credential and skips the OAuth lookup.
+ *
  * Issue #2215: this replaces the old "copy CLAUDE_CODE_OAUTH_TOKEN from
  * process.env" path which silently injected stale tokens.
  */
 export async function buildIsolatedEnvWithFreshOAuth(
   includeCredentials: boolean = true,
+  options: FreshOAuthOptions = {},
 ): Promise<Record<string, string>> {
   const isolatedEnv = buildIsolatedEnv(includeCredentials);
 
@@ -240,19 +279,35 @@ export async function buildIsolatedEnvWithFreshOAuth(
   // all). Keeping the BASE_URL branch here is therefore the *security*-correct
   // behavior: it prevents the OAuth token from being sent to a user-configured
   // third-party gateway. It is NOT the leak path it was before the deny-list.
+  //
+  // No auth-method check here: the seeded 'subscription' default is on disk for
+  // gateway users too (Kimi, LiteLLM), and a BASE_URL in .env is itself the
+  // explicit choice.
   if (isolatedEnv.ANTHROPIC_BASE_URL) {
     clearStaleMarker();
     return isolatedEnv;
   }
-  // Direct API with explicit credentials: skip OAuth lookup.
-  if (isolatedEnv.ANTHROPIC_API_KEY || isolatedEnv.ANTHROPIC_AUTH_TOKEN) {
+
+  const authMethod = options.authMethod ?? configuredClaudeAuthMethod();
+
+  const hasEnvCredential = !!(isolatedEnv.ANTHROPIC_API_KEY || isolatedEnv.ANTHROPIC_AUTH_TOKEN);
+  // Direct API with explicit credentials and a method that wants them: skip OAuth lookup.
+  if (hasEnvCredential && authMethod !== 'subscription') {
     clearStaleMarker();
     return isolatedEnv;
+  }
+  if (!hasEnvCredential && authMethod === 'api-key' && !warnedApiKeyMethodWithoutKey) {
+    warnedApiKeyMethodWithoutKey = true;
+    logger.warn(
+      'ENV',
+      'CLAUDE_MEM_CLAUDE_AUTH_METHOD=api-key, but no ANTHROPIC_API_KEY is set in the .env file; trying the subscription OAuth token instead.',
+      { envFile: envFilePath() },
+    );
   }
 
   let result: OAuthTokenResult;
   try {
-    result = await readClaudeOAuthToken();
+    result = await (options.readOAuthToken ?? readClaudeOAuthToken)();
   } catch (error) {
     logger.warn(
       'OAUTH',
@@ -261,6 +316,33 @@ export async function buildIsolatedEnvWithFreshOAuth(
       error instanceof Error ? error : new Error(String(error)),
     );
     return isolatedEnv;
+  }
+
+  if (hasEnvCredential) {
+    // authMethod === 'subscription' with a key/token in .env.
+    if (result.kind === 'present') {
+      delete isolatedEnv.ANTHROPIC_API_KEY;
+      delete isolatedEnv.ANTHROPIC_AUTH_TOKEN;
+      if (!warnedSubscriptionOverridesEnvKey) {
+        warnedSubscriptionOverridesEnvKey = true;
+        logger.warn(
+          'ENV',
+          'CLAUDE_MEM_CLAUDE_AUTH_METHOD=subscription: ignoring ANTHROPIC_API_KEY/ANTHROPIC_AUTH_TOKEN from the .env file and using the subscription OAuth token. Remove the key from the .env file, or set the method to api-key to use it.',
+          { envFile: envFilePath() },
+        );
+      }
+    } else {
+      if (!warnedSubscriptionFallbackToEnvKey) {
+        warnedSubscriptionFallbackToEnvKey = true;
+        logger.warn(
+          'ENV',
+          `CLAUDE_MEM_CLAUDE_AUTH_METHOD=subscription, but no usable OAuth token (${result.kind}: ${result.reason}); falling back to the credential in the .env file. Run \`claude auth login\` to use the subscription.`,
+          { envFile: envFilePath() },
+        );
+      }
+      clearStaleMarker();
+      return isolatedEnv;
+    }
   }
 
   switch (result.kind) {
@@ -309,7 +391,22 @@ export function hasAnthropicAuthToken(): boolean {
   return !!env.ANTHROPIC_AUTH_TOKEN;
 }
 
-export function getAuthMethodDescription(): string {
+/**
+ * Describe the auth in use. Pass the env returned by
+ * buildIsolatedEnvWithFreshOAuth() to describe what a spawn actually got;
+ * without it this is a sync hint based on the .env file alone.
+ */
+export function getAuthMethodDescription(spawnEnv?: Record<string, string | undefined>): string {
+  if (spawnEnv) {
+    if (spawnEnv.CLAUDE_CODE_OAUTH_TOKEN) return 'Claude subscription OAuth token (read from system keychain at spawn)';
+    if (spawnEnv.ANTHROPIC_BASE_URL) return 'Gateway (ANTHROPIC_BASE_URL from .env)';
+    if (spawnEnv.ANTHROPIC_API_KEY) return 'API key (from .env)';
+    if (spawnEnv.ANTHROPIC_AUTH_TOKEN) return 'Gateway auth token (from .env)';
+    return 'No credential injected (SDK default auth)';
+  }
+  if ((hasAnthropicApiKey() || hasAnthropicAuthToken()) && !getCredential('ANTHROPIC_BASE_URL') && configuredClaudeAuthMethod() === 'subscription') {
+    return 'Claude subscription OAuth token (the .env credential is used only if no OAuth token is available)';
+  }
   if (hasAnthropicApiKey()) {
     return 'API key (from ~/.claude-mem/.env)';
   }

@@ -229,7 +229,7 @@ export class ClaudeProvider {
 
     try {
       const isolatedEnv = sanitizeEnv(await buildIsolatedEnvWithFreshOAuth());
-      const authMethod = getAuthMethodDescription();
+      const authMethod = getAuthMethodDescription(isolatedEnv);
 
       logger.info('SDK', 'Starting SDK query', {
         sessionDbId: session.sessionDbId,

@@ -89,14 +89,22 @@ function readJson(filePath, label = filePath) {
   }
 }
 
+// Mirrors resolveDataDir() in src/shared/paths.ts: the worker loads modes from
+// this dir and silently falls back to 'code' when the mode file is missing.
 function resolveDataDir() {
-  if (process.env.CLAUDE_MEM_DATA_DIR) return expandHome(process.env.CLAUDE_MEM_DATA_DIR);
-  const defaultDir = path.join(homedir(), '.claude-mem');
-  const defaultSettings = path.join(defaultDir, 'settings.json');
-  if (!existsSync(defaultSettings)) return defaultDir;
-  const parsed = readJson(defaultSettings, 'claude-mem settings');
-  const flat = parsed.env && typeof parsed.env === 'object' ? parsed.env : parsed;
-  return flat.CLAUDE_MEM_DATA_DIR ? expandHome(flat.CLAUDE_MEM_DATA_DIR) : defaultDir;
+  const fromEnv = process.env.HUMMEM_DATA_DIR || process.env.CLAUDE_MEM_DATA_DIR;
+  if (fromEnv) return expandHome(fromEnv);
+  const defaultDir = path.join(homedir(), '.hummem');
+  const legacyDir = path.join(homedir(), '.claude-mem');
+  for (const dir of [defaultDir, legacyDir]) {
+    const settingsPath = path.join(dir, 'settings.json');
+    if (!existsSync(settingsPath)) continue;
+    const parsed = readJson(settingsPath, 'hummem settings');
+    const flat = parsed.env && typeof parsed.env === 'object' ? parsed.env : parsed;
+    const configured = flat.HUMMEM_DATA_DIR ?? flat.CLAUDE_MEM_DATA_DIR;
+    if (configured) return expandHome(configured);
+  }
+  return defaultDir;
 }
 
 function deepMerge(base, override) {

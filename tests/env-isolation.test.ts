@@ -6,6 +6,7 @@ import {
   envFilePath,
   buildIsolatedEnv,
   buildIsolatedEnvWithFreshOAuth,
+  getAuthMethodDescription,
 } from '../src/shared/EnvManager.js';
 import { sanitizeEnv } from '../src/supervisor/env-sanitizer.js';
 import * as oauthToken from '../src/shared/oauth-token.js';
@@ -177,6 +178,99 @@ describe('Issue #2375: ANTHROPIC_BASE_URL env-var isolation', () => {
     } finally {
       oauthSpy.mockRestore();
     }
+  });
+});
+
+/**
+ * CLAUDE_MEM_CLAUDE_AUTH_METHOD must decide between an .env API key and the
+ * subscription OAuth token. Before this, any ANTHROPIC_API_KEY in the .env file
+ * short-circuited the OAuth lookup, so 'subscription' was silently ignored and
+ * an exhausted key kept failing with "Credit balance is too low".
+ */
+describe('CLAUDE_MEM_CLAUDE_AUTH_METHOD vs .env credentials', () => {
+  const present = async (): Promise<oauthToken.OAuthTokenResult> => ({
+    kind: 'present',
+    token: 'oauth-subscription-token',
+    source: 'keychain',
+  } as oauthToken.OAuthTokenResult);
+  const absent = async (): Promise<oauthToken.OAuthTokenResult> => ({ kind: 'absent', reason: 'not logged in' });
+
+  beforeAll(() => {
+    fs.mkdirSync(TEST_DATA_DIR, { recursive: true, mode: 0o700 });
+    process.env.CLAUDE_MEM_ENV_FILE = TEST_ENV_FILE;
+  });
+
+  afterAll(() => {
+    if (ORIGINAL_ENV_FILE === undefined) {
+      delete process.env.CLAUDE_MEM_ENV_FILE;
+    } else {
+      process.env.CLAUDE_MEM_ENV_FILE = ORIGINAL_ENV_FILE;
+    }
+  });
+
+  beforeEach(() => {
+    clearEnvFile();
+    clearAnthropicEnv();
+    fs.writeFileSync(TEST_ENV_FILE, 'ANTHROPIC_API_KEY=sk-exhausted\n', { mode: 0o600 });
+  });
+
+  afterEach(() => {
+    clearEnvFile();
+    restoreOriginalEnv();
+  });
+
+  it('subscription + OAuth available: drops the .env key and injects OAuth', async () => {
+    const result = await buildIsolatedEnvWithFreshOAuth(true, { authMethod: 'subscription', readOAuthToken: present });
+
+    expect(result.ANTHROPIC_API_KEY).toBeUndefined();
+    expect(result.CLAUDE_CODE_OAUTH_TOKEN).toBe('oauth-subscription-token');
+    expect(getAuthMethodDescription(result)).toContain('subscription');
+  });
+
+  it('subscription + .env AUTH_TOKEN: the token is dropped too', async () => {
+    fs.writeFileSync(TEST_ENV_FILE, 'ANTHROPIC_AUTH_TOKEN=tok\n', { mode: 0o600 });
+
+    const result = await buildIsolatedEnvWithFreshOAuth(true, { authMethod: 'subscription', readOAuthToken: present });
+
+    expect(result.ANTHROPIC_AUTH_TOKEN).toBeUndefined();
+    expect(result.CLAUDE_CODE_OAUTH_TOKEN).toBe('oauth-subscription-token');
+  });
+
+  it('subscription without OAuth: falls back to the .env key (seeded-default installs)', async () => {
+    const result = await buildIsolatedEnvWithFreshOAuth(true, { authMethod: 'subscription', readOAuthToken: absent });
+
+    expect(result.ANTHROPIC_API_KEY).toBe('sk-exhausted');
+    expect(result.CLAUDE_CODE_OAUTH_TOKEN).toBeUndefined();
+  });
+
+  it('api-key: keeps the .env key and never reads OAuth', async () => {
+    let oauthRead = false;
+    const result = await buildIsolatedEnvWithFreshOAuth(true, {
+      authMethod: 'api-key',
+      readOAuthToken: async () => { oauthRead = true; return present(); },
+    });
+
+    expect(result.ANTHROPIC_API_KEY).toBe('sk-exhausted');
+    expect(result.CLAUDE_CODE_OAUTH_TOKEN).toBeUndefined();
+    expect(oauthRead).toBe(false);
+    expect(getAuthMethodDescription(result)).toContain('API key');
+  });
+
+  it('subscription + gateway BASE_URL: gateway wins, OAuth is never read', async () => {
+    fs.writeFileSync(
+      TEST_ENV_FILE,
+      'ANTHROPIC_BASE_URL=https://gateway.example\nANTHROPIC_API_KEY=sk-gw\n',
+      { mode: 0o600 },
+    );
+    let oauthRead = false;
+    const result = await buildIsolatedEnvWithFreshOAuth(true, {
+      authMethod: 'subscription',
+      readOAuthToken: async () => { oauthRead = true; return present(); },
+    });
+
+    expect(result.ANTHROPIC_API_KEY).toBe('sk-gw');
+    expect(result.CLAUDE_CODE_OAUTH_TOKEN).toBeUndefined();
+    expect(oauthRead).toBe(false);
   });
 });
 
