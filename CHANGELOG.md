@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.0.7] - 2026-09-27
+
+## Fixes
+
+- **`CLAUDE_MEM_CLAUDE_AUTH_METHOD=subscription` is now honored over an `ANTHROPIC_API_KEY` in `~/.hummem/.env`** (#32). Before, any key or `ANTHROPIC_AUTH_TOKEN` in `.env` skipped the OAuth lookup, so an exhausted key kept failing distillation with "Credit balance is too low" even with `subscription` selected.
+  - `subscription` with a Claude login: the `.env` key/token is ignored, OAuth is used, and one warning is logged.
+  - `subscription` without a usable OAuth token: falls back to the `.env` credential with a warning. A fresh settings.json is seeded with `subscription`, so installs that use only a key keep working.
+  - `api-key`: uses the key and never reads OAuth.
+  - `ANTHROPIC_BASE_URL` (gateway / Kimi): unchanged. OAuth is never sent to a custom base URL.
+  - The SDK log now reports the auth a spawn actually received.
+- **mode-creator writes to the right data dir.** `install-mode.mjs` and `configure-telegram.mjs` resolved to `~/.claude-mem` instead of `~/.hummem`. Installed modes were never loaded (the worker silently fell back to `code`), and Telegram settings went to the wrong settings.json.
+
+## Upgrade note
+
+If you run on a subscription and still have an `ANTHROPIC_API_KEY` in `~/.hummem/.env`, hummem now uses the subscription. Set `CLAUDE_MEM_CLAUDE_AUTH_METHOD=api-key` to keep using the key.
+
 ## [1.0.6] - 2026-09-24
 
 ## Fixes
