@@ -116,46 +116,41 @@ Keep the dated backup for longer than this.
 
 ---
 
-## 6. Publish to npm — DONE
+## 6. Publish to npm — AUTOMATED since 2026-08-31
 
-`hummem@1.0.0` is published and verified: downloaded from the registry,
-`.claude-plugin/marketplace.json` present, CLI reports `1.0.0`, and the bundled
-worker creates `hummem.db` in a fresh data directory.
+Releases `1.0.0` through `1.0.4` were published by hand from a maintainer
+machine. They no longer are: `.github/workflows/npm-publish.yml` fires on any
+`v*` tag and runs build → `smoke:clean-room` → `npm publish`, authenticating
+with the `NPM_TOKEN` repository secret (granular token, package-scoped, "bypass
+2FA" enabled, no IP allow-list — a GitHub-hosted runner has no stable address).
 
-Irreversible: the package name is claimed permanently, and a published version
-cannot be reissued under the same number.
-
-```bash
-npm login
-npm publish        # runs prepublishOnly: build + postinstall + privacy + branding guards
-```
-
-**If publishing is rejected for two-factor authentication**, either pass a
-one-time code directly:
+Publishing is therefore a consequence of pushing the tag:
 
 ```bash
-npm publish --otp=<6-digit code>
+git push origin main && git push origin vX.Y.Z
 ```
 
-or create a granular access token on npmjs.com with "bypass 2FA" enabled, so
-publishing works non-interactively:
+**Do not run `npm publish`, `np`, or `npm run release:*` locally.** They
+publish too, and racing the workflow for the same version number means one of
+them fails on an already-published version.
+
+**Verify:**
 
 ```bash
-npm config set //registry.npmjs.org/:_authToken=<token>
-npm publish
+gh run list --workflow npm-publish.yml --limit 1
+npm view hummem@X.Y.Z version    # should print X.Y.Z
 ```
 
-**Only if npm reports `EPERM` about root-owned cache files**, take ownership of
-the cache and retry. Do not run this pre-emptively:
+**Confirm the secret still exists** before a release (tokens expire):
 
 ```bash
-sudo chown -R "$(id -u):$(id -g)" ~/.npm
+gh secret list --repo kejwojew/hummem   # expect NPM_TOKEN
 ```
 
-**Verify:** `npm view hummem version` prints `1.0.0`.
-
-**Undo:** `npm unpublish hummem@1.0.0` works only within 72 hours, and the name
-stays reserved regardless.
+Irreversible: a published version cannot be reissued under the same number.
+`npm unpublish hummem@X.Y.Z` works only within 72 hours, and the name stays
+reserved regardless. If the workflow fails *after* `npm publish` succeeded, the
+fix is a version bump, not a re-run.
 
 ---
 

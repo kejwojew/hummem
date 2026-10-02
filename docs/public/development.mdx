@@ -638,11 +638,15 @@ git push origin main
 git push origin vNEW_VERSION
 ```
 
-Publishing to npm requires the maintainer's npm credentials and 2FA:
+Pushing the tag is what publishes: `.github/workflows/npm-publish.yml` fires on
+any `v*` tag and runs build → clean-room smoke → `npm publish` with the
+repository's `NPM_TOKEN` secret. Do not publish by hand — a local `npm publish`
+(or `np`, or `npm run release:*`) races the workflow for the same version
+number, and whichever loses fails on an already-published version.
 
 ```bash
-npm publish
-npm view claude-mem@NEW_VERSION version
+gh run list --workflow npm-publish.yml --limit 1
+npm view hummem@NEW_VERSION version
 ```
 
 Only after npm resolves the version, create the GitHub release and regenerate the
